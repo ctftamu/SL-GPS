@@ -1,7 +1,7 @@
 # Simple steps to get started
-> Install the SL-GPS library - pip install slgps
-> To generate dataset source - from slgps import make_data_parallel
-> To train a neural network - from slgps.mech_train import make_model
+> Install the SL-GPS library - 'pip install slgps'
+> To generate dataset source - 'from slgps import make_data_parallel'
+> To train a neural network - 'from slgps.mech_train import make_model'
 > Check main.py to see how to utilize these functions for your own case
 
 
