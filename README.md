@@ -1,3 +1,10 @@
+# Simple steps to get started
+> Install the SL-GPS library - pip install slgps
+> To generate dataset source - from slgps import make_data_parallel
+> To train a neural network - from slgps.mech_train import make_model
+> Check main.py to see how to utilize these functions for your own case
+
+
 # SL-GPS
 This repository contains the means to create a neural network architecture for dynamic chemistry reduction based on reduction results from Global Pathway Selection. The basic procedure is to first run adaptive GPS for 0D auto-ignition simulation so as to create a dataset. This dataset is later used for training the Artificial Neural Network (ANN). You can reach out to us at rmishra@tamu.edu (Rohit Mishra) or aaronnelson@tamu.edu (Aaron Nelson) for code issues, suggestions and/or pull requests. The step-by-step procedure to use this repository is as follows:
 
