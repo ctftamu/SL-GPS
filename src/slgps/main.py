@@ -7,9 +7,6 @@ import os
 
 # -----------------EDITABLE INPUT VALUES FOR SIMULATION SET-------------------
 
-
-
-
 #fuel species name
 fuel = 'CH4'
 
@@ -41,11 +38,20 @@ t_rng=[800,2300]
 p_rng=[2.1, 2.5]
 
 #training range for equivalance ratios (-)
-phi_rng=[0.6, 1.4]
+phi_rng=[0.6, 1.4] # Not utilized since we are using species_ranges (still need to specify any dummy range to run the code)
 
 #alpha (error control for GPS)
 alpha=0.001
 
+# Define the species and their allowable range
+species_ranges = {
+'CH4': (0.0, 1.0),
+'N2': (0, 0.8),
+'O2': (0.0, 0.4),
+'CO2': (0.0, 0.005),
+'H2O': (0.0,  0.1),
+'OH': (0.00, 1e-3)
+}
 
 #Frequency threshold for inclusion of a species above which a species is always
 #to be included in a reduced mechanism, and not considered in ANN
@@ -76,5 +82,8 @@ if __name__ == '__main__':
     if not os.path.exists(data_path):
         os.makedirs(data_path)
 
-        make_data_parallel(fuel, mech_file, end_threshold, ign_HRR_threshold_div, ign_GPS_resolution, norm_GPS_resolution, GPS_per_interval, n_cases, t_rng, p_rng, phi_rng, alpha, always_threshold, never_threshold, data_path)
+        make_data_parallel(fuel, mech_file, end_threshold, ign_HRR_threshold_div, ign_GPS_resolution,\
+        norm_GPS_resolution, GPS_per_interval, n_cases, t_rng, p_rng, phi_rng, alpha, always_threshold,\
+        never_threshold, data_path, species_ranges)
+
     make_model(input_specs, data_path, scaler_path, model_path)
