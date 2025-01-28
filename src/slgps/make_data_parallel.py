@@ -95,7 +95,7 @@ def process_simulation(sim_data):
 
 def make_data_parallel(fuel, mech_file, end_threshold, ign_HRR_threshold_div, ign_GPS_resolution, 
               norm_GPS_resolution, GPS_per_interval, n_cases, t_rng, p_rng, phi_rng, 
-              alpha, always_threshold, never_threshold, pathname):
+              alpha, always_threshold, never_threshold, pathname, species_ranges):
     #initialize lists of random initial conditions
     temps = []
     pressures = []
@@ -113,19 +113,7 @@ def make_data_parallel(fuel, mech_file, end_threshold, ign_HRR_threshold_div, ig
     
     #Initialize Cantera solution
     soln_in = ct.Solution(mech_file)
-    
-
-
-    # Define the species and their allowable range
-    species_ranges = {
-    'CH4': (0.0, 1.0),
-    'N2': (0, 0.8),
-    'O2': (0.0, 0.4),
-    'CO2': (0.0, 0.005),
-    'H2O': (0.0,  0.1),
-    'OH': (0.00, 1e-3)
-    }
-
+   
     # Number of cases
     #n_cases = 10  # Change this to your desired number of cases
 
