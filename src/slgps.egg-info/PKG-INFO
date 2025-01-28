@@ -1,6 +1,6 @@
 Metadata-Version: 2.2
 Name: slgps
-Version: 0.0.8
+Version: 2.0.0
 Summary: NN assisted chemistry reduction of mechanism based on Global Pathway Selection algorithm
 Author-email: Rohit Mishra <rohitmishranitrr@gmail.com>
 Project-URL: Homepage, https://github.com/ctftamu/SL-GPS
