@@ -3,6 +3,7 @@
 2. To generate dataset source - `from slgps import make_data_parallel`
 3. To train a neural network - `from slgps.mech_train import make_model`
 4. Check main.py to see how to utilize these functions for your own case
+   
 For questions and discussions please join : https://discord.com/channels/1333609076726431798/1333610748424880128
 Please feel free to ask any questions related to SL-GPS there. 
 
