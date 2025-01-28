@@ -65,6 +65,25 @@ def make_model(input_specs, data_path, scaler_path, model_path):
     best_model_idx = min(range(len(train_test_histories)), key=lambda i: train_test_histories[i].history['loss'][-1])
     best_model = models[best_model_idx]
 
-    dump(min_max_scaler, open(scaler_path, 'wb'))
-    best_model.save(model_path)
+    # Create all missing directories if they don't exist
+    os.makedirs(scaler_path, exist_ok=True)
+
+    scaler_path_with_file = os.path.join(scaler_path, 'model.pkl')
+
+    # Now you can check for the file
+    if not os.path.exists(scaler_path_with_file ):
+        # Create the file or process it as needed
+        dump(min_max_scaler, open(scaler_path_with_file , 'wb'))
+
+
+
+    # Create all missing directories if they don't exist
+    os.makedirs(model_path, exist_ok=True)
+
+    model_path_with_file = os.path.join(model_path, 'model.h5')
+
+    # Now you can check for the file
+    if not os.path.exists(model_path_with_file):
+        # Create the file or process it as needed
+        best_model.save(model_path_with_file)
 

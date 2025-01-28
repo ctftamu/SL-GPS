@@ -1,6 +1,6 @@
 [project]
 name = "slgps"
-version = "2.0.2"
+version = "2.0.7"
 authors = [
   { name="Rohit Mishra", email="rohitmishranitrr@gmail.com" },
 ]
