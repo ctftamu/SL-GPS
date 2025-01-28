@@ -7,6 +7,9 @@
 5. Check main.py to see how to utilize these functions for your own case
 
 
+For questions and discussions please join : https://discord.com/channels/1333609076726431798/1333610748424880128
+Please feel free to ask any questions related to SL-GPS there. 
+
 # SL-GPS
 This repository contains the means to create a neural network architecture for dynamic chemistry reduction based on reduction results from Global Pathway Selection. The basic procedure is to first run adaptive GPS for 0D auto-ignition simulation so as to create a dataset. This dataset is later used for training the Artificial Neural Network (ANN). You can reach out to us at rmishra@tamu.edu (Rohit Mishra) or aaronnelson@tamu.edu (Aaron Nelson) for code issues, suggestions and/or pull requests. The step-by-step procedure to use this repository is as follows:
 
