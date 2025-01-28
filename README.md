@@ -1,9 +1,12 @@
 # Simple steps to get started
-1. Install the SL-GPS library - `pip install slgps`
-2. To generate dataset source - `from slgps import make_data_parallel`
-3. To train a neural network - `from slgps.mech_train import make_model`
-4. Check main.py to see how to utilize these functions for your own case
-   
+
+1. Install basic libraries - `pip install matplotlib cantera tensorflow`
+2. Install the SL-GPS library - `pip install slgps`
+3. To generate dataset source - `from slgps import make_data_parallel`
+4. To train a neural network - `from slgps.mech_train import make_model`
+5. Check main.py to see how to utilize these functions for your own case
+
+
 For questions and discussions please join : https://discord.com/channels/1333609076726431798/1333610748424880128
 Please feel free to ask any questions related to SL-GPS there. 
 

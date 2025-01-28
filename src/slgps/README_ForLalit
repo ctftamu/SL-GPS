@@ -1,0 +1,3 @@
+1. Run the main.py; Most parameters are present there to change your use case.
+2. make_data_parallel.py -> Generates dataset for training
+3. mech_train.py -> Creates NN for the generated dataset
