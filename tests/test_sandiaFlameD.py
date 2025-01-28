@@ -1,5 +1,5 @@
 
-from slgps import utils, make_data_parallel
+from slgps.make_data_parallel import make_data_parallel
 from slgps.mech_train import make_model
 import os
 
@@ -9,7 +9,7 @@ import os
 fuel = 'CH4'
 
 #name of detailed mechanism file, either stored in cantera or in custom path
-mech_file='gri30.cti'
+mech_file='gri30.yaml'
 
 #HHR threshold, below which simulation ends
 end_threshold = 2e5
@@ -66,10 +66,10 @@ data_path = 'TrainingData/Sandia_100sims' #Sandia_train_data_c_100_a_0.001'
 input_specs = ['CH4', 'H2O', 'OH', 'H', 'CO', 'O2', 'CO2', 'O', 'CH3', 'CH', 'H2']
 
 #Path to min max scaler for normalizing input data to neural network
-scaler_path = 'Min-Max Scalers/Sandia_100sims.pkl' #Sandia_scaler_c_100_a_0.001.pkl'
+scaler_path = 'Min-Max Scalers/Sandia_100sims' #Sandia_scaler_c_100_a_0.001.pkl'
 
 #Path to h5 file containing trained neural network
-model_path = 'Artificial Neural Networks/Sandia_100sims.h5' #Sandia_model_c_100_a_0.001_n_16.h5'
+model_path = 'Artificial Neural Networks/Sandia_100sims' #Sandia_model_c_100_a_0.001_n_16.h5'
 
     
 # ------------------------------END OF INPUTS---------------------------------
@@ -77,7 +77,8 @@ model_path = 'Artificial Neural Networks/Sandia_100sims.h5' #Sandia_model_c_100_
 
 #produce autoignition data and train model according to the above parameters
 if __name__ == '__main__':
-    if not os.path.exists(data_path):
+    if not os.path.exists(data_path) or len(os.listdir(data_path)) == 0:
+        # Create the directory if it doesn't exist or if it's empty
         os.makedirs(data_path)
 
         make_data_parallel(fuel, mech_file, end_threshold, ign_HRR_threshold_div, ign_GPS_resolution,\
