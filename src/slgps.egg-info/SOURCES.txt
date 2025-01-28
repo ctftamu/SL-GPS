@@ -119,4 +119,5 @@ src/slgps/src/tools/combine_de_mech.py
 src/slgps/src/tools/csv_plot.py
 src/slgps/src/tools/def_DNS.py
 src/slgps/src/tools/upper_case.py
-tests/test_slgps.py
+tests/test_basic.py
+tests/test_sandiaFlameD.py
