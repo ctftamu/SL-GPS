@@ -1,0 +1,19 @@
+[project]
+name = "slgps"
+version = "0.0.8"
+authors = [
+  { name="Rohit Mishra", email="rohitmishranitrr@gmail.com" },
+]
+description = "NN assisted chemistry reduction of mechanism based on Global Pathway Selection algorithm"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+
+[project.urls]
+Homepage = "https://github.com/ctftamu/SL-GPS"
+Issues = "https://github.com/ctftamu/SL-GPS/issues"
