@@ -3,7 +3,7 @@
 1. Install basic libraries - `pip install matplotlib cantera tensorflow`
 2. Install the SL-GPS library - `pip install slgps`
 3. Test your installation by running any of the files in the [tests folder](tests/)
-4. The trained neural network is stored as .h5 file which can be accessed and utilized to produce reduce mechanisms for any given composition, temperature and pressure.
+4. The trained neural network is stored as .h5 file which can be accessed and utilized to produce reduced mechanisms for any given composition, temperature and pressure.
 
 NOTE: The default neural network architecture is 16x8 (2 hidden layers). To change the neural network architecture, go to the [file](/src/slgps/mech_train.py) and edit the function spec_train according to your needs.
 
