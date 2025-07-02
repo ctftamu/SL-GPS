@@ -1,7 +1,7 @@
 # Simple steps to get started
 
 1. Install basic libraries - `pip install matplotlib cantera tensorflow`
-2. Install the SL-GPS library - `pip install slgps`
+2. Install the SL-GPS library - `pip install "git+https://github.com/ctftamu/SL-GPS.git"`
 3. Test your installation by running any of the files in the [tests folder](tests/)
 4. The trained neural network is stored as .h5 file which can be accessed and utilized to produce reduced mechanisms for any given composition, temperature and pressure.
 
