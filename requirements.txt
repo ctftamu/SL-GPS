@@ -1,0 +1,7 @@
+matplotlib
+tensorflow
+"cantera==2.6.0"
+"numpy==1.26.4"
+networkx
+scikit-learn
+"git+https://github.com/ctftamu/SL-GPS.git"
