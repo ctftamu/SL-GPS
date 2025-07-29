@@ -4,19 +4,28 @@
    ```
    pip install matplotlib tensorflow
    ```
-3. Install cantera libraries
+2. Install cantera libraries
    ```
    pip install --no-cache-dir "cantera==2.6.0"
    ```
-5. Install numpy
+3. Install numpy
    ```
    pip install "numpy==1.26.4"
    ```
-7. Install networkx (for parallel compute) - `pip install networkx`
-8. Install scikit - `pip install scikit-learn`
-9. Install the SL-GPS library - `pip install "git+https://github.com/ctftamu/SL-GPS.git"`
-10. Test your installation by running any of the files in the [tests folder](tests/)
-11. The trained neural network is stored as .h5 file which can be accessed and utilized to produce reduced mechanisms for any given composition, temperature and pressure.
+4. Install networkx (for parallel compute)
+   ```
+   pip install networkx
+   ```
+5. Install scikit
+   ```
+   pip install scikit-learn
+   ```
+6. Install the SL-GPS library
+   ```
+   pip install "git+https://github.com/ctftamu/SL-GPS.git"
+   ```
+7. Test your installation by running any of the files in the [tests folder](tests/)
+8. The trained neural network is stored as .h5 file which can be accessed and utilized to produce reduced mechanisms for any given composition, temperature and pressure.
 
 NOTE: The default neural network architecture is 16x8 (2 hidden layers). To change the neural network architecture, go to the [file](/src/slgps/mech_train.py) and edit the function spec_train according to your needs.
 
