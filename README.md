@@ -1,9 +1,11 @@
 # Simple steps to get started
 
-1. Install basic libraries - `pip install matplotlib cantera tensorflow`
-2. Install the SL-GPS library - `pip install "git+https://github.com/ctftamu/SL-GPS.git"`
-3. Test your installation by running any of the files in the [tests folder](tests/)
-4. The trained neural network is stored as .h5 file which can be accessed and utilized to produce reduced mechanisms for any given composition, temperature and pressure.
+1. Install basic libraries - `pip install matplotlib tensorflow`
+2. Install cantera libraries - `pip install --no-cache-dir "cantera==2.6.0"`
+3. Install numpy - `pip install "numpy==1.26.4"`
+4. Install the SL-GPS library - `pip install "git+https://github.com/ctftamu/SL-GPS.git"`
+5. Test your installation by running any of the files in the [tests folder](tests/)
+6. The trained neural network is stored as .h5 file which can be accessed and utilized to produce reduced mechanisms for any given composition, temperature and pressure.
 
 NOTE: The default neural network architecture is 16x8 (2 hidden layers). To change the neural network architecture, go to the [file](/src/slgps/mech_train.py) and edit the function spec_train according to your needs.
 
