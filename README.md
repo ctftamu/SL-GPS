@@ -26,6 +26,7 @@
    ```
 7. Test your installation by running any of the files in the [tests folder](tests/)
 8. The trained neural network is stored as .h5 file which can be accessed and utilized to produce reduced mechanisms for any given composition, temperature and pressure.
+9. Next, convert the generated .h5 file to .pb (frozen graph) to be used in OpenFOAM using the script converth5ToPb.ipynb in [tests folder](tests/).
 
 NOTE: The default neural network architecture is 16x8 (2 hidden layers). To change the neural network architecture, go to the [file](/src/slgps/mech_train.py) and edit the function spec_train according to your needs.
 
