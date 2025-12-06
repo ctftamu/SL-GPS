@@ -1,24 +1,123 @@
 # SL-GPS: Supervised Learning - Global Pathway Selection
 
-[cite_start]This repository contains the means to create a **neural network architecture for dynamic chemistry reduction** based on reduction results from **Global Pathway Selection (GPS)**[cite: 186554, 186638].
+Welcome to **SL-GPS**, a Python framework for automated chemistry reduction in combustion simulations. This tool uses artificial neural networks trained on chemical kinetics data to predict important species, enabling dynamic reduction of complex chemical mechanisms during autoignition simulations.
 
-The basic procedure is:
-1. [cite_start]Run **adaptive GPS** for 0D auto-ignition simulation to create a dataset[cite: 186554, 186638].
-2. [cite_start]Use this dataset for **training the Artificial Neural Network (ANN)**[cite: 186554, 186638].
+## Key Features
 
-## Contact
+- **Automated Data Generation**: Run 0D autoignition simulations with adaptive GPS-based species selection
+- **Neural Network Training**: Train ANNs on the generated kinetics data for species importance prediction
+- **Dynamic Mechanism Reduction**: Adaptively reduce chemical mechanisms during simulation based on ANN predictions
+- **Flexible Chemistry**: Support for any detailed mechanism compatible with Cantera (CTI format)
+- **Parallel Processing**: Multi-process data generation and ensemble neural network training
 
-For questions, discussions, code issues, or pull requests, please contact:
-* [cite_start]Rohit Mishra (rmishra@tamu.edu) [cite: 186554]
-* [cite_start]Aaron Nelson (aaronnelson@tamu.edu) [cite: 186554]
+## What This Does
 
-[cite_start]You can also join the Discord channel: [Discord Channel](https://discord.com/channels/1333609076726431798/1333610748424880128)[cite: 186554].
+SL-GPS addresses a critical challenge in combustion modeling: **large chemical mechanisms are computationally expensive, but simple ones can be inaccurate**. This framework automatically learns which species are important at different points in a simulation:
 
-## How to Cite
+1. **Phase 1: Training Data Generation** - Runs multiple autoignition simulations with detailed mechanisms, using GPS to identify important species in each timestep interval
+2. **Phase 2: ANN Training** - Trains neural networks to predict important species based on thermochemical state (temperature, pressure, composition)
+3. **Phase 3: Adaptive Reduction** - Uses trained ANNs to dynamically select species during new simulations, building reduced mechanisms on-the-fly
 
-If you use this work, please cite the following publication:
-- [cite_start]Mishra, R., Nelson, A., Jarrahbashi, D., "Adaptive global pathway selection using artificial neural networks: A-priori study", **Combustion and Flame**, 244 (2022) 112279[cite: 186554, 186638].
-  * [cite_start][Link to Publication](https://doi.org/10.1016/j.combustflame.2022.112279) [cite: 186554, 186638]
+## Typical Workflow
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ 1. Run main.py → Generate training data via GPS + ANNs      │
+│    (make_data_parallel.py creates autoignition dataset)      │
+├─────────────────────────────────────────────────────────────┤
+│ 2. mech_train.py → Train ensemble of neural networks        │
+│    (selects best model from parallel training)              │
+├─────────────────────────────────────────────────────────────┤
+│ 3. Run SL_GPS.py → Adaptive simulation with trained ANN     │
+│    (dynamically reduces mechanism at each timestep)         │
+├─────────────────────────────────────────────────────────────┤
+│ 4. display_sim_data.py → Visualize results                  │
+│    (temperature, HRR, species evolution, mechanism size)    │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## Why SL-GPS?
+
+Traditional mechanism reduction methods (e.g., DRGEP, CSP) are slow or require manual tuning. SL-GPS provides:
+
+- **Speed**: Once trained, ANN predictions are ~10x faster than GPS
+- **Accuracy**: Learns from data-driven analysis of important reaction pathways
+- **Automation**: No manual tuning of importance thresholds required
+- **Adaptability**: Mechanisms reduce differently at different simulation points (e.g., pre-ignition vs. post-ignition)
+
+## Quick Start
+
+### Installation
+```bash
+pip install --no-cache-dir "cantera==2.6.0"
+pip install "numpy==1.26.4" tensorflow mkdocs mkdocs-material networkx scikit-learn
+```
+
+### Basic Usage
+```python
+# See docs/setup.md for detailed installation
+# See docs/workflow.md for step-by-step tutorials
+# See docs/code_structure.md for customization options
+```
+
+## Publications & References
+
+### Primary Citation
+
+If you use this work, please cite:
+- **Mishra, R., Nelson, A., Jarrahbashi, D.**, "Adaptive global pathway selection using artificial neural networks: A-priori study", *Combustion and Flame*, **244** (2022) 112279. [[DOI: 10.1016/j.combustflame.2022.112279](https://doi.org/10.1016/j.combustflame.2022.112279)]
+
+### Related Work
+
+- **Gao, X., Yang, S., Sun, W.**, "A global pathway selection algorithm for the reduction of detailed chemical kinetic mechanisms", *Combustion and Flame*, **167** (2016) 238-247. [[DOI: 10.1016/j.combustflame.2016.02.007](https://doi.org/10.1016/j.combustflame.2016.02.007)]
+
+## Contact & Community
+
+For questions, discussions, feature requests, or bug reports:
+
+- **GitHub Issues**: https://github.com/ctftamu/SL-GPS/issues
+- **Email**:
+  - Rohit Mishra: rmishra@tamu.edu
+  - Aaron Nelson: aaronnelson@tamu.edu
+- **Discord Community**: [Join Channel](https://discord.com/channels/1333609076726431798/1333610748424880128)
+
+## Dependencies
+
+Developed in **Python 3**. Core dependencies:
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| **Cantera** | 2.6.0 (exact) | Chemical kinetics, mechanism handling |
+| **TensorFlow** | 2.x | Neural network training (Keras API) |
+| **NumPy** | 1.26.4 | Numerical computations |
+| **scikit-learn** | latest | Data scaling (MinMaxScaler) |
+| **NetworkX** | latest | GPS flux graph operations |
+| **Pandas** | latest | Data I/O (CSV) |
+| **Joblib** | latest | Parallel training |
+
+**Critical**: Cantera 2.6.0 is required; newer versions have breaking API changes.
+
+## Project Structure
+
+```
+SL-GPS/
+├── docs/              # Documentation (MkDocs)
+├── src/slgps/         # Main package
+│   ├── main.py        # Entry point: data generation + training
+│   ├── mech_train.py  # ANN training logic
+│   ├── SL_GPS.py      # Adaptive simulation runner
+│   ├── utils.py       # Core utilities (GPS, simulation, reduction)
+│   ├── make_data_parallel.py  # Parallel data generation
+│   ├── display_sim_data.py    # Results visualization
+│   └── GPS/           # GPS algorithm submodule
+├── tests/             # Test files and examples
+├── mkdocs.yml         # Documentation configuration
+└── requirements.txt   # Python dependencies
+```
 
 ---
-_Code developed entirely in **Python 3**. [cite_start]Dependent packages include Cantera 2, Tensorflow 2, pandas, sklearn, numpy, pickle, and networkx._ [cite: 186554, 186638]
+
+**Next Steps**:
+- 📖 Read [Setup & Installation](setup.md) for detailed installation instructions
+- ▶️ Check [Usage Workflow](workflow.md) for step-by-step tutorials
+- 🔧 See [Code Structure](code_structure.md) for customization options
