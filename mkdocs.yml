@@ -1,6 +1,6 @@
 site_name: SL-GPS Documentation
 site_description: Supervised Learning for Dynamic Chemistry Reduction based on Global Pathway Selection
-repo_url: https://github.com/ctftamu/SL-GPS # Assuming this URL based on pyproject.toml
+repo_url: https://github.com/ctftamu/SL-GPS
 site_author: Rohit Mishra, Aaron Nelson
 nav:
     - Home: index.md
