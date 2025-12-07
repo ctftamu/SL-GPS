@@ -47,13 +47,33 @@ Traditional mechanism reduction methods (e.g., DRGEP, CSP) are slow or require m
 
 ## Quick Start
 
+### 🚀 Launch the GUI (Recommended)
+
+The fastest way to get started is with the built-in Gradio GUI:
+
+```bash
+pip install -r frontend/requirements.txt
+python -m frontend
+```
+
+This opens a browser interface where you can:
+- Upload a Cantera mechanism file
+- Configure simulation parameters
+- Generate training datasets with one click
+- Train neural networks with customizable architecture
+- Download trained models
+
+**→ [GUI Documentation](frontend.md)**
+
+---
+
 ### Installation
 ```bash
 pip install --no-cache-dir "cantera==2.6.0"
 pip install "numpy==1.26.4" tensorflow mkdocs mkdocs-material networkx scikit-learn
 ```
 
-### Basic Usage
+### Manual Usage (Script-Based)
 ```python
 # See docs/setup.md for detailed installation
 # See docs/workflow.md for step-by-step tutorials
