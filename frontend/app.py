@@ -15,12 +15,30 @@ import shutil
 from pathlib import Path
 from typing import Tuple, Dict, Any
 import traceback
+import sys
+
+# Ensure local `src/` is on sys.path so `slgps` package imports work when running
+# the frontend from the repository root (e.g. `python -m frontend`). This helps
+# avoid NameError when backend functions aren't importable.
+try:
+    repo_root = Path(__file__).resolve().parents[1]
+    src_path = str(repo_root / "src")
+    if src_path not in sys.path:
+        sys.path.insert(0, src_path)
+except Exception:
+    pass
+
+# Backend placeholders (will be overwritten if imports succeed)
+make_data_parallel = None
+make_model = None
 
 try:
     from slgps.make_data_parallel import make_data_parallel
     from slgps.mech_train import make_model
-except ImportError:
-    print("Warning: SL-GPS not installed. Some features may not work.")
+except Exception:
+    # Print a helpful warning — the GUI can still start, but dataset generation
+    # and training features will return a clear error message in the UI.
+    print("Warning: SL-GPS backend not importable. Dataset generation and training will be disabled in the GUI.")
 
 
 # Global state to track progress
@@ -82,6 +100,14 @@ def generate_dataset(
         # Copy mechanism file
         shutil.copy(mechanism_file.name, mech_path)
         
+        # Guard: ensure backend function is available
+        if make_data_parallel is None:
+            return "", (
+                "Error: backend `make_data_parallel` not available.\n"
+                "Run the frontend from the repository root so the `src/` package is importable, "
+                "or install the package (e.g. `pip install -e .`)."
+            )
+
         # Call data generation
         status = f"Generating dataset with {n_cases} simulations...\n"
         status += f"Fuel: {fuel_species}, T: {temp_min}-{temp_max}K, P: {pressure_min}-{pressure_max} log(atm)\n"
