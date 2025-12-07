@@ -8,6 +8,7 @@ nav:
     - Usage Workflow: workflow.md
     - Code Structure: code_structure.md
     - API Reference: api.md
+    - Frontend GUI: frontend.md
 theme:
     name: material
     features:
