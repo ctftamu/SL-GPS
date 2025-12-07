@@ -7,6 +7,7 @@ import random
 from slgps.utils import findIgnInterval, GPS_spec, findTimeIndex, auto_ign_build_X0
 import os
 import multiprocessing
+import traceback
 
 def process_simulation(sim_data):
   try:    
@@ -121,6 +122,26 @@ def make_data_parallel(fuel, mech_file, end_threshold, ign_HRR_threshold_div, ig
     X0_values = []
 
     # Generate random values for each case
+    # If species_ranges is empty, create a sensible default composition using fuel/O2/N2
+    if not species_ranges:
+        # prefer common names if present in mechanism; fall back to any species
+        soln_species = soln_in.species_names
+        default_ranges = {}
+        if fuel in soln_species:
+            default_ranges[fuel] = [0.05, 0.05]
+        if 'O2' in soln_species:
+            default_ranges['O2'] = [0.21, 0.21]
+        if 'N2' in soln_species:
+            default_ranges['N2'] = [0.74, 0.74]
+        # If none of the common species exist, use the first species as fuel-like
+        if not default_ranges:
+            if len(soln_species) >= 3:
+                default_ranges = {soln_species[0]: [0.05, 0.05], soln_species[1]: [0.21, 0.21], soln_species[2]: [0.74, 0.74]}
+            else:
+                # fallback single-species composition
+                default_ranges = {soln_species[0]: [1.0, 1.0]}
+        species_ranges = default_ranges
+
     for _ in range(n_cases):
         species_values = {}
 
@@ -131,8 +152,14 @@ def make_data_parallel(fuel, mech_file, end_threshold, ign_HRR_threshold_div, ig
 
         # Normalize the values to ensure they sum up to 1
         total_value = sum(species_values.values())
-        for species in species_values.keys():
-            species_values[species] /= total_value
+        if total_value <= 0:
+            # fallback to equal fractions
+            n_sp = len(species_values)
+            for species in species_values.keys():
+                species_values[species] = 1.0 / max(1, n_sp)
+        else:
+            for species in list(species_values.keys()):
+                species_values[species] /= total_value
 
         # Convert the values to the desired string format and append to the list
         X0 = ', '.join([f'{species}:{value:.5f}' for species, value in species_values.items()])
@@ -210,9 +237,8 @@ def make_data_parallel(fuel, mech_file, end_threshold, ign_HRR_threshold_div, ig
     #print(delete_arr)
     new_bin_array = np.delete(concatenated_bin_array, delete_arr, 1)
     #print(new_bin_array)
-    #Mechanism contains 128 species and 957 reactions (MILD combustion)
-    det_spec_nums = np.arange(0, 53, dtype=int)
-    #det_spec_nums = np.arange(0, 128, dtype=int)
+    # Mechanism species indices based on actual mechanism length
+    det_spec_nums = np.arange(0, len(det_spec_strs), dtype=int)
     det_spec_nums = np.delete(det_spec_nums, delete_arr) 
 
     #Create headers for binary list csv
