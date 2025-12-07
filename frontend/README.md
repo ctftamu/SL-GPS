@@ -114,6 +114,16 @@ gradio frontend/app.py
 | **Neurons per Layer** | Nodes in each hidden layer | 16 | 4-256 |
 | **Learning Rate** | Training step size | 0.001 | 0.0001-0.1 |
 
+### Parallel Training (New)
+
+The frontend provides a `Number of Processes` slider in the **Train Neural Network** tab. This controls how many parallel workers are used when training the ensemble of ANNs (the backend uses `joblib.Parallel`).
+
+- Set to `1` for sequential execution or local debugging.
+- Set to a higher value (e.g., `8`, `16`, `28`) to use more CPU cores and speed up ensemble training. The backend default is `28` for large/cluster runs.
+
+Ensure your machine has sufficient CPU cores and memory before increasing this value.
+
+
 ## Customizing Neural Network Architecture
 
 The GUI shows layer/neuron controls, but to apply custom architectures, you need to edit the backend:

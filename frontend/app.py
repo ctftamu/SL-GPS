@@ -126,6 +126,7 @@ def train_neural_network(
     n_hidden_layers: int,
     neurons_per_layer: int,
     learning_rate: float = 0.001,
+    num_processes: int = 1,
 ) -> Tuple[str, str]:
     """
     Train neural network for species importance prediction.
@@ -158,16 +159,19 @@ def train_neural_network(
         status = f"Training neural network...\n"
         status += f"Hidden layers: {n_hidden_layers}\n"
         status += f"Neurons per layer: {neurons_per_layer}\n"
+        status += f"Num processes: {num_processes}\n"
         status += f"Input species: {', '.join(input_specs)}\n"
         status += f"Data path: {data_path}\n\n"
         
-        # Note: NN architecture customization requires modifying mech_train.py
-        # For now, we'll use default architecture and show user how to customize
+        # Call make_model with GUI-selected architecture parameters
         make_model(
             input_specs=input_specs,
             data_path=data_path,
             scaler_path=scaler_path,
-            model_path=model_path
+            model_path=model_path,
+            num_hidden_layers=int(n_hidden_layers),
+            neurons_per_layer=int(neurons_per_layer),
+            num_processes=max(1, int(num_processes))
         )
         
         app_state["model_path"] = model_path
@@ -176,8 +180,8 @@ def train_neural_network(
         status += f"\n✅ Neural network trained successfully!\n"
         status += f"Model saved to: {model_path}\n"
         status += f"Scaler saved to: {scaler_path}\n\n"
-        status += f"⚠️ Note: Current implementation uses default architecture (16 neurons, 1 hidden layer).\n"
-        status += f"To customize layers and neurons, edit src/slgps/mech_train.py::spec_train() function.\n"
+        status += f"✅ Architecture applied: {int(n_hidden_layers)} hidden layers, {int(neurons_per_layer)} neurons/layer.\n"
+        status += f"✅ Training processes used: {int(num_processes)}\n"
         
         app_state["status"] = "NN trained"
         return status, ""
@@ -391,6 +395,15 @@ def create_gradio_interface():
                 step=0.0001,
                 info="How fast the network learns (smaller = slower but more stable)"
             )
+
+            num_processes = gr.Slider(
+                label="Number of Processes",
+                minimum=1,
+                maximum=64,
+                value=1,
+                step=1,
+                info="Parallel training workers (set to 1 for sequential / debugging)"
+            )
             
             gr.Markdown(
                 """
@@ -425,7 +438,7 @@ def create_gradio_interface():
             # Callback
             train_button.click(
                 fn=train_neural_network,
-                inputs=[input_species_string, n_hidden_layers, neurons_per_layer, learning_rate],
+                inputs=[input_species_string, n_hidden_layers, neurons_per_layer, learning_rate, num_processes],
                 outputs=[train_status, train_error]
             )
         
