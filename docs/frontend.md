@@ -83,6 +83,7 @@ The GUI opens automatically in your default browser at `http://localhost:7860`
 
 3. **Click Train**
    - Trains ensemble of ANNs in parallel
+   - **Number of Processes**: Use the new slider to control parallel training workers. Set to `1` for sequential runs or debugging, higher values (e.g., 8, 16, 28) to use more CPU cores. The backend `make_model(..., num_processes=...)` accepts this value.
    - Selects best model by validation loss
    - Outputs:
      - `model.h5` - Trained Keras model
@@ -153,6 +154,7 @@ Integrated help and API reference directly in the GUI.
 | **Hidden Layers** | Network depth | 1-5 | 2 |
 | **Neurons** | Layer capacity | 4-256 | 16 |
 | **Learning Rate** | Training speed | 0.0001-0.1 | 0.001 |
+| **Number of Processes** | Parallel training workers (controls `joblib.Parallel`) | 1-64 | 1 |
 
 ## Common Workflows
 
@@ -205,6 +207,7 @@ See [API Reference](api.md) for details.
 
 - **Faster iteration**: Start with 10-20 cases instead of 100
 - **Parallel training**: Ensure CPU cores available
+ - **Parallel training**: Ensure CPU cores available. Use the `Number of Processes` slider in the GUI to control how many parallel workers `make_model()` launches (default in code is 28 for large runs; GUI default is 1 for safe local testing).
 - **GPU training**: Install `tensorflow[and-cuda]` for 10-100x speedup
 - **Storage**: Use SSD for faster I/O during data generation
 
