@@ -47,9 +47,21 @@ Traditional mechanism reduction methods (e.g., DRGEP, CSP) are slow or require m
 
 ## Quick Start
 
-### 🚀 Launch the GUI (Recommended)
+### 🌐 Try Online (No Installation Required)
 
-The fastest way to get started is with the built-in Gradio GUI:
+**[Launch SL-GPS GUI on Hugging Face Spaces](https://huggingface.co/spaces/ctftamu/SL-GPS)** - The frontend is deployed and ready to use directly in your browser!
+
+<iframe
+  src="https://huggingface.co/spaces/ctftamu/SL-GPS/embed"
+  frameborder="0"
+  width="100%"
+  height="1200"
+  style="border-radius: 8px; margin: 20px 0;"
+></iframe>
+
+### 🚀 Or Launch Locally
+
+Alternatively, run it locally with the built-in Gradio GUI:
 
 ```bash
 pip install -r frontend/requirements.txt
