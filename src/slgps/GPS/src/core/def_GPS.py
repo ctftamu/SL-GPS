@@ -120,9 +120,9 @@ def GPS_algo(soln, flux_graph, source, target, path_save=None, \
     in_deg = flux_graph.in_degree(weight='flux')
     out_deg = flux_graph.out_degree(weight='flux')
 
-    if normal is 'source':
+    if normal == 'source':
         norm_deg = out_deg[source]
-    elif normal is 'max':
+    elif normal == 'max':
         try:
             norm_deg = max([max([v for k, v in out_deg]), max([v for k, v in in_deg])])
         except:
