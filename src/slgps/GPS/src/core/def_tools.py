@@ -144,9 +144,9 @@ def avg_mole_per_sec(raw, start_point=0, end_point='eq', constV=False):
             mole_per_sec = rr[i_start, :] * float(V[i_start])
             return np.transpose(mole_per_sec)
     else:
-        if end_point is 'ign':
+        if end_point == 'ign':
             T_end = T[0] + 400
-        elif end_point is 'eq':
+        elif end_point == 'eq':
             T_end = T[-1] - 50
         i_end = np.argmin(abs(T - T_end))
 
