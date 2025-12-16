@@ -29,6 +29,30 @@ try:
 except ImportError:
     pass
 
+# Monkey-patch gradio_client to fix json_schema_to_python_type error
+# This function has a bug where it doesn't handle all schema types properly
+try:
+    import gradio_client.utils as client_utils
+    original_get_type = None
+    
+    def patched_get_type(schema):
+        """Patched version that handles bool schemas gracefully"""
+        if isinstance(schema, bool):
+            # If schema is a boolean (e.g., True or False), return a generic type
+            return "Any"
+        
+        # Call original logic for non-bool schemas
+        if original_get_type:
+            return original_get_type(schema)
+        return "Any"
+    
+    # Store original and replace
+    if hasattr(client_utils, 'get_type'):
+        original_get_type = client_utils.get_type
+        client_utils.get_type = patched_get_type
+except (ImportError, AttributeError):
+    pass
+
 # Add src directory to path so slgps package is importable
 repo_root = Path(__file__).resolve().parent
 src_path = str(repo_root / "src")
