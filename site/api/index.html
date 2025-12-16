@@ -1,0 +1,1771 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Supervised Learning for Dynamic Chemistry Reduction based on Global Pathway Selection">
+      
+      
+        <meta name="author" content="Rohit Mishra, Aaron Nelson">
+      
+      
+      
+        <link rel="prev" href="../code_structure/">
+      
+      
+        <link rel="next" href="../frontend/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>API Reference - SL-GPS Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.618322db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#api-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="SL-GPS Documentation" class="md-header__button md-logo" aria-label="SL-GPS Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SL-GPS Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ctftamu/SL-GPS" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../setup/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Setup & Installation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Usage Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../code_structure/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Code Structure
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  API Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../frontend/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Frontend GUI
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="SL-GPS Documentation" class="md-nav__button md-logo" aria-label="SL-GPS Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SL-GPS Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ctftamu/SL-GPS" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup & Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../code_structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Code Structure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#core-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Modules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Modules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mainpy-training-pipeline-entry-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        main.py - Training Pipeline Entry Point
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make_data_parallelpy-training-data-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        make_data_parallel.py - Training Data Generation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="make_data_parallel.py - Training Data Generation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#make_data_parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        make_data_parallel()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process_simulation-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        process_simulation() (internal)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mech_trainpy-neural-network-training" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mech_train.py - Neural Network Training
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="mech_train.py - Neural Network Training">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#spec_train" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        spec_train()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make_model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        make_model()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sl_gpspy-adaptive-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SL_GPS.py - Adaptive Simulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilspy-core-utilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        utils.py - Core Utilities
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="utils.py - Core Utilities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#auto_ign_build_sl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        auto_ign_build_SL()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sub_mech" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sub_mech()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gps_spec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GPS_spec()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#findigninterval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        findIgnInterval()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find_ign_delay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        find_ign_delay()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auto_ign_build_x0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        auto_ign_build_X0()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-1-generate-training-data-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 1: Generate Training Data Only
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-2-train-ann-on-existing-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 2: Train ANN on Existing Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-3-run-adaptive-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 3: Run Adaptive Simulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Formats
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File Formats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#datacsv-state-vectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        data.csv (State Vectors)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#speciescsv-binary-masks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        species.csv (Binary Masks)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Tips
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debugging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debugging
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../frontend/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Frontend GUI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#core-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Modules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Modules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mainpy-training-pipeline-entry-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        main.py - Training Pipeline Entry Point
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make_data_parallelpy-training-data-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        make_data_parallel.py - Training Data Generation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="make_data_parallel.py - Training Data Generation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#make_data_parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        make_data_parallel()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process_simulation-internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        process_simulation() (internal)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mech_trainpy-neural-network-training" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mech_train.py - Neural Network Training
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="mech_train.py - Neural Network Training">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#spec_train" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        spec_train()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make_model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        make_model()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sl_gpspy-adaptive-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SL_GPS.py - Adaptive Simulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilspy-core-utilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        utils.py - Core Utilities
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="utils.py - Core Utilities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#auto_ign_build_sl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        auto_ign_build_SL()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sub_mech" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sub_mech()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gps_spec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GPS_spec()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#findigninterval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        findIgnInterval()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find_ign_delay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        find_ign_delay()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auto_ign_build_x0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        auto_ign_build_X0()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-1-generate-training-data-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 1: Generate Training Data Only
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-2-train-ann-on-existing-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 2: Train ANN on Existing Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-3-run-adaptive-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 3: Run Adaptive Simulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Formats
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File Formats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#datacsv-state-vectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        data.csv (State Vectors)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#speciescsv-binary-masks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        species.csv (Binary Masks)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Tips
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debugging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debugging
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="api-reference">API Reference<a class="headerlink" href="#api-reference" title="Permanent link">&para;</a></h1>
+<p>This page documents the key functions and modules in SL-GPS.</p>
+<h2 id="core-modules">Core Modules<a class="headerlink" href="#core-modules" title="Permanent link">&para;</a></h2>
+<h3 id="mainpy-training-pipeline-entry-point"><code>main.py</code> - Training Pipeline Entry Point<a class="headerlink" href="#mainpy-training-pipeline-entry-point" title="Permanent link">&para;</a></h3>
+<p>Main orchestration script that coordinates data generation and ANN training.</p>
+<p><strong>Key Variables</strong> (edit these to customize your run):</p>
+<div class="codehilite"><pre><span></span><code><span class="n">fuel</span> <span class="o">=</span> <span class="s1">&#39;CH4&#39;</span>  <span class="c1"># Fuel species name</span>
+<span class="n">mech_file</span> <span class="o">=</span> <span class="s1">&#39;gri30.cti&#39;</span>  <span class="c1"># Detailed mechanism file (Cantera CTI format)</span>
+<span class="n">n_cases</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># Number of training simulations</span>
+<span class="n">t_rng</span> <span class="o">=</span> <span class="p">[</span><span class="mi">800</span><span class="p">,</span> <span class="mi">2300</span><span class="p">]</span>  <span class="c1"># Temperature range (K)</span>
+<span class="n">p_rng</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.1</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">]</span>  <span class="c1"># Pressure range (log atm)</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.001</span>  <span class="c1"># GPS error tolerance (smaller = more species)</span>
+<span class="n">always_threshold</span> <span class="o">=</span> <span class="mf">0.99</span>  <span class="c1"># Species in &gt;99% of cases (always included)</span>
+<span class="n">never_threshold</span> <span class="o">=</span> <span class="mf">0.01</span>  <span class="c1"># Species in &lt;1% of cases (never included)</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="s1">&#39;TrainingData/MyData&#39;</span>  <span class="c1"># Where to save generated data</span>
+<span class="n">model_path</span> <span class="o">=</span> <span class="s1">&#39;Models/MyModel.h5&#39;</span>  <span class="c1"># Where to save trained ANN</span>
+<span class="n">scaler_path</span> <span class="o">=</span> <span class="s1">&#39;Scalers/MyScaler.pkl&#39;</span>  <span class="c1"># Where to save input scaler</span>
+</code></pre></div>
+
+<p><strong>Workflow</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># If data doesn&#39;t exist, generate it</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data_path</span><span class="p">):</span>
+        <span class="n">make_data_parallel</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>  <span class="c1"># Generates data.csv and species.csv</span>
+
+    <span class="c1"># Train neural network on the data</span>
+    <span class="n">make_model</span><span class="p">(</span><span class="n">input_specs</span><span class="p">,</span> <span class="n">data_path</span><span class="p">,</span> <span class="n">scaler_path</span><span class="p">,</span> <span class="n">model_path</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h3 id="make_data_parallelpy-training-data-generation"><code>make_data_parallel.py</code> - Training Data Generation<a class="headerlink" href="#make_data_parallelpy-training-data-generation" title="Permanent link">&para;</a></h3>
+<p>Generates autoignition simulation data using parallel processing and GPS-based species selection.</p>
+<h4 id="make_data_parallel"><code>make_data_parallel()</code><a class="headerlink" href="#make_data_parallel" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">make_data_parallel</span><span class="p">(</span>
+    <span class="n">fuel</span><span class="p">,</span> <span class="n">mech_file</span><span class="p">,</span> <span class="n">end_threshold</span><span class="p">,</span> <span class="n">ign_HRR_threshold_div</span><span class="p">,</span>
+    <span class="n">ign_GPS_resolution</span><span class="p">,</span> <span class="n">norm_GPS_resolution</span><span class="p">,</span> <span class="n">GPS_per_interval</span><span class="p">,</span>
+    <span class="n">n_cases</span><span class="p">,</span> <span class="n">t_rng</span><span class="p">,</span> <span class="n">p_rng</span><span class="p">,</span> <span class="n">phi_rng</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span>
+    <span class="n">always_threshold</span><span class="p">,</span> <span class="n">never_threshold</span><span class="p">,</span> <span class="n">pathname</span><span class="p">,</span> <span class="n">species_ranges</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Purpose</strong>: Run <code>n_cases</code> autoignition simulations with randomized initial conditions, apply GPS to identify important species at each interval, and save state vectors and species masks.</p>
+<p><strong>Parameters</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fuel</code></td>
+<td>str</td>
+<td>Fuel species name</td>
+<td><code>'CH4'</code></td>
+</tr>
+<tr>
+<td><code>mech_file</code></td>
+<td>str</td>
+<td>Cantera mechanism file</td>
+<td><code>'gri30.cti'</code></td>
+</tr>
+<tr>
+<td><code>end_threshold</code></td>
+<td>float</td>
+<td>HRR threshold to end simulation (J/m³s)</td>
+<td><code>2e5</code></td>
+</tr>
+<tr>
+<td><code>ign_HRR_threshold_div</code></td>
+<td>int</td>
+<td>Divisor for max HRR to define ignition</td>
+<td><code>300</code></td>
+</tr>
+<tr>
+<td><code>ign_GPS_resolution</code></td>
+<td>int</td>
+<td>Timesteps per interval during ignition</td>
+<td><code>200</code></td>
+</tr>
+<tr>
+<td><code>norm_GPS_resolution</code></td>
+<td>int</td>
+<td>Timesteps per interval post-ignition</td>
+<td><code>40</code></td>
+</tr>
+<tr>
+<td><code>GPS_per_interval</code></td>
+<td>int</td>
+<td>GPS evaluation points per interval</td>
+<td><code>4</code></td>
+</tr>
+<tr>
+<td><code>n_cases</code></td>
+<td>int</td>
+<td>Number of simulations to run</td>
+<td><code>100</code></td>
+</tr>
+<tr>
+<td><code>t_rng</code></td>
+<td>list</td>
+<td>Temperature range [min, max] (K)</td>
+<td><code>[800, 2300]</code></td>
+</tr>
+<tr>
+<td><code>p_rng</code></td>
+<td>list</td>
+<td>Log pressure range [min, max] (atm)</td>
+<td><code>[2.1, 2.5]</code></td>
+</tr>
+<tr>
+<td><code>phi_rng</code></td>
+<td>list</td>
+<td>Equivalence ratio range (not used if species_ranges set)</td>
+<td><code>[0.6, 1.4]</code></td>
+</tr>
+<tr>
+<td><code>alpha</code></td>
+<td>float</td>
+<td>GPS pathway threshold (smaller = more species)</td>
+<td><code>0.001</code></td>
+</tr>
+<tr>
+<td><code>always_threshold</code></td>
+<td>float</td>
+<td>Species occurrence threshold for "always include"</td>
+<td><code>0.99</code></td>
+</tr>
+<tr>
+<td><code>never_threshold</code></td>
+<td>float</td>
+<td>Species occurrence threshold for "never include"</td>
+<td><code>0.01</code></td>
+</tr>
+<tr>
+<td><code>pathname</code></td>
+<td>str</td>
+<td>Output directory for data</td>
+<td><code>'TrainingData/Data'</code></td>
+</tr>
+<tr>
+<td><code>species_ranges</code></td>
+<td>dict</td>
+<td>Species composition ranges</td>
+<td><code>{'CH4': (0, 1), 'O2': (0, 0.4)}</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Outputs</strong>:
+- <code>pathname/data.csv</code> - State vectors: [Temperature, Pressure, species mole fractions]
+- <code>pathname/species.csv</code> - Binary masks: 1 if species important in that timestep
+- <code>pathname/always_spec_nums.csv</code> - Indices of always-included species
+- <code>pathname/never_spec_nums.csv</code> - Indices of never-included species</p>
+<p><strong>Example</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">make_data_parallel</span><span class="p">(</span>
+    <span class="n">fuel</span><span class="o">=</span><span class="s1">&#39;CH4&#39;</span><span class="p">,</span> <span class="n">mech_file</span><span class="o">=</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">,</span> <span class="n">end_threshold</span><span class="o">=</span><span class="mf">2e5</span><span class="p">,</span>
+    <span class="n">ign_HRR_threshold_div</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">ign_GPS_resolution</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+    <span class="n">norm_GPS_resolution</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">GPS_per_interval</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">n_cases</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">t_rng</span><span class="o">=</span><span class="p">[</span><span class="mi">800</span><span class="p">,</span> <span class="mi">2300</span><span class="p">],</span> <span class="n">p_rng</span><span class="o">=</span><span class="p">[</span><span class="mf">2.1</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">],</span> <span class="n">phi_rng</span><span class="o">=</span><span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">1.4</span><span class="p">],</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">always_threshold</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">never_threshold</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+    <span class="n">pathname</span><span class="o">=</span><span class="s1">&#39;TrainingData/CH4_data&#39;</span><span class="p">,</span> <span class="n">species_ranges</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;CH4&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;N2&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="s1">&#39;O2&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<h4 id="process_simulation-internal"><code>process_simulation()</code> (internal)<a class="headerlink" href="#process_simulation-internal" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">process_simulation</span><span class="p">(</span><span class="n">sim_data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span>
+</code></pre></div>
+
+<p>Internal function called by joblib.Parallel for each simulation. Returns state vectors and species masks for one autoignition run.</p>
+<hr />
+<h3 id="mech_trainpy-neural-network-training"><code>mech_train.py</code> - Neural Network Training<a class="headerlink" href="#mech_trainpy-neural-network-training" title="Permanent link">&para;</a></h3>
+<p>Trains ensemble of ANNs to predict important species based on thermochemical state.</p>
+<h4 id="spec_train"><code>spec_train()</code><a class="headerlink" href="#spec_train" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">spec_train</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Model</span><span class="p">,</span> <span class="n">History</span><span class="p">,</span> <span class="n">History</span><span class="p">]</span>
+</code></pre></div>
+
+<p><strong>Purpose</strong>: Train a single ANN model for species prediction.</p>
+<p><strong>Parameters</strong>:
+- <code>X_train</code> (np.ndarray): Normalized input data [samples, features]
+- <code>Y_train</code> (np.ndarray): Binary target data [samples, species]</p>
+<p><strong>Returns</strong>:
+- <code>model</code> - Trained Keras model
+- <code>history</code> - Training history
+- <code>train_test_history</code> - Train/test split history</p>
+<p><strong>Default Architecture</strong>:</p>
+<div class="codehilite"><pre><span></span><code>Input Layer: [Temperature, Pressure, species mole fractions]
+  ↓
+Dense(16, activation=&#39;relu&#39;, kernel_initializer=&#39;he_normal&#39;)
+  ↓
+Dense(Y_train.shape[1], activation=&#39;sigmoid&#39;)
+  ↓
+Output Layer: [binary predictions for each species]
+</code></pre></div>
+
+<p><strong>To customize architecture, edit spec_train()</strong> before the output layer:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Current default:</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">kernel_initializer</span><span class="o">=</span><span class="s1">&#39;he_normal&#39;</span><span class="p">))</span>
+
+<span class="c1"># Example: Add deeper network</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">kernel_initializer</span><span class="o">=</span><span class="s1">&#39;he_normal&#39;</span><span class="p">))</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.2</span><span class="p">))</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">kernel_initializer</span><span class="o">=</span><span class="s1">&#39;he_normal&#39;</span><span class="p">))</span>
+</code></pre></div>
+
+<h4 id="make_model"><code>make_model()</code><a class="headerlink" href="#make_model" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">make_model</span><span class="p">(</span><span class="n">input_specs</span><span class="p">,</span> <span class="n">data_path</span><span class="p">,</span> <span class="n">scaler_path</span><span class="p">,</span> <span class="n">model_path</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Purpose</strong>: Load training data, normalize it, train ensemble of ANNs in parallel, and save best model.</p>
+<p><strong>Parameters</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input_specs</code></td>
+<td>list</td>
+<td>Species names used as ANN inputs</td>
+</tr>
+<tr>
+<td><code>data_path</code></td>
+<td>str</td>
+<td>Directory containing data.csv and species.csv</td>
+</tr>
+<tr>
+<td><code>scaler_path</code></td>
+<td>str</td>
+<td>Path to save MinMaxScaler pickle</td>
+</tr>
+<tr>
+<td><code>model_path</code></td>
+<td>str</td>
+<td>Path to save best .h5 model</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Key Settings</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">num_processes</span> <span class="o">=</span> <span class="mi">28</span>  <span class="c1"># Parallel training (configurable via `make_model(..., num_processes=...)`)</span>
+<span class="n">train_test_split</span> <span class="o">=</span> <span class="mf">0.2</span>  <span class="c1"># 80% train, 20% validation</span>
+<span class="n">early_stopping_patience</span> <span class="o">=</span> <span class="mi">30</span>  <span class="c1"># Epochs to wait for val_loss improvement</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">200</span>
+</code></pre></div>
+
+<p><strong>Workflow</strong>:
+1. Load state vectors and species masks from CSV
+2. Select only <code>input_specs</code> columns as features
+3. Normalize input using MinMaxScaler (0-1 range)
+4. Train 28 models in parallel with different random initializations
+5. Select best model by validation loss
+6. Save model as .h5 and scaler as .pkl</p>
+<p><strong>Example</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">make_model</span><span class="p">(</span>
+    <span class="n">input_specs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;CH4&#39;</span><span class="p">,</span> <span class="s1">&#39;H2O&#39;</span><span class="p">,</span> <span class="s1">&#39;OH&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">,</span> <span class="s1">&#39;CO2&#39;</span><span class="p">,</span> <span class="s1">&#39;O&#39;</span><span class="p">],</span>
+    <span class="n">data_path</span><span class="o">=</span><span class="s1">&#39;TrainingData/CH4_data&#39;</span><span class="p">,</span>
+    <span class="n">scaler_path</span><span class="o">=</span><span class="s1">&#39;Scalers/ch4_scaler.pkl&#39;</span><span class="p">,</span>
+    <span class="n">model_path</span><span class="o">=</span><span class="s1">&#39;Models/ch4_model.h5&#39;</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h3 id="sl_gpspy-adaptive-simulation"><code>SL_GPS.py</code> - Adaptive Simulation<a class="headerlink" href="#sl_gpspy-adaptive-simulation" title="Permanent link">&para;</a></h3>
+<p>Runs autoignition simulation with trained ANN dynamically reducing the mechanism.</p>
+<p><strong>Key Variables</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">fuel</span> <span class="o">=</span> <span class="s1">&#39;CH4&#39;</span>
+<span class="n">mech_file</span> <span class="o">=</span> <span class="s1">&#39;gri30.cti&#39;</span>  <span class="c1"># Detailed mechanism</span>
+<span class="n">input_specs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CH4&#39;</span><span class="p">,</span> <span class="s1">&#39;H2O&#39;</span><span class="p">,</span> <span class="s1">&#39;OH&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">,</span> <span class="s1">&#39;CO2&#39;</span><span class="p">,</span> <span class="s1">&#39;O&#39;</span><span class="p">]</span>  <span class="c1"># ANN inputs</span>
+<span class="n">scaler_path</span> <span class="o">=</span> <span class="s1">&#39;Scalers/scaler.pkl&#39;</span>  <span class="c1"># MinMaxScaler</span>
+<span class="n">model_path</span> <span class="o">=</span> <span class="s1">&#39;Models/model.h5&#39;</span>  <span class="c1"># Trained ANN</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="s1">&#39;TrainingData/Data&#39;</span>  <span class="c1"># Training data (for always/never species)</span>
+
+<span class="n">T0_in</span> <span class="o">=</span> <span class="mi">1500</span>  <span class="c1"># Initial temperature (K)</span>
+<span class="n">phi</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># Equivalence ratio</span>
+<span class="n">atm</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># Pressure (atm)</span>
+<span class="n">t_end</span> <span class="o">=</span> <span class="mf">0.002</span>  <span class="c1"># Simulation end time (s)</span>
+
+<span class="n">norm_Dt</span> <span class="o">=</span> <span class="mf">0.0002</span>  <span class="c1"># Timestep pre-ignition (s)</span>
+<span class="n">ign_Dt</span> <span class="o">=</span> <span class="mf">0.00005</span>  <span class="c1"># Timestep during ignition (s)</span>
+<span class="n">ign_threshold</span> <span class="o">=</span> <span class="mf">9e7</span>  <span class="c1"># HRR threshold to detect ignition (J/m³s)</span>
+
+<span class="n">results_path</span> <span class="o">=</span> <span class="s1">&#39;Results/results.pkl&#39;</span>  <span class="c1"># Output pickle file</span>
+</code></pre></div>
+
+<p><strong>Outputs</strong>: Pickle file containing:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+    <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="n">array</span><span class="p">,</span>  <span class="c1"># Simulation time</span>
+    <span class="s1">&#39;temperature&#39;</span><span class="p">:</span> <span class="n">array</span><span class="p">,</span>  <span class="c1"># Temperature evolution</span>
+    <span class="s1">&#39;heat_release_rate&#39;</span><span class="p">:</span> <span class="n">array</span><span class="p">,</span>  <span class="c1"># HRR evolution</span>
+    <span class="s1">&#39;mole_fractions&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>  <span class="c1"># Species compositions</span>
+    <span class="s1">&#39;mechanism_size&#39;</span><span class="p">:</span> <span class="n">array</span><span class="p">,</span>  <span class="c1"># Number of species/reactions over time</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<hr />
+<h3 id="utilspy-core-utilities"><code>utils.py</code> - Core Utilities<a class="headerlink" href="#utilspy-core-utilities" title="Permanent link">&para;</a></h3>
+<p>Low-level functions for simulation, mechanism reduction, and GPS species selection.</p>
+<h4 id="auto_ign_build_sl"><code>auto_ign_build_SL()</code><a class="headerlink" href="#auto_ign_build_sl" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">auto_ign_build_SL</span><span class="p">(</span>
+    <span class="n">fuel</span><span class="p">,</span> <span class="n">mech_file</span><span class="p">,</span> <span class="n">input_specs</span><span class="p">,</span> <span class="n">norm_Dt</span><span class="p">,</span> <span class="n">ign_Dt</span><span class="p">,</span>
+    <span class="n">T0_in</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">atm</span><span class="p">,</span> <span class="n">t_end</span><span class="p">,</span> <span class="n">scaler_path</span><span class="p">,</span> <span class="n">model_path</span><span class="p">,</span>
+    <span class="n">data_path</span><span class="p">,</span> <span class="n">ign_threshold</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span>
+</code></pre></div>
+
+<p><strong>Purpose</strong>: Run adaptive autoignition simulation with ANN-based mechanism reduction.</p>
+<p><strong>Workflow</strong>:
+1. Load trained ANN and scaler
+2. Load training data to get always/never species
+3. Start simulation at (T0_in, phi, atm)
+4. At each timestep:
+   - Get current thermochemical state
+   - Scale state and feed to ANN
+   - Get binary predictions for species
+   - Combine with always/never species
+   - Build reduced mechanism with only selected species
+   - Step simulation
+5. Switch between <code>norm_Dt</code> (slow) and <code>ign_Dt</code> (fast) based on HRR
+6. Return results dict</p>
+<h4 id="sub_mech"><code>sub_mech()</code><a class="headerlink" href="#sub_mech" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">sub_mech</span><span class="p">(</span><span class="n">mech_file</span><span class="p">,</span> <span class="n">species_names</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span>
+</code></pre></div>
+
+<p><strong>Purpose</strong>: Build a reduced Cantera solution with only specified species and their reactions.</p>
+<p><strong>Parameters</strong>:
+- <code>mech_file</code> - Path to detailed CTI mechanism
+- <code>species_names</code> - List of species to keep (must match Cantera names exactly)</p>
+<p><strong>Returns</strong>: Cantera Solution object with reduced mechanism</p>
+<p><strong>Key Logic</strong>:
+- Keeps only reactions where ALL reactants and products are in species_names
+- Removes reactions involving excluded species</p>
+<h4 id="gps_spec"><code>GPS_spec()</code><a class="headerlink" href="#gps_spec" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">GPS_spec</span><span class="p">(</span>
+    <span class="n">soln_in</span><span class="p">,</span> <span class="n">fuel</span><span class="p">,</span> <span class="n">raw</span><span class="p">,</span> <span class="n">t_start</span><span class="p">,</span> <span class="n">t_end</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">GPS_per_interval</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span>
+</code></pre></div>
+
+<p><strong>Purpose</strong>: Apply GPS algorithm to identify important species in a simulation interval.</p>
+<p><strong>Parameters</strong>:
+- <code>soln_in</code> - Cantera solution object
+- <code>fuel</code> - Fuel species name
+- <code>raw</code> - Raw simulation data (time, T, P, X)
+- <code>t_start</code>, <code>t_end</code> - Time interval (s)
+- <code>alpha</code> - GPS pathway threshold (smaller = more species)
+- <code>GPS_per_interval</code> - Number of GPS evaluations in interval</p>
+<p><strong>Returns</strong>: Set of important species</p>
+<p><strong>GPS Configuration</strong> (hardcoded in function):</p>
+<div class="codehilite"><pre><span></span><code><span class="n">elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;O&#39;</span><span class="p">]</span>
+<span class="n">sources</span> <span class="o">=</span> <span class="p">[</span><span class="n">fuel</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">]</span>
+<span class="n">targets</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CO2&#39;</span><span class="p">,</span> <span class="s1">&#39;H2O&#39;</span><span class="p">]</span>
+</code></pre></div>
+
+<h4 id="findigninterval"><code>findIgnInterval()</code><a class="headerlink" href="#findigninterval" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">findIgnInterval</span><span class="p">(</span><span class="n">hrr</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+</code></pre></div>
+
+<p>Returns time indices where HRR exceeds threshold (ignition start/end).</p>
+<h4 id="find_ign_delay"><code>find_ign_delay()</code><a class="headerlink" href="#find_ign_delay" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">find_ign_delay</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">temperature</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span>
+</code></pre></div>
+
+<p>Returns ignition delay time when temperature rises by 50% of (T_max - T_min).</p>
+<h4 id="auto_ign_build_x0"><code>auto_ign_build_X0()</code><a class="headerlink" href="#auto_ign_build_x0" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">auto_ign_build_X0</span><span class="p">(</span>
+    <span class="n">soln</span><span class="p">,</span> <span class="n">T0</span><span class="p">,</span> <span class="n">atm</span><span class="p">,</span> <span class="n">X0</span><span class="p">,</span> <span class="n">end_threshold</span><span class="o">=</span><span class="mf">2e3</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">dir_raw</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+</code></pre></div>
+
+<p><strong>Purpose</strong>: Run detailed autoignition with full mechanism.</p>
+<p><strong>Parameters</strong>:
+- <code>soln</code> - Cantera solution
+- <code>T0</code> - Initial temperature (K)
+- <code>atm</code> - Pressure (atm)
+- <code>X0</code> - Initial composition (mole fractions dict or string)
+- <code>end_threshold</code> - HRR limit to stop simulation
+- <code>end</code> - Maximum simulation time (s)
+- <code>dir_raw</code> - Directory to save raw data</p>
+<p><strong>Returns</strong>:
+- <code>raw</code> - Simulation data dict
+- <code>time_exec</code> - CPU execution time (s)
+- <code>step_count</code> - Number of timesteps</p>
+<hr />
+<h2 id="usage-examples">Usage Examples<a class="headerlink" href="#usage-examples" title="Permanent link">&para;</a></h2>
+<h3 id="example-1-generate-training-data-only">Example 1: Generate Training Data Only<a class="headerlink" href="#example-1-generate-training-data-only" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">slgps.make_data_parallel</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_data_parallel</span>
+
+<span class="n">make_data_parallel</span><span class="p">(</span>
+    <span class="n">fuel</span><span class="o">=</span><span class="s1">&#39;CH4&#39;</span><span class="p">,</span>
+    <span class="n">mech_file</span><span class="o">=</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">,</span>
+    <span class="n">end_threshold</span><span class="o">=</span><span class="mf">2e5</span><span class="p">,</span>
+    <span class="n">ign_HRR_threshold_div</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">ign_GPS_resolution</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+    <span class="n">norm_GPS_resolution</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
+    <span class="n">GPS_per_interval</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">n_cases</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>  <span class="c1"># Small for testing</span>
+    <span class="n">t_rng</span><span class="o">=</span><span class="p">[</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">],</span>
+    <span class="n">p_rng</span><span class="o">=</span><span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">],</span>
+    <span class="n">phi_rng</span><span class="o">=</span><span class="p">[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">],</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
+    <span class="n">always_threshold</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span>
+    <span class="n">never_threshold</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+    <span class="n">pathname</span><span class="o">=</span><span class="s1">&#39;MyData&#39;</span><span class="p">,</span>
+    <span class="n">species_ranges</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;CH4&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;O2&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">),</span> <span class="s1">&#39;N2&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">)}</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<h3 id="example-2-train-ann-on-existing-data">Example 2: Train ANN on Existing Data<a class="headerlink" href="#example-2-train-ann-on-existing-data" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">slgps.mech_train</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_model</span>
+
+<span class="n">make_model</span><span class="p">(</span>
+    <span class="n">input_specs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;CH4&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">,</span> <span class="s1">&#39;CO2&#39;</span><span class="p">,</span> <span class="s1">&#39;H2O&#39;</span><span class="p">],</span>
+    <span class="n">data_path</span><span class="o">=</span><span class="s1">&#39;MyData&#39;</span><span class="p">,</span>
+    <span class="n">scaler_path</span><span class="o">=</span><span class="s1">&#39;MyScaler.pkl&#39;</span><span class="p">,</span>
+    <span class="n">model_path</span><span class="o">=</span><span class="s1">&#39;MyModel.h5&#39;</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<h3 id="example-3-run-adaptive-simulation">Example 3: Run Adaptive Simulation<a class="headerlink" href="#example-3-run-adaptive-simulation" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">slgps.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">auto_ign_build_SL</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">auto_ign_build_SL</span><span class="p">(</span>
+    <span class="n">fuel</span><span class="o">=</span><span class="s1">&#39;CH4&#39;</span><span class="p">,</span>
+    <span class="n">mech_file</span><span class="o">=</span><span class="s1">&#39;gri30.cti&#39;</span><span class="p">,</span>
+    <span class="n">input_specs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;CH4&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">,</span> <span class="s1">&#39;CO2&#39;</span><span class="p">,</span> <span class="s1">&#39;H2O&#39;</span><span class="p">],</span>
+    <span class="n">norm_Dt</span><span class="o">=</span><span class="mf">0.0002</span><span class="p">,</span>
+    <span class="n">ign_Dt</span><span class="o">=</span><span class="mf">0.00005</span><span class="p">,</span>
+    <span class="n">T0_in</span><span class="o">=</span><span class="mi">1500</span><span class="p">,</span>
+    <span class="n">phi</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">atm</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">t_end</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
+    <span class="n">scaler_path</span><span class="o">=</span><span class="s1">&#39;MyScaler.pkl&#39;</span><span class="p">,</span>
+    <span class="n">model_path</span><span class="o">=</span><span class="s1">&#39;MyModel.h5&#39;</span><span class="p">,</span>
+    <span class="n">data_path</span><span class="o">=</span><span class="s1">&#39;MyData&#39;</span><span class="p">,</span>
+    <span class="n">ign_threshold</span><span class="o">=</span><span class="mf">9e7</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="file-formats">File Formats<a class="headerlink" href="#file-formats" title="Permanent link">&para;</a></h2>
+<h3 id="datacsv-state-vectors"><code>data.csv</code> (State Vectors)<a class="headerlink" href="#datacsv-state-vectors" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code># Temperature,Atmospheres,CH4,O2,N2,CO2,H2O,...
+1500,1.0,0.05,0.21,0.74,0.0,0.0,...
+1550,1.0,0.04,0.20,0.76,0.001,0.01,...
+...
+</code></pre></div>
+
+<p>Column order:
+1. <code># Temperature</code> (K)
+2. <code>Atmospheres</code> (pressure, atm)
+3. Species mole fractions in order of <code>input_specs</code></p>
+<h3 id="speciescsv-binary-masks"><code>species.csv</code> (Binary Masks)<a class="headerlink" href="#speciescsv-binary-masks" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code>CH4,O2,N2,CO2,H2O,...
+1,1,1,0,0,...
+1,1,1,1,1,...
+...
+</code></pre></div>
+
+<p>Values: 1 = important in this timestep, 0 = not important</p>
+<hr />
+<h2 id="performance-tips">Performance Tips<a class="headerlink" href="#performance-tips" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Reduce GPS_per_interval</strong> from 4 to 2 for faster data generation</li>
+<li><strong>Reduce n_cases</strong> for initial testing</li>
+<li><strong>Use fewer input_specs</strong> to speed up ANN training</li>
+<li><strong>Increase <code>num_processes</code></strong> in <code>make_model()</code> or via the GUI if you have more CPU cores. The Gradio frontend exposes a "Number of Processes" slider to control parallel workers.</li>
+<li><strong>Use GPU</strong>: Install tensorflow[and-cuda] for 10-100x training speedup</li>
+</ul>
+<hr />
+<h2 id="debugging">Debugging<a class="headerlink" href="#debugging" title="Permanent link">&para;</a></h2>
+<p>Enable verbose output:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TF_CPP_MIN_LOG_LEVEL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span>  <span class="c1"># See TensorFlow logs</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">debugging</span><span class="o">.</span><span class="n">set_log_device_placement</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Log device usage</span>
+</code></pre></div>
+
+<p>Check intermediate results:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;MyData/data.csv&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (num_samples, num_features)</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "search.suggest", "content.tabs"], "search": "../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  </body>
+</html>

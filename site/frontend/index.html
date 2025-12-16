@@ -1,0 +1,1783 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Supervised Learning for Dynamic Chemistry Reduction based on Global Pathway Selection">
+      
+      
+        <meta name="author" content="Rohit Mishra, Aaron Nelson">
+      
+      
+      
+        <link rel="prev" href="../api/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Frontend GUI - SL-GPS Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.618322db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#frontend-gui" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="SL-GPS Documentation" class="md-header__button md-logo" aria-label="SL-GPS Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SL-GPS Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Frontend GUI
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ctftamu/SL-GPS" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../setup/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Setup & Installation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../workflow/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Usage Workflow
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../code_structure/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Code Structure
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../api/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  API Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Frontend GUI
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="SL-GPS Documentation" class="md-nav__button md-logo" aria-label="SL-GPS Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SL-GPS Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ctftamu/SL-GPS" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup & Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../code_structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Code Structure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Frontend GUI
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Frontend GUI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#try-online" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🌐 Try Online
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Start
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#local-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local Installation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#launch-the-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Launch the GUI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tab-1-generate-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tab 1: Generate Dataset
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tab-2-train-neural-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tab 2: Train Neural Network
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tab-3-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tab 3: Documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interface-walkthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interface Walkthrough
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interface Walkthrough">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dataset-generation-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dataset Generation Tab
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#neural-network-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Neural Network Tab
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameters-explained" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters Explained
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters Explained">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dataset-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dataset Generation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#neural-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Neural Network
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Workflows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Workflows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quick-test-5-minutes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Test (5 minutes)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#production-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Production Run
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fine-tuning-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fine-Tuning Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tips-tricks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tips &amp; Tricks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tips &amp; Tricks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#output-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Output Files
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next Steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Usage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#share-online" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Share Online
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-output-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom Output Directory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable-auto-browser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disable Auto-Browser
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Support
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#try-online" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🌐 Try Online
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Start
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#local-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local Installation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#launch-the-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Launch the GUI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tab-1-generate-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tab 1: Generate Dataset
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tab-2-train-neural-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tab 2: Train Neural Network
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tab-3-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tab 3: Documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interface-walkthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interface Walkthrough
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interface Walkthrough">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dataset-generation-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dataset Generation Tab
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#neural-network-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Neural Network Tab
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameters-explained" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters Explained
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters Explained">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dataset-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dataset Generation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#neural-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Neural Network
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Workflows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Workflows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quick-test-5-minutes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Test (5 minutes)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#production-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Production Run
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fine-tuning-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fine-Tuning Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tips-tricks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tips &amp; Tricks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tips &amp; Tricks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#output-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Output Files
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next Steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Usage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#share-online" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Share Online
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-output-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom Output Directory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable-auto-browser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disable Auto-Browser
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Support
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="frontend-gui">Frontend GUI<a class="headerlink" href="#frontend-gui" title="Permanent link">&para;</a></h1>
+<p>SL-GPS includes a beautiful browser-based GUI built with Gradio that makes it easy for non-technical users to generate datasets and train neural networks.</p>
+<h2 id="try-online">🌐 Try Online<a class="headerlink" href="#try-online" title="Permanent link">&para;</a></h2>
+<p><strong><a href="https://huggingface.co/spaces/rmishra4/SL-GPS">Launch SL-GPS GUI on Hugging Face Spaces</a></strong> - No installation required! The frontend is fully deployed and ready to use.</p>
+<p><iframe
+  src="https://huggingface.co/spaces/rmishra4/SL-GPS/embed"
+  frameborder="0"
+  width="100%"
+  height="1200"
+  style="border-radius: 8px; margin: 20px 0;"
+></iframe>
+</p>
+<hr />
+<h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
+<h3 id="local-installation">Local Installation<a class="headerlink" href="#local-installation" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Install frontend dependencies</span>
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>frontend/requirements.txt
+</code></pre></div>
+
+<h3 id="launch-the-gui">Launch the GUI<a class="headerlink" href="#launch-the-gui" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># From SL-GPS root directory</span>
+python<span class="w"> </span>-m<span class="w"> </span>frontend
+</code></pre></div>
+
+<p>The GUI opens automatically in your default browser at <code>http://localhost:7860</code></p>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
+<p>✨ <strong>User-Friendly Interface</strong>
+- Intuitive tabs for each workflow step
+- Sliders and input fields for all parameters
+- Real-time status updates</p>
+<p>📁 <strong>File Management</strong>
+- Upload Cantera mechanism files directly
+- Automatic output file organization
+- Download results easily</p>
+<p>⚙️ <strong>Full Control</strong>
+- Configure all simulation parameters
+- Customize neural network architecture
+- Monitor training progress</p>
+<p>🌐 <strong>Web-Based</strong>
+- No installation needed beyond Python
+- Share via public links
+- Works on any device with a browser</p>
+<h2 id="workflow">Workflow<a class="headerlink" href="#workflow" title="Permanent link">&para;</a></h2>
+<h3 id="tab-1-generate-dataset">Tab 1: Generate Dataset<a class="headerlink" href="#tab-1-generate-dataset" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Upload Mechanism File</strong> (.cti format)</li>
+<li>
+<p>Examples: <code>gri30.cti</code>, <code>nHeptane.cti</code></p>
+</li>
+<li>
+<p><strong>Configure Simulation Parameters</strong></p>
+</li>
+<li><strong>Fuel Species</strong>: Main reactant (e.g., CH4, H2)</li>
+<li><strong>Number of Simulations</strong>: How many autoignition cases to run</li>
+<li><strong>Temperature Range</strong>: Initial temperatures (K)</li>
+<li>
+<p><strong>Pressure Range</strong>: Initial pressures (log₁₀ atm)</p>
+</li>
+<li>
+<p><strong>Set GPS Parameters</strong></p>
+</li>
+<li><strong>Alpha</strong>: Pathway importance threshold (smaller = more species)</li>
+<li>
+<p><strong>Always/Never Thresholds</strong>: Frequency cutoffs for species inclusion</p>
+</li>
+<li>
+<p><strong>Define Species Composition</strong></p>
+</li>
+<li>JSON format specifying min/max mole fractions</li>
+<li>
+<p>Example: <code>{"CH4": [0, 1], "O2": [0, 0.4]}</code></p>
+</li>
+<li>
+<p><strong>Click Generate</strong></p>
+</li>
+<li>Generates <code>generated_data/</code> folder with:<ul>
+<li><code>data.csv</code> - State vectors</li>
+<li><code>species.csv</code> - Species importance masks</li>
+<li><code>always_spec_nums.csv</code> - Always-included species</li>
+<li><code>never_spec_nums.csv</code> - Never-included species</li>
+</ul>
+</li>
+</ol>
+<h3 id="tab-2-train-neural-network">Tab 2: Train Neural Network<a class="headerlink" href="#tab-2-train-neural-network" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Specify Input Species</strong></li>
+<li>Which species affect ANN decisions</li>
+<li>
+<p>Comma-separated list or JSON array</p>
+</li>
+<li>
+<p><strong>Configure Architecture</strong></p>
+</li>
+<li><strong>Hidden Layers</strong>: Depth of network (1-5)</li>
+<li><strong>Neurons per Layer</strong>: Capacity (4-256)</li>
+<li>
+<p><strong>Learning Rate</strong>: Training speed</p>
+</li>
+<li>
+<p><strong>Click Train</strong></p>
+</li>
+<li>Trains ensemble of ANNs in parallel</li>
+<li><strong>Number of Processes</strong>: Use the new slider to control parallel training workers. Set to <code>1</code> for sequential runs or debugging, higher values (e.g., 8, 16, 28) to use more CPU cores. The backend <code>make_model(..., num_processes=...)</code> accepts this value.</li>
+<li>Selects best model by validation loss</li>
+<li>Outputs:<ul>
+<li><code>model.h5</code> - Trained Keras model</li>
+<li><code>scaler.pkl</code> - Input normalization</li>
+</ul>
+</li>
+</ol>
+<h3 id="tab-3-documentation">Tab 3: Documentation<a class="headerlink" href="#tab-3-documentation" title="Permanent link">&para;</a></h3>
+<p>Integrated help and API reference directly in the GUI.</p>
+<h2 id="interface-walkthrough">Interface Walkthrough<a class="headerlink" href="#interface-walkthrough" title="Permanent link">&para;</a></h2>
+<h3 id="dataset-generation-tab">Dataset Generation Tab<a class="headerlink" href="#dataset-generation-tab" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="err">📊</span><span class="w"> </span><span class="n">GENERATE</span><span class="w"> </span><span class="n">DATASET</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">Upload</span><span class="w"> </span><span class="n">Mechanism</span><span class="w"> </span><span class="k">File</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">Configure</span><span class="w"> </span><span class="n">Simulation</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">Fuel</span><span class="w"> </span><span class="nl">Species</span><span class="p">:</span><span class="w"> </span><span class="o">[</span><span class="n">CH4________</span><span class="o">]</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">Number</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nl">Cases</span><span class="p">:</span><span class="w"> </span><span class="o">[</span><span class="n">100</span><span class="o">]</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">Temperature</span><span class="w"> </span><span class="k">Range</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nf">Min</span><span class="err">:</span><span class="w"> </span><span class="o">[</span><span class="n">========800========</span><span class="o">]</span><span class="w"> </span><span class="n">K</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="nf">Max</span><span class="err">:</span><span class="w"> </span><span class="o">[</span><span class="n">=====2300=====</span><span class="o">]</span><span class="w"> </span><span class="n">K</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">Pressure</span><span class="w"> </span><span class="k">Range</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nf">Min</span><span class="err">:</span><span class="w"> </span><span class="o">[</span><span class="n">=2.1=</span><span class="o">]</span><span class="w"> </span><span class="nf">log</span><span class="w"> </span><span class="n">atm</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="nf">Max</span><span class="err">:</span><span class="w"> </span><span class="o">[</span><span class="n">=2.5=</span><span class="o">]</span><span class="w"> </span><span class="nf">log</span><span class="w"> </span><span class="n">atm</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">GPS</span><span class="w"> </span><span class="k">Parameters</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nl">Alpha</span><span class="p">:</span><span class="w"> </span><span class="o">[</span><span class="n">=0.001=</span><span class="o">]</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">Always</span><span class="w"> </span><span class="nl">Threshold</span><span class="p">:</span><span class="w"> </span><span class="o">[</span><span class="n">====0.99====</span><span class="o">]</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">Never</span><span class="w"> </span><span class="nl">Threshold</span><span class="p">:</span><span class="w"> </span><span class="o">[</span><span class="n">=0.01=</span><span class="o">]</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">Species</span><span class="w"> </span><span class="n">Ranges</span><span class="w"> </span><span class="p">(</span><span class="n">JSON</span><span class="p">)</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="o">[</span><span class="n">{&quot;CH4&quot;: [0,1</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="p">...</span><span class="err">}]</span>
+<span class="err">└──</span><span class="w"> </span><span class="o">[</span><span class="n">🚀 Generate Dataset</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">🔄 Clear</span><span class="o">]</span>
+</code></pre></div>
+
+<h3 id="neural-network-tab">Neural Network Tab<a class="headerlink" href="#neural-network-tab" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code>🧠 TRAIN NEURAL NETWORK
+├── Input Species
+│   └── [CH4, O2, CO2, H2O...]
+├── Architecture
+│   ├── Hidden Layers: [====2====]
+│   └── Neurons per Layer: [===16===]
+├── Training Settings
+│   └── Learning Rate: [===0.001===]
+└── [🚀 Train Neural Network]
+</code></pre></div>
+
+<h2 id="parameters-explained">Parameters Explained<a class="headerlink" href="#parameters-explained" title="Permanent link">&para;</a></h2>
+<h3 id="dataset-generation">Dataset Generation<a class="headerlink" href="#dataset-generation" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Purpose</th>
+<th>Range</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Fuel Species</strong></td>
+<td>Main combustible</td>
+<td>Any species name</td>
+<td>CH4</td>
+</tr>
+<tr>
+<td><strong>N Cases</strong></td>
+<td>Training simulations</td>
+<td>1-1000+</td>
+<td>100</td>
+</tr>
+<tr>
+<td><strong>Temp Min/Max</strong></td>
+<td>Initial temperature range</td>
+<td>300-3000 K</td>
+<td>800-2300 K</td>
+</tr>
+<tr>
+<td><strong>Press Min/Max</strong></td>
+<td>Initial pressure range</td>
+<td>log₁₀(atm)</td>
+<td>2.1-2.5</td>
+</tr>
+<tr>
+<td><strong>Alpha</strong></td>
+<td>GPS pathway threshold</td>
+<td>0.0001-0.1</td>
+<td>0.001</td>
+</tr>
+<tr>
+<td><strong>Always Threshold</strong></td>
+<td>"Always include" cutoff</td>
+<td>0.5-1.0</td>
+<td>0.99</td>
+</tr>
+<tr>
+<td><strong>Never Threshold</strong></td>
+<td>"Never include" cutoff</td>
+<td>0.0-0.5</td>
+<td>0.01</td>
+</tr>
+</tbody>
+</table>
+<h3 id="neural-network">Neural Network<a class="headerlink" href="#neural-network" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Purpose</th>
+<th>Range</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Input Species</strong></td>
+<td>ANN features</td>
+<td>Any dataset species</td>
+<td>CH4, O2, CO2, etc</td>
+</tr>
+<tr>
+<td><strong>Hidden Layers</strong></td>
+<td>Network depth</td>
+<td>1-5</td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>Neurons</strong></td>
+<td>Layer capacity</td>
+<td>4-256</td>
+<td>16</td>
+</tr>
+<tr>
+<td><strong>Learning Rate</strong></td>
+<td>Training speed</td>
+<td>0.0001-0.1</td>
+<td>0.001</td>
+</tr>
+<tr>
+<td><strong>Number of Processes</strong></td>
+<td>Parallel training workers (controls <code>joblib.Parallel</code>)</td>
+<td>1-64</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="common-workflows">Common Workflows<a class="headerlink" href="#common-workflows" title="Permanent link">&para;</a></h2>
+<h3 id="quick-test-5-minutes">Quick Test (5 minutes)<a class="headerlink" href="#quick-test-5-minutes" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">default</span><span class="w"> </span><span class="n">parameters</span><span class="p">,</span><span class="w"> </span><span class="n">but</span><span class="w"> </span><span class="n">set</span><span class="p">:</span>
+<span class="w">   </span><span class="o">-</span><span class="w"> </span><span class="n">Number</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">Cases</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">(</span><span class="n">instead</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span>
+<span class="w">   </span><span class="o">-</span><span class="w"> </span><span class="n">Temperature</span><span class="w"> </span><span class="n">Range</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="o">-</span><span class="mi">1500</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="p">(</span><span class="n">instead</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="mi">800</span><span class="o">-</span><span class="mi">2300</span><span class="p">)</span>
+<span class="mf">2.</span><span class="w"> </span><span class="n">Upload</span><span class="w"> </span><span class="n">any</span><span class="w"> </span><span class="n">Cantera</span><span class="w"> </span><span class="n">mechanism</span>
+<span class="mf">3.</span><span class="w"> </span><span class="n">Generate</span><span class="w"> </span><span class="n">dataset</span>
+<span class="mf">4.</span><span class="w"> </span><span class="n">Train</span><span class="w"> </span><span class="n">neural</span><span class="w"> </span><span class="n">network</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">default</span><span class="w"> </span><span class="n">settings</span>
+</code></pre></div>
+
+<h3 id="production-run">Production Run<a class="headerlink" href="#production-run" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="n">Set</span><span class="w"> </span><span class="n">parameters</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">application</span><span class="p">:</span>
+<span class="w">   </span><span class="o">-</span><span class="w"> </span><span class="n">Fuel</span><span class="w"> </span><span class="n">species</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">mechanism</span>
+<span class="w">   </span><span class="o">-</span><span class="w"> </span><span class="n">Realistic</span><span class="w"> </span><span class="n">T</span><span class="o">/</span><span class="n">P</span><span class="w"> </span><span class="n">ranges</span>
+<span class="w">   </span><span class="o">-</span><span class="w"> </span><span class="n">GPS</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">desired</span><span class="w"> </span><span class="n">accuracy</span>
+<span class="mf">2.</span><span class="w"> </span><span class="n">Set</span><span class="w"> </span><span class="n">n_cases</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="mi">100</span><span class="o">-</span><span class="mi">500</span><span class="w"> </span><span class="p">(</span><span class="n">more</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">better</span><span class="w"> </span><span class="n">but</span><span class="w"> </span><span class="n">slower</span><span class="p">)</span>
+<span class="mf">3.</span><span class="w"> </span><span class="n">Generate</span><span class="w"> </span><span class="n">dataset</span><span class="w"> </span><span class="p">(</span><span class="n">may</span><span class="w"> </span><span class="n">take</span><span class="w"> </span><span class="n">hours</span><span class="p">)</span>
+<span class="mf">4.</span><span class="w"> </span><span class="n">Train</span><span class="w"> </span><span class="n">neural</span><span class="w"> </span><span class="n">network</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="mi">2</span><span class="o">-</span><span class="mi">3</span><span class="w"> </span><span class="n">hidden</span><span class="w"> </span><span class="n">layers</span>
+<span class="mf">5.</span><span class="w"> </span><span class="n">Download</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">scaler</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">deployment</span>
+</code></pre></div>
+
+<h3 id="fine-tuning-architecture">Fine-Tuning Architecture<a class="headerlink" href="#fine-tuning-architecture" title="Permanent link">&para;</a></h3>
+<p>To customize neural network layers beyond GUI controls:</p>
+<ol>
+<li>Edit <code>src/slgps/mech_train.py</code></li>
+<li>Modify the <code>spec_train()</code> function</li>
+<li>Save and re-train through GUI</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Example: deeper network with dropout</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.3</span><span class="p">))</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.2</span><span class="p">))</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+</code></pre></div>
+
+<p>See <a href="../api/">API Reference</a> for details.</p>
+<h2 id="tips-tricks">Tips &amp; Tricks<a class="headerlink" href="#tips-tricks" title="Permanent link">&para;</a></h2>
+<h3 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Faster iteration</strong>: Start with 10-20 cases instead of 100</li>
+<li><strong>Parallel training</strong>: Ensure CPU cores available</li>
+<li><strong>Parallel training</strong>: Ensure CPU cores available. Use the <code>Number of Processes</code> slider in the GUI to control how many parallel workers <code>make_model()</code> launches (default in code is 28 for large runs; GUI default is 1 for safe local testing).</li>
+<li><strong>GPU training</strong>: Install <code>tensorflow[and-cuda]</code> for 10-100x speedup</li>
+<li><strong>Storage</strong>: Use SSD for faster I/O during data generation</li>
+</ul>
+<h3 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Lower alpha</strong> = more species included (more accurate, larger models)</li>
+<li><strong>Higher alpha</strong> = fewer species (smaller, faster mechanisms)</li>
+<li><strong>More cases</strong> = better training data (exponential time cost)</li>
+<li><strong>Deeper networks</strong> = more model capacity (slower training)</li>
+</ul>
+<h3 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h3>
+<p><strong>Port 7860 already in use?</strong></p>
+<div class="codehilite"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>frontend<span class="w"> </span>--server_port<span class="w"> </span><span class="m">7861</span>
+</code></pre></div>
+
+<p><strong>Need to share the interface?</strong></p>
+<div class="codehilite"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>frontend<span class="w"> </span>--share
+</code></pre></div>
+
+<p><strong>Check mechanism validity:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">cantera</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ct</span>
+<span class="n">gas</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">Solution</span><span class="p">(</span><span class="s1">&#39;mech_file.cti&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gas</span><span class="o">.</span><span class="n">species_names</span><span class="p">)</span>
+</code></pre></div>
+
+<h2 id="output-files">Output Files<a class="headerlink" href="#output-files" title="Permanent link">&para;</a></h2>
+<p>After running the GUI, you'll have:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">generated_data</span><span class="o">/</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">data</span><span class="o">.</span><span class="n">csv</span><span class="w">                  </span><span class="c1"># State vectors (T, P, compositions)</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">species</span><span class="o">.</span><span class="n">csv</span><span class="w">              </span><span class="c1"># Species importance masks</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">always_spec_nums</span><span class="o">.</span><span class="n">csv</span><span class="w">     </span><span class="c1"># Always-included species</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">never_spec_nums</span><span class="o">.</span><span class="n">csv</span><span class="w">      </span><span class="c1"># Never-included species</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">mechanism</span><span class="o">.</span><span class="n">cti</span><span class="w">            </span><span class="c1"># Copy of uploaded mechanism</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">model</span><span class="o">.</span><span class="n">h5</span><span class="w">                 </span><span class="c1"># Trained Keras ANN</span>
+<span class="err">└──</span><span class="w"> </span><span class="n">scaler</span><span class="o">.</span><span class="n">pkl</span><span class="w">               </span><span class="c1"># MinMaxScaler for normalization</span>
+</code></pre></div>
+
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Use the trained model</strong>: See <a href="../src/slgps/SL_GPS.py">SL_GPS.py</a> for adaptive simulation</li>
+<li><strong>Visualize results</strong>: Use <code>display_sim_data.py</code> to plot mechanism reduction</li>
+<li><strong>Export to other tools</strong>: Convert .h5 to .pb for OpenFOAM using <code>h5topb.py</code></li>
+</ol>
+<h2 id="advanced-usage">Advanced Usage<a class="headerlink" href="#advanced-usage" title="Permanent link">&para;</a></h2>
+<h3 id="share-online">Share Online<a class="headerlink" href="#share-online" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>frontend<span class="w"> </span>--share
+</code></pre></div>
+
+<p>Creates a public link valid for 72 hours.</p>
+<h3 id="custom-output-directory">Custom Output Directory<a class="headerlink" href="#custom-output-directory" title="Permanent link">&para;</a></h3>
+<p>Edit <code>frontend/app.py</code> and change:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">data_dir</span> <span class="o">=</span> <span class="s2">&quot;my_output_folder&quot;</span>
+</code></pre></div>
+
+<h3 id="disable-auto-browser">Disable Auto-Browser<a class="headerlink" href="#disable-auto-browser" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>frontend<span class="w"> </span>--inbrowser<span class="w"> </span><span class="nb">false</span>
+</code></pre></div>
+
+<h2 id="api">API<a class="headerlink" href="#api" title="Permanent link">&para;</a></h2>
+<p>The GUI calls these backend functions:</p>
+<ul>
+<li><code>make_data_parallel()</code> - Dataset generation</li>
+<li><code>make_model()</code> - Neural network training</li>
+</ul>
+<p>See <a href="../api/">API Reference</a> for detailed documentation.</p>
+<h2 id="support">Support<a class="headerlink" href="#support" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>GUI Documentation</strong>: See frontend/README.md</li>
+<li><strong>Full Docs</strong>: https://ctftamu.github.io/SL-GPS/</li>
+<li><strong>GitHub</strong>: https://github.com/ctftamu/SL-GPS</li>
+<li><strong>Issues</strong>: https://github.com/ctftamu/SL-GPS/issues</li>
+<li><strong>Discord</strong>: https://discord.com/channels/1333609076726431798/1333610748424880128</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "search.suggest", "content.tabs"], "search": "../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  </body>
+</html>

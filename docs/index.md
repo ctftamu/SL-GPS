@@ -49,10 +49,10 @@ Traditional mechanism reduction methods (e.g., DRGEP, CSP) are slow or require m
 
 ### 🌐 Try Online (No Installation Required)
 
-**[Launch SL-GPS GUI on Hugging Face Spaces](https://huggingface.co/spaces/ctftamu/SL-GPS)** - The frontend is deployed and ready to use directly in your browser!
+**[Launch SL-GPS GUI on Hugging Face Spaces](https://huggingface.co/spaces/rmishra4/SL-GPS)** - The frontend is deployed and ready to use directly in your browser!
 
 <iframe
-  src="https://huggingface.co/spaces/ctftamu/SL-GPS/embed"
+  src="https://huggingface.co/spaces/rmishra4/SL-GPS/embed"
   frameborder="0"
   width="100%"
   height="1200"

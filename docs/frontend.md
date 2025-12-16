@@ -4,10 +4,10 @@ SL-GPS includes a beautiful browser-based GUI built with Gradio that makes it ea
 
 ## 🌐 Try Online
 
-**[Launch SL-GPS GUI on Hugging Face Spaces](https://huggingface.co/spaces/ctftamu/SL-GPS)** - No installation required! The frontend is fully deployed and ready to use.
+**[Launch SL-GPS GUI on Hugging Face Spaces](https://huggingface.co/spaces/rmishra4/SL-GPS)** - No installation required! The frontend is fully deployed and ready to use.
 
 <iframe
-  src="https://huggingface.co/spaces/ctftamu/SL-GPS/embed"
+  src="https://huggingface.co/spaces/rmishra4/SL-GPS/embed"
   frameborder="0"
   width="100%"
   height="1200"

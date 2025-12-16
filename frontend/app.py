@@ -220,8 +220,15 @@ def train_neural_network(
 def create_gradio_interface():
     """Create and return the Gradio interface."""
     
-    with gr.Blocks(title="SL-GPS Chemistry Reduction GUI", theme=gr.themes.Soft()) as demo:
-        
+    # Create a Blocks context. Newer Gradio versions accept a `theme` argument,
+    # older versions do not — handle both cases so the frontend works across
+    # multiple Gradio releases.
+    try:
+        demo_ctx = gr.Blocks(title="SL-GPS Chemistry Reduction GUI", theme=gr.themes.Soft())
+    except TypeError:
+        demo_ctx = gr.Blocks(title="SL-GPS Chemistry Reduction GUI")
+
+    with demo_ctx as demo:
         gr.Markdown("# 🧪 SL-GPS Chemistry Reduction GUI")
         gr.Markdown(
             """

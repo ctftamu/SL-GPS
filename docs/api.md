@@ -167,7 +167,7 @@ def make_model(input_specs, data_path, scaler_path, model_path)
 
 **Key Settings**:
 ```python
-num_processes = 28  # Parallel training (edit for your CPU cores)
+num_processes = 28  # Parallel training (configurable via `make_model(..., num_processes=...)`)
 train_test_split = 0.2  # 80% train, 20% validation
 early_stopping_patience = 30  # Epochs to wait for val_loss improvement
 batch_size = 32
@@ -448,7 +448,7 @@ Values: 1 = important in this timestep, 0 = not important
 - **Reduce GPS_per_interval** from 4 to 2 for faster data generation
 - **Reduce n_cases** for initial testing
 - **Use fewer input_specs** to speed up ANN training
-- **Increase num_processes** in mech_train.py if you have >28 CPU cores
+- **Increase `num_processes`** in `make_model()` or via the GUI if you have more CPU cores. The Gradio frontend exposes a "Number of Processes" slider to control parallel workers.
 - **Use GPU**: Install tensorflow[and-cuda] for 10-100x training speedup
 
 ---

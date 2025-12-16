@@ -46,7 +46,7 @@ The embedded GPS module (`src/slgps/GPS/`) handles flux analysis:
 | File | Purpose | Key Parameters |
 |------|---------|-----------------|
 | `main.py` | Entry point for training | `n_cases`, `t_rng`, `p_rng`, `alpha`, `always_threshold`, `never_threshold` |
-| `mech_train.py` | ANN architecture & training | `spec_train()` function contains layers (edit here to customize); `num_processes=28` for parallel training |
+| `mech_train.py` | ANN architecture & training | `spec_train()` function contains layers (edit here to customize); `num_processes` is configurable (default 28) and exposed in the Gradio frontend |
 | `SL_GPS.py` | Simulation runner | `norm_Dt`, `ign_Dt` (timestep control), `T0_in`, `phi`, `atm` (initial conditions) |
 | `utils.py` | Core simulation logic | `auto_ign_build_SL()` (main loop), `GPS_spec()` (species selection), `sub_mech()` (mechanism building) |
 | `make_data_parallel.py` | Data generation | `process_simulation()` (parallel job), coordinate ignition detection |
@@ -56,7 +56,7 @@ The embedded GPS module (`src/slgps/GPS/`) handles flux analysis:
 
 1. **Mechanism Files**: Use Cantera CTI format (`.cti`). Examples: `gri30.cti`, `nHeptane.cti`, or custom paths
 2. **Output Paths**: No intermediate cleanup; directory creation is handled by `os.makedirs(exist_ok=True)`
-3. **Parallel Execution**: Uses `joblib.Parallel` for ANN training (28 processes) and `multiprocessing` for data generation
+3. **Parallel Execution**: Uses `joblib.Parallel` for ANN training (default 28 processes). `num_processes` is configurable via `make_model(..., num_processes=...)` and the Gradio frontend exposes a slider to control it.
 4. **Model Format**: ANNs saved as Keras `.h5` files; scalers as joblib pickle files
 5. **State Vectors**: CSV files with columns `[# Temperature, Atmospheres, <species mole fractions>]`
 6. **Species Naming**: Must match Cantera species names exactly (case-sensitive, e.g., 'CH4', 'H2O', 'OH')

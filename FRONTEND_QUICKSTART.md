@@ -2,10 +2,10 @@
 
 ## 🌐 Try Online First
 
-**[Launch on Hugging Face Spaces](https://huggingface.co/spaces/ctftamu/SL-GPS)** - No installation required!
+**[Launch on Hugging Face Spaces](https://huggingface.co/spaces/rmishra4/SL-GPS)** - No installation required!
 
 <iframe
-  src="https://huggingface.co/spaces/ctftamu/SL-GPS/embed"
+  src="https://huggingface.co/spaces/rmishra4/SL-GPS/embed"
   frameborder="0"
   width="100%"
   height="1200"
