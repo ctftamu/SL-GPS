@@ -2,9 +2,23 @@
 
 SL-GPS includes a beautiful browser-based GUI built with Gradio that makes it easy for non-technical users to generate datasets and train neural networks.
 
+## 🌐 Try Online
+
+**[Launch SL-GPS GUI on Hugging Face Spaces](https://huggingface.co/spaces/ctftamu/SL-GPS)** - No installation required! The frontend is fully deployed and ready to use.
+
+<iframe
+  src="https://huggingface.co/spaces/ctftamu/SL-GPS/embed"
+  frameborder="0"
+  width="100%"
+  height="1200"
+  style="border-radius: 8px; margin: 20px 0;"
+></iframe>
+
+---
+
 ## Quick Start
 
-### Installation
+### Local Installation
 
 ```bash
 # Install frontend dependencies

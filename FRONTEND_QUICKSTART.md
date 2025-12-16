@@ -1,6 +1,20 @@
 # SL-GPS Frontend - Quick Reference
 
-## Installation & Launch
+## 🌐 Try Online First
+
+**[Launch on Hugging Face Spaces](https://huggingface.co/spaces/ctftamu/SL-GPS)** - No installation required!
+
+<iframe
+  src="https://huggingface.co/spaces/ctftamu/SL-GPS/embed"
+  frameborder="0"
+  width="100%"
+  height="1200"
+  style="border-radius: 8px; margin: 20px 0;"
+></iframe>
+
+---
+
+## Installation & Launch Locally
 
 ```bash
 # Install frontend dependencies
