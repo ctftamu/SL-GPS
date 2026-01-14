@@ -572,7 +572,33 @@ def create_gradio_interface():
                 visible=True
             )
             
+            # Download buttons for dataset
+            gr.Markdown("#### Download Dataset Files")
+            with gr.Row():
+                data_csv_file = gr.File(
+                    label="📥 Download data.csv",
+                    visible=False,
+                    type="filepath"
+                )
+                species_csv_file = gr.File(
+                    label="📥 Download species.csv",
+                    visible=False,
+                    type="filepath"
+                )
+            
             # Callbacks
+            def update_dataset_downloads():
+                """Return dataset files if generation succeeded"""
+                data_path = app_state.get("data_path")
+                if not data_path:
+                    return None, None
+                data_csv = os.path.join(data_path, "data.csv")
+                species_csv = os.path.join(data_path, "species.csv")
+                return (
+                    data_csv if os.path.exists(data_csv) else None,
+                    species_csv if os.path.exists(species_csv) else None
+                )
+            
             gen_button.click(
                 fn=generate_dataset,
                 inputs=[
@@ -582,14 +608,17 @@ def create_gradio_interface():
                 ],
                 outputs=[gen_status, gen_error],
                 concurrency_limit=1
+            ).then(
+                fn=update_dataset_downloads,
+                outputs=[data_csv_file, species_csv_file]
             )
             
             def clear_gen():
-                return None, "", ""
+                return None, "", "", None, None
             
             clear_button.click(
                 fn=clear_gen,
-                outputs=[mechanism_file, gen_status, gen_error]
+                outputs=[mechanism_file, gen_status, gen_error, data_csv_file, species_csv_file]
             )
         
         # ============================================================================
@@ -679,12 +708,38 @@ def create_gradio_interface():
                 visible=True
             )
             
+            # Download buttons
+            gr.Markdown("#### Download Trained Model")
+            with gr.Row():
+                model_file = gr.File(
+                    label="📥 Download Model (.h5)",
+                    visible=False,
+                    type="filepath"
+                )
+                scaler_file = gr.File(
+                    label="📥 Download Scaler (.pkl)",
+                    visible=False,
+                    type="filepath"
+                )
+            
             # Callback
+            def update_downloads():
+                """Return download files if training succeeded"""
+                model_path = app_state.get("model_path")
+                scaler_path = app_state.get("scaler_path")
+                return (
+                    model_path if model_path and os.path.exists(model_path) else None,
+                    scaler_path if scaler_path and os.path.exists(scaler_path) else None
+                )
+            
             train_button.click(
                 fn=train_neural_network,
                 inputs=[input_species_string, n_hidden_layers, neurons_per_layer, learning_rate, num_processes],
                 outputs=[train_status, train_error],
                 concurrency_limit=1
+            ).then(
+                fn=update_downloads,
+                outputs=[model_file, scaler_file]
             )
         
         # ============================================================================
