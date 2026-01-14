@@ -635,7 +635,10 @@ def create_gradio_interface():
                 ],
                 outputs=[gen_status, gen_error],
                 concurrency_limit=1
-            ).then(
+            )
+            
+            # Update downloads after dataset generation
+            gen_status.change(
                 fn=update_dataset_downloads,
                 outputs=[data_csv_file, species_csv_file, always_spec_file, never_spec_file, var_spec_file]
             )
@@ -762,7 +765,10 @@ def create_gradio_interface():
                 inputs=[input_species_string, n_hidden_layers, neurons_per_layer, learning_rate, num_processes],
                 outputs=[train_status, train_error],
                 concurrency_limit=1
-            ).then(
+            )
+            
+            # Update downloads after training
+            train_status.change(
                 fn=update_downloads,
                 outputs=[model_file, scaler_file]
             )
