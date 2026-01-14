@@ -576,27 +576,51 @@ def create_gradio_interface():
             gr.Markdown("#### Download Dataset Files")
             with gr.Row():
                 data_csv_file = gr.File(
-                    label="📥 Download data.csv",
+                    label="📥 data.csv",
                     visible=False,
                     type="filepath"
                 )
                 species_csv_file = gr.File(
-                    label="📥 Download species.csv",
+                    label="📥 species.csv",
+                    visible=False,
+                    type="filepath"
+                )
+            
+            with gr.Row():
+                always_spec_file = gr.File(
+                    label="📥 always_spec_nums.csv",
+                    visible=False,
+                    type="filepath"
+                )
+                never_spec_file = gr.File(
+                    label="📥 never_spec_nums.csv",
+                    visible=False,
+                    type="filepath"
+                )
+                var_spec_file = gr.File(
+                    label="📥 var_spec_nums.csv",
                     visible=False,
                     type="filepath"
                 )
             
             # Callbacks
             def update_dataset_downloads():
-                """Return dataset files if generation succeeded"""
+                """Return all dataset files if generation succeeded"""
                 data_path = app_state.get("data_path")
                 if not data_path:
-                    return None, None
-                data_csv = os.path.join(data_path, "data.csv")
-                species_csv = os.path.join(data_path, "species.csv")
-                return (
-                    data_csv if os.path.exists(data_csv) else None,
-                    species_csv if os.path.exists(species_csv) else None
+                    return None, None, None, None, None
+                
+                files = {
+                    "data_csv": os.path.join(data_path, "data.csv"),
+                    "species_csv": os.path.join(data_path, "species.csv"),
+                    "always_spec": os.path.join(data_path, "always_spec_nums.csv"),
+                    "never_spec": os.path.join(data_path, "never_spec_nums.csv"),
+                    "var_spec": os.path.join(data_path, "var_spec_nums.csv"),
+                }
+                
+                return tuple(
+                    f if os.path.exists(f) else None 
+                    for f in files.values()
                 )
             
             gen_button.click(
@@ -610,15 +634,15 @@ def create_gradio_interface():
                 concurrency_limit=1
             ).then(
                 fn=update_dataset_downloads,
-                outputs=[data_csv_file, species_csv_file]
+                outputs=[data_csv_file, species_csv_file, always_spec_file, never_spec_file, var_spec_file]
             )
             
             def clear_gen():
-                return None, "", "", None, None
+                return None, "", "", None, None, None, None, None
             
             clear_button.click(
                 fn=clear_gen,
-                outputs=[mechanism_file, gen_status, gen_error, data_csv_file, species_csv_file]
+                outputs=[mechanism_file, gen_status, gen_error, data_csv_file, species_csv_file, always_spec_file, never_spec_file, var_spec_file]
             )
         
         # ============================================================================
