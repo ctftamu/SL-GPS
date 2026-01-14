@@ -13,9 +13,14 @@ import json
 import tempfile
 import shutil
 from pathlib import Path
-from typing import Tuple, Dict, Any
+from typing import Tuple, Dict, Any, Generator
 import traceback
 import sys
+import io
+import contextlib
+from datetime import datetime
+import threading
+import queue
 
 # Ensure local `src/` is on sys.path so `slgps` package imports work when running
 # the frontend from the repository root (e.g. `python -m frontend`). This helps
@@ -46,8 +51,44 @@ app_state = {
     "data_path": None,
     "model_path": None,
     "scaler_path": None,
-    "status": "Ready"
+    "status": "Ready",
+    "log_buffer": []
 }
+
+
+class LogCapture:
+    """Capture stderr/stdout and store in log queue for real-time streaming"""
+    def __init__(self, log_queue=None):
+        self.original_stderr = sys.stderr
+        self.original_stdout = sys.stdout
+        self.log_queue = log_queue
+        
+    def __enter__(self):
+        sys.stderr = self
+        sys.stdout = self
+        return self
+        
+    def __exit__(self, *args):
+        sys.stderr = self.original_stderr
+        sys.stdout = self.original_stdout
+        
+    def write(self, message):
+        if message.strip():
+            timestamp = datetime.now().strftime("%H:%M:%S")
+            log_msg = f"[{timestamp}] {message}"
+            # Store in app state for reference
+            app_state["log_buffer"].append(log_msg)
+            # Send to queue if provided (for real-time streaming)
+            if self.log_queue:
+                try:
+                    self.log_queue.put(log_msg, block=False)
+                except queue.Full:
+                    pass
+            # Also write to original stderr for server logs
+            self.original_stderr.write(log_msg + "\n")
+            
+    def flush(self):
+        pass
 
 
 def generate_dataset(
@@ -62,9 +103,11 @@ def generate_dataset(
     always_threshold: float,
     never_threshold: float,
     species_string: str,
-) -> Tuple[str, str]:
+    progress=gr.Progress(),
+) -> Generator[Tuple[str, str], None, None]:
     """
     Generate training dataset from autoignition simulations with GPS.
+    Streams output in real-time to the UI.
     
     Args:
         mechanism_file: Uploaded Cantera CTI file
@@ -76,11 +119,19 @@ def generate_dataset(
         always_threshold: Species occurrence threshold for "always include"
         never_threshold: Species occurrence threshold for "never include"
         species_string: JSON string of species ranges
+        progress: Gradio progress object
         
-    Returns:
+    Yields:
         Tuple of (status_message, error_message)
     """
     try:
+        # Clear log buffer and setup log queue
+        app_state["log_buffer"] = []
+        log_queue = queue.Queue(maxsize=100)
+        accumulated_output = f"[{datetime.now().strftime('%H:%M:%S')}] Starting dataset generation...\n"
+        
+        yield accumulated_output, ""
+        
         # Create output directory
         data_dir = "generated_data"
         os.makedirs(data_dir, exist_ok=True)
@@ -90,61 +141,122 @@ def generate_dataset(
         try:
             species_ranges = json.loads(species_string) if species_string.strip() else {}
         except json.JSONDecodeError:
-            return "", "Error: Invalid species ranges JSON format"
+            yield "", "Error: Invalid species ranges JSON format"
+            return
         
         # Save mechanism file to temp location
         mech_path = os.path.join(data_dir, "mechanism.cti")
         if mechanism_file is None:
-            return "", "Error: No mechanism file uploaded"
+            yield "", "Error: No mechanism file uploaded"
+            return
         
         # Copy mechanism file
         shutil.copy(mechanism_file.name, mech_path)
+        accumulated_output += f"[{datetime.now().strftime('%H:%M:%S')}] Mechanism file saved to {mech_path}\n"
+        yield accumulated_output, ""
         
         # Guard: ensure backend function is available
         if make_data_parallel is None:
-            return "", (
+            yield "", (
                 "Error: backend `make_data_parallel` not available.\n"
                 "Run the frontend from the repository root so the `src/` package is importable, "
                 "or install the package (e.g. `pip install -e .`)."
             )
+            return
 
-        # Call data generation
-        status = f"Generating dataset with {n_cases} simulations...\n"
-        status += f"Fuel: {fuel_species}, T: {temp_min}-{temp_max}K, P: {pressure_min}-{pressure_max} log(atm)\n"
-        status += f"GPS alpha: {alpha}, Always threshold: {always_threshold}, Never threshold: {never_threshold}\n"
+        # Call data generation with log capture
+        accumulated_output += f"Generating dataset with {n_cases} simulations...\n"
+        accumulated_output += f"Fuel: {fuel_species}, T: {temp_min}-{temp_max}K, P: {pressure_min}-{pressure_max} log(atm)\n"
+        accumulated_output += f"GPS alpha: {alpha}, Always threshold: {always_threshold}, Never threshold: {never_threshold}\n\n"
+        yield accumulated_output, ""
         
-        make_data_parallel(
-            fuel=fuel_species,
-            mech_file=mech_path,
-            end_threshold=2e5,
-            ign_HRR_threshold_div=300,
-            ign_GPS_resolution=200,
-            norm_GPS_resolution=40,
-            GPS_per_interval=4,
-            n_cases=n_cases,
-            t_rng=[temp_min, temp_max],
-            p_rng=[pressure_min, pressure_max],
-            phi_rng=[0.6, 1.4],  # Not used if species_ranges is set
-            alpha=alpha,
-            always_threshold=always_threshold,
-            never_threshold=never_threshold,
-            pathname=data_dir,
-            species_ranges=species_ranges
-        )
+        progress(0, desc="Initializing...")
         
-        status += f"\n✅ Dataset generated successfully in '{data_dir}'\n"
-        status += f"Output files:\n"
-        status += f"  - {data_dir}/data.csv (state vectors)\n"
-        status += f"  - {data_dir}/species.csv (species masks)\n"
-        status += f"  - {data_dir}/always_spec_nums.csv\n"
-        status += f"  - {data_dir}/never_spec_nums.csv\n"
+        # Run backend function in a thread and stream logs in real-time
+        error_holder = {"error": None}
         
+        def run_backend():
+            try:
+                with LogCapture(log_queue):
+                    make_data_parallel(
+                        fuel=fuel_species,
+                        mech_file=mech_path,
+                        end_threshold=2e5,
+                        ign_HRR_threshold_div=300,
+                        ign_GPS_resolution=200,
+                        norm_GPS_resolution=40,
+                        GPS_per_interval=4,
+                        n_cases=n_cases,
+                        t_rng=[temp_min, temp_max],
+                        p_rng=[pressure_min, pressure_max],
+                        phi_rng=[0.6, 1.4],  # Not used if species_ranges is set
+                        alpha=alpha,
+                        always_threshold=always_threshold,
+                        never_threshold=never_threshold,
+                        pathname=data_dir,
+                        species_ranges=species_ranges
+                    )
+            except Exception as e:
+                error_holder["error"] = e
+        
+        # Start backend in thread
+        backend_thread = threading.Thread(target=run_backend, daemon=True)
+        backend_thread.start()
+        
+        # Stream logs while backend runs
+        import time
+        while backend_thread.is_alive():
+            # Check for logs
+            has_logs = False
+            while True:
+                try:
+                    log_msg = log_queue.get_nowait()
+                    accumulated_output += log_msg + "\n"
+                    has_logs = True
+                except queue.Empty:
+                    break
+            
+            # Yield if we got new logs
+            if has_logs:
+                yield accumulated_output, ""
+            
+            # Small sleep to avoid busy-waiting
+            time.sleep(0.1)
+        
+        # Wait for thread to complete
+        backend_thread.join(timeout=5)
+        
+        # Collect any final logs
+        while True:
+            try:
+                log_msg = log_queue.get_nowait()
+                accumulated_output += log_msg + "\n"
+            except queue.Empty:
+                break
+        
+        # Check for errors
+        if error_holder["error"]:
+            accumulated_output += f"\n❌ ERROR during execution: {str(error_holder['error'])}\n"
+            accumulated_output += f"Full traceback:\n{traceback.format_exc()}\n"
+            yield "", accumulated_output
+            return
+        
+        accumulated_output += f"\n✅ Dataset generated successfully in '{data_dir}'\n"
+        accumulated_output += f"Output files:\n"
+        accumulated_output += f"  - {data_dir}/data.csv (state vectors)\n"
+        accumulated_output += f"  - {data_dir}/species.csv (species masks)\n"
+        accumulated_output += f"  - {data_dir}/always_spec_nums.csv\n"
+        accumulated_output += f"  - {data_dir}/never_spec_nums.csv\n"
+        
+        progress(1, desc="Complete!")
         app_state["status"] = "Dataset generated"
-        return status, ""
+        yield accumulated_output, ""
         
     except Exception as e:
-        error_msg = f"Error generating dataset:\n{str(e)}\n\n{traceback.format_exc()}"
-        return "", error_msg
+        error_msg = f"❌ Error generating dataset:\n{str(e)}\n\n"
+        error_msg += f"Full traceback:\n{traceback.format_exc()}"
+        yield "", error_msg
+
 
 
 def train_neural_network(
@@ -153,22 +265,34 @@ def train_neural_network(
     neurons_per_layer: int,
     learning_rate: float = 0.001,
     num_processes: int = 1,
-) -> Tuple[str, str]:
+    progress=gr.Progress(),
+) -> Generator[Tuple[str, str], None, None]:
     """
     Train neural network for species importance prediction.
+    Streams output in real-time to the UI.
     
     Args:
         input_species_string: JSON string of input species names
         n_hidden_layers: Number of hidden layers
         neurons_per_layer: Number of neurons per hidden layer
         learning_rate: Learning rate for training
+        num_processes: Number of parallel processes
+        progress: Gradio progress object
         
-    Returns:
+    Yields:
         Tuple of (status_message, error_message)
     """
     try:
+        # Clear log buffer and setup log queue
+        app_state["log_buffer"] = []
+        log_queue = queue.Queue(maxsize=100)
+        accumulated_output = f"[{datetime.now().strftime('%H:%M:%S')}] Starting neural network training...\n"
+        
+        yield accumulated_output, ""
+        
         if app_state["data_path"] is None:
-            return "", "Error: Generate dataset first before training NN"
+            yield "", "Error: Generate dataset first before training NN"
+            return
         
         # Parse input species
         try:
@@ -182,39 +306,93 @@ def train_neural_network(
         scaler_path = os.path.join(data_path, "scaler.pkl")
         model_path = os.path.join(data_path, "model.h5")
         
-        status = f"Training neural network...\n"
-        status += f"Hidden layers: {n_hidden_layers}\n"
-        status += f"Neurons per layer: {neurons_per_layer}\n"
-        status += f"Num processes: {num_processes}\n"
-        status += f"Input species: {', '.join(input_specs)}\n"
-        status += f"Data path: {data_path}\n\n"
+        accumulated_output += f"Training neural network...\n"
+        accumulated_output += f"Hidden layers: {n_hidden_layers}\n"
+        accumulated_output += f"Neurons per layer: {neurons_per_layer}\n"
+        accumulated_output += f"Num processes: {num_processes}\n"
+        accumulated_output += f"Input species: {', '.join(input_specs)}\n"
+        accumulated_output += f"Data path: {data_path}\n\n"
         
-        # Call make_model with GUI-selected architecture parameters
-        make_model(
-            input_specs=input_specs,
-            data_path=data_path,
-            scaler_path=scaler_path,
-            model_path=model_path,
-            num_hidden_layers=int(n_hidden_layers),
-            neurons_per_layer=int(neurons_per_layer),
-            num_processes=max(1, int(num_processes))
-        )
+        yield accumulated_output, ""
+        progress(0, desc="Initializing...")
+        
+        # Run backend function in a thread and stream logs in real-time
+        error_holder = {"error": None}
+        
+        def run_backend():
+            try:
+                with LogCapture(log_queue):
+                    make_model(
+                        input_specs=input_specs,
+                        data_path=data_path,
+                        scaler_path=scaler_path,
+                        model_path=model_path,
+                        num_hidden_layers=int(n_hidden_layers),
+                        neurons_per_layer=int(neurons_per_layer),
+                        num_processes=max(1, int(num_processes))
+                    )
+            except Exception as e:
+                error_holder["error"] = e
+        
+        # Start backend in thread
+        backend_thread = threading.Thread(target=run_backend, daemon=True)
+        backend_thread.start()
+        
+        # Stream logs while backend runs
+        import time
+        while backend_thread.is_alive():
+            # Check for logs
+            has_logs = False
+            while True:
+                try:
+                    log_msg = log_queue.get_nowait()
+                    accumulated_output += log_msg + "\n"
+                    has_logs = True
+                except queue.Empty:
+                    break
+            
+            # Yield if we got new logs
+            if has_logs:
+                yield accumulated_output, ""
+            
+            # Small sleep to avoid busy-waiting
+            time.sleep(0.1)
+        
+        # Wait for thread to complete
+        backend_thread.join(timeout=5)
+        
+        # Collect any final logs
+        while True:
+            try:
+                log_msg = log_queue.get_nowait()
+                accumulated_output += log_msg + "\n"
+            except queue.Empty:
+                break
+        
+        # Check for errors
+        if error_holder["error"]:
+            accumulated_output += f"\n❌ ERROR during training: {str(error_holder['error'])}\n"
+            accumulated_output += f"Full traceback:\n{traceback.format_exc()}\n"
+            yield "", accumulated_output
+            return
         
         app_state["model_path"] = model_path
         app_state["scaler_path"] = scaler_path
         
-        status += f"\n✅ Neural network trained successfully!\n"
-        status += f"Model saved to: {model_path}\n"
-        status += f"Scaler saved to: {scaler_path}\n\n"
-        status += f"✅ Architecture applied: {int(n_hidden_layers)} hidden layers, {int(neurons_per_layer)} neurons/layer.\n"
-        status += f"✅ Training processes used: {int(num_processes)}\n"
+        accumulated_output += f"\n✅ Neural network trained successfully!\n"
+        accumulated_output += f"Model saved to: {model_path}\n"
+        accumulated_output += f"Scaler saved to: {scaler_path}\n\n"
+        accumulated_output += f"✅ Architecture applied: {int(n_hidden_layers)} hidden layers, {int(neurons_per_layer)} neurons/layer.\n"
+        accumulated_output += f"✅ Training processes used: {int(num_processes)}\n"
         
+        progress(1, desc="Complete!")
         app_state["status"] = "NN trained"
-        return status, ""
+        yield accumulated_output, ""
         
     except Exception as e:
-        error_msg = f"Error training neural network:\n{str(e)}\n\n{traceback.format_exc()}"
-        return "", error_msg
+        error_msg = f"❌ Error training neural network:\n{str(e)}\n\n"
+        error_msg += f"Full traceback:\n{traceback.format_exc()}"
+        yield "", error_msg
 
 
 def create_gradio_interface():
@@ -370,7 +548,8 @@ def create_gradio_interface():
                     temp_min, temp_max, pressure_min, pressure_max,
                     alpha, always_threshold, never_threshold, species_string
                 ],
-                outputs=[gen_status, gen_error]
+                outputs=[gen_status, gen_error],
+                concurrency_limit=1
             )
             
             def clear_gen():
@@ -472,7 +651,8 @@ def create_gradio_interface():
             train_button.click(
                 fn=train_neural_network,
                 inputs=[input_species_string, n_hidden_layers, neurons_per_layer, learning_rate, num_processes],
-                outputs=[train_status, train_error]
+                outputs=[train_status, train_error],
+                concurrency_limit=1
             )
         
         # ============================================================================
