@@ -442,12 +442,12 @@ def create_gradio_interface():
     # older versions do not — handle both cases so the frontend works across
     # multiple Gradio releases.
     try:
-        demo_ctx = gr.Blocks(title="SL-GPS Chemistry Reduction GUI", theme=gr.themes.Soft())
+        demo_ctx = gr.Blocks(title="SL-GPS Chemistry Reduction GUI (new)", theme=gr.themes.Soft())
     except TypeError:
-        demo_ctx = gr.Blocks(title="SL-GPS Chemistry Reduction GUI")
+        demo_ctx = gr.Blocks(title="SL-GPS Chemistry Reduction GUI (new)")
 
     with demo_ctx as demo:
-        gr.Markdown("# 🧪 SL-GPS Chemistry Reduction GUI")
+        gr.Markdown("# 🧪 SL-GPS Chemistry Reduction GUI (new)")
         gr.Markdown(
             """
             Automated neural network-based chemistry reduction using Global Pathway Selection (GPS).
