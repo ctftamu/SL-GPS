@@ -1,15 +1,16 @@
 # Pre-built wheels only (no source compilation)
-# For HF Spaces: use only binary wheels to avoid timeout during pip install
+# All versions pinned to ensure wheels exist for Python 3.10
+# DO NOT use >= or >, only == for exact version matching
 
 tensorflow-cpu==2.13.0
-cantera==2.6.0; python_version < '3.13'
+cantera==2.6.0
 numpy==1.26.4
-matplotlib>=3.7.0
-scikit-learn>=1.3.0
-networkx>=3.0
-pandas>=2.0.0
-joblib>=1.3.0
-gradio>=4.0.0
+matplotlib==3.9.2
+pandas==2.2.3
+scikit-learn==1.5.2
+networkx==3.3
+joblib==1.4.2
+gradio==4.29.0
 
-# Note: Cantera may not have wheels for Python 3.13+
-# If you need Python 3.13 support, see Dockerfile.slim for lightweight approach
+# Python 3.10 is required - see runtime.txt
+# All versions above have pre-built wheels (.whl) for Python 3.10

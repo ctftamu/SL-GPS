@@ -1,8 +1,8 @@
 # Lightweight Dockerfile for quick HF Spaces deployment
+# Python 3.10 - all dependencies have pre-built wheels for this version
 # Installs frontend only, training dependencies installed on-demand
-# This bypasses timeout by deferring heavy package installs
 
-FROM python:3.10-slim
+FROM python:3.10.15-slim
 
 WORKDIR /app
 

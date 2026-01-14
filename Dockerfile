@@ -1,7 +1,8 @@
 # Dockerfile for SL-GPS on Hugging Face Spaces
-# Optimized to avoid timeouts by using only pre-built wheels (no compilation)
+# Python 3.10 - all dependencies have pre-built wheels for this version
+# NO source compilation needed
 
-FROM python:3.10-slim
+FROM python:3.10.15-slim
 
 # Set working directory
 WORKDIR /app
