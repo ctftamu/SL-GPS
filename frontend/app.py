@@ -203,8 +203,9 @@ def generate_dataset(
         backend_thread = threading.Thread(target=run_backend, daemon=True)
         backend_thread.start()
         
-        # Stream logs while backend runs
+        # Stream logs while backend runs (optimized polling)
         import time
+        last_yield_time = time.time()
         while backend_thread.is_alive():
             # Check for logs
             has_logs = False
@@ -216,12 +217,15 @@ def generate_dataset(
                 except queue.Empty:
                     break
             
-            # Yield if we got new logs
-            if has_logs:
+            # Yield only if we got new logs and at least 1 second has passed
+            # This reduces UI update frequency and improves performance
+            current_time = time.time()
+            if has_logs and (current_time - last_yield_time) >= 1.0:
                 yield accumulated_output, ""
+                last_yield_time = current_time
             
-            # Small sleep to avoid busy-waiting
-            time.sleep(0.1)
+            # Increased sleep interval to reduce CPU usage (was 0.1s)
+            time.sleep(0.5)
         
         # Wait for thread to complete
         backend_thread.join(timeout=5)
@@ -370,8 +374,9 @@ def train_neural_network(
         backend_thread = threading.Thread(target=run_backend, daemon=True)
         backend_thread.start()
         
-        # Stream logs while backend runs
+        # Stream logs while backend runs (optimized polling)
         import time
+        last_yield_time = time.time()
         while backend_thread.is_alive():
             # Check for logs
             has_logs = False
@@ -383,12 +388,15 @@ def train_neural_network(
                 except queue.Empty:
                     break
             
-            # Yield if we got new logs
-            if has_logs:
+            # Yield only if we got new logs and at least 1 second has passed
+            # This reduces UI update frequency and improves performance
+            current_time = time.time()
+            if has_logs and (current_time - last_yield_time) >= 1.0:
                 yield accumulated_output, ""
+                last_yield_time = current_time
             
-            # Small sleep to avoid busy-waiting
-            time.sleep(0.1)
+            # Increased sleep interval to reduce CPU usage (was 0.1s)
+            time.sleep(0.5)
         
         # Wait for thread to complete
         backend_thread.join(timeout=5)
