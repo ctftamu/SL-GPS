@@ -227,8 +227,8 @@ def generate_dataset(
             # Increased sleep interval to reduce CPU usage (was 0.1s)
             time.sleep(0.5)
         
-        # Wait for thread to complete
-        backend_thread.join(timeout=5)
+        # Wait for thread to complete (timeout set to 1 hour for long-running operations)
+        backend_thread.join(timeout=3600)
         
         # Collect any final logs
         while True:
@@ -398,8 +398,8 @@ def train_neural_network(
             # Increased sleep interval to reduce CPU usage (was 0.1s)
             time.sleep(0.5)
         
-        # Wait for thread to complete
-        backend_thread.join(timeout=5)
+        # Wait for thread to complete (timeout set to 1 hour for long-running operations)
+        backend_thread.join(timeout=3600)
         
         # Collect any final logs
         while True:

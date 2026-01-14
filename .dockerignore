@@ -1,0 +1,60 @@
+# Docker build context - exclude files that aren't needed in the image
+
+# Version control
+.git
+.gitignore
+.github
+
+# Virtual environments
+.venv
+venv
+env
+__pycache__
+*.pyc
+*.pyo
+*.egg-info
+
+# Generated/test data
+generated_data
+generated_data_test
+test_real_data
+test_real_data*
+results_data
+train_data*
+chem_plots
+de_mech
+pred_mech
+sk_mech
+SL_GPS\ Simulation\ Data
+
+# Build artifacts
+dist
+build
+*.egg-info
+.pytest_cache
+
+# Documentation (not needed in runtime image)
+docs
+site
+mkdocs.yml
+*.md
+
+# IDE/editor files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Cache
+.cache
+*.cache
+
+# Local test files
+*.npz
+flux_graph
+source.txt
