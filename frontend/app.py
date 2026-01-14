@@ -583,27 +583,39 @@ def create_gradio_interface():
             # Download buttons for dataset
             gr.Markdown("#### Download Dataset Files")
             with gr.Row():
-                data_csv_file = gr.File(
-                    label="📥 data.csv",
-                    type="filepath"
-                )
-                species_csv_file = gr.File(
-                    label="📥 species.csv",
-                    type="filepath"
-                )
+                with gr.Column():
+                    gr.Label(value="Data Files")
+                    data_csv_file = gr.File(
+                        label="data.csv",
+                        type="filepath",
+                        interactive=False
+                    )
+                with gr.Column():
+                    gr.Label(value="Species Files")
+                    species_csv_file = gr.File(
+                        label="species.csv",
+                        type="filepath",
+                        interactive=False
+                    )
             
             with gr.Row():
                 always_spec_file = gr.File(
-                    label="📥 always_spec_nums.csv",
-                    type="filepath"
+                    label="always_spec_nums.csv",
+                    type="filepath",
+                    interactive=False,
+                    scale=1
                 )
                 never_spec_file = gr.File(
-                    label="📥 never_spec_nums.csv",
-                    type="filepath"
+                    label="never_spec_nums.csv",
+                    type="filepath",
+                    interactive=False,
+                    scale=1
                 )
                 var_spec_file = gr.File(
-                    label="📥 var_spec_nums.csv",
-                    type="filepath"
+                    label="var_spec_nums.csv",
+                    type="filepath",
+                    interactive=False,
+                    scale=1
                 )
             
             # Callbacks
@@ -742,12 +754,14 @@ def create_gradio_interface():
             gr.Markdown("#### Download Trained Model")
             with gr.Row():
                 model_file = gr.File(
-                    label="📥 Download Model (.h5)",
-                    type="filepath"
+                    label="model.h5",
+                    type="filepath",
+                    interactive=False
                 )
                 scaler_file = gr.File(
-                    label="📥 Download Scaler (.pkl)",
-                    type="filepath"
+                    label="scaler.pkl",
+                    type="filepath",
+                    interactive=False
                 )
             
             # Callback
