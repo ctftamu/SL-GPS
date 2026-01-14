@@ -24,11 +24,11 @@ RUN pip install --no-cache-dir \
 # LAYER 3: Install other dependencies (all pre-built wheels)
 RUN pip install --no-cache-dir \
     numpy==1.26.4 \
-    scikit-learn>=1.3.0 \
-    networkx>=3.0 \
-    pandas>=2.0.0 \
-    joblib>=1.3.0 \
-    matplotlib>=3.7.0 \
+    scikit-learn==1.5.2 \
+    networkx==3.3 \
+    pandas==2.2.3 \
+    joblib==1.4.2 \
+    matplotlib==3.9.2 \
     gradio==4.29.0
 
 # LAYER 4: Copy application code (changes most frequently)
