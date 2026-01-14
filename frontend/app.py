@@ -585,29 +585,24 @@ def create_gradio_interface():
             with gr.Row():
                 data_csv_file = gr.File(
                     label="📥 data.csv",
-                    visible=False,
                     type="filepath"
                 )
                 species_csv_file = gr.File(
                     label="📥 species.csv",
-                    visible=False,
                     type="filepath"
                 )
             
             with gr.Row():
                 always_spec_file = gr.File(
                     label="📥 always_spec_nums.csv",
-                    visible=False,
                     type="filepath"
                 )
                 never_spec_file = gr.File(
                     label="📥 never_spec_nums.csv",
-                    visible=False,
                     type="filepath"
                 )
                 var_spec_file = gr.File(
                     label="📥 var_spec_nums.csv",
-                    visible=False,
                     type="filepath"
                 )
             
@@ -745,12 +740,10 @@ def create_gradio_interface():
             with gr.Row():
                 model_file = gr.File(
                     label="📥 Download Model (.h5)",
-                    visible=False,
                     type="filepath"
                 )
                 scaler_file = gr.File(
                     label="📥 Download Scaler (.pkl)",
-                    visible=False,
                     type="filepath"
                 )
             
