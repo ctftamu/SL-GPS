@@ -248,6 +248,17 @@ def generate_dataset(
         accumulated_output += f"  - {data_dir}/always_spec_nums.csv\n"
         accumulated_output += f"  - {data_dir}/never_spec_nums.csv\n"
         
+        # Show available species for user reference
+        try:
+            import pandas as pd
+            data_df = pd.read_csv(os.path.join(data_dir, "data.csv"))
+            available_species = [col for col in data_df.columns if col not in ['# Temperature', 'Atmospheres']]
+            accumulated_output += f"\n📊 Available species for training ({len(available_species)} total):\n"
+            accumulated_output += f"  {', '.join(sorted(available_species))}\n"
+            accumulated_output += f"\nℹ️  Use these species names in the Neural Network Training tab.\n"
+        except Exception as e:
+            accumulated_output += f"\n⚠️  Could not read available species: {str(e)}\n"
+        
         progress(1, desc="Complete!")
         app_state["status"] = "Dataset generated"
         yield accumulated_output, ""
@@ -305,6 +316,27 @@ def train_neural_network(
         data_path = app_state["data_path"]
         scaler_path = os.path.join(data_path, "scaler.pkl")
         model_path = os.path.join(data_path, "model.h5")
+        
+        # Validate that input species exist in the training data
+        data_csv_path = os.path.join(data_path, "data.csv")
+        try:
+            import pandas as pd
+            data_df = pd.read_csv(data_csv_path)
+            available_species = [col for col in data_df.columns if col not in ['# Temperature', 'Atmospheres']]
+            
+            # Check for missing species
+            missing_species = [sp for sp in input_specs if sp not in available_species]
+            if missing_species:
+                error_msg = f"❌ Error: The following species were not found in the training data:\n"
+                error_msg += f"  Missing: {', '.join(missing_species)}\n\n"
+                error_msg += f"Available species in your data ({len(available_species)} total):\n"
+                error_msg += f"  {', '.join(sorted(available_species))}\n\n"
+                error_msg += f"Please update the input species list to use only species from the data.\n"
+                yield "", error_msg
+                return
+        except Exception as e:
+            yield "", f"Error reading training data: {str(e)}"
+            return
         
         accumulated_output += f"Training neural network...\n"
         accumulated_output += f"Hidden layers: {n_hidden_layers}\n"
