@@ -1,24 +1,26 @@
 # Dockerfile for SL-GPS on Hugging Face Spaces
-# Optimized with layer caching to avoid rebuilding heavy dependencies
+# Optimized to avoid timeouts by using only pre-built wheels (no compilation)
 
 FROM python:3.10-slim
 
 # Set working directory
 WORKDIR /app
 
-# Update pip and install system dependencies for building packages
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+# Only upgrade pip (minimal overhead)
+RUN pip install --upgrade pip setuptools wheel
 
-# LAYER 1: Install heavy dependencies first (TensorFlow, Cantera)
-# These take the longest and should be cached separately from app code
+# LAYER 1: Install TensorFlow first (uses pre-built wheels, no compilation)
+# Only installs CPU version to reduce size and build time
 RUN pip install --no-cache-dir \
-    tensorflow>=2.13.0 \
-    cantera==2.6.0
+    tensorflow-cpu==2.13.0
 
-# LAYER 2: Install other core dependencies
+# LAYER 2: Install Cantera from conda-forge wheels (faster than compiling)
+# Install from PyPI pre-built wheel
+RUN pip install --no-cache-dir \
+    cantera==2.6.0 \
+    --only-binary cantera || pip install --no-cache-dir cantera==2.6.0
+
+# LAYER 3: Install other dependencies (all pre-built wheels)
 RUN pip install --no-cache-dir \
     numpy==1.26.4 \
     scikit-learn>=1.3.0 \
@@ -28,17 +30,14 @@ RUN pip install --no-cache-dir \
     matplotlib>=3.7.0 \
     gradio==4.29.0
 
-# LAYER 3: Copy application code (changes most frequently)
+# LAYER 4: Copy application code (changes most frequently)
 COPY . /app
 
-# LAYER 4: Install SL-GPS package and any additional requirements
-RUN pip install -e /app/src/slgps
+# LAYER 5: Install SL-GPS package
+RUN pip install --no-cache-dir -e /app/src/slgps
 
 # Expose Gradio default port
 EXPOSE 7860
-
-# Health check
-HEALTHCHECK CMD curl --fail http://localhost:7860 || exit 1
 
 # Run the HF Spaces app
 CMD ["python", "-m", "HF_SPACE_app"]

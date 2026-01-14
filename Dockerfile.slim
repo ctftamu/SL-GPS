@@ -1,0 +1,25 @@
+# Lightweight Dockerfile for quick HF Spaces deployment
+# Installs frontend only, training dependencies installed on-demand
+# This bypasses timeout by deferring heavy package installs
+
+FROM python:3.10-slim
+
+WORKDIR /app
+
+RUN pip install --upgrade pip setuptools wheel
+
+# Install only frontend requirements (fast - <5 min)
+RUN pip install --no-cache-dir \
+    gradio==4.29.0
+
+# Copy app code
+COPY . /app
+
+# Install SL-GPS in development mode
+RUN pip install --no-cache-dir -e /app/src/slgps
+
+EXPOSE 7860
+
+# Heavy dependencies (TensorFlow, Cantera) installed on first use
+# via lazy imports in HF_SPACE_app.py
+CMD ["python", "-m", "HF_SPACE_app"]
