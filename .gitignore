@@ -1,0 +1,70 @@
+# Generated data - should not be committed (too large)
+generated_data/
+generated_data_test/
+test_real_data/
+test_real_data2/
+source.txt
+train_data_0.001_prob/
+ign.npz
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Results/output
+results_data/
+chem_plots/
+de_mech/
+pred_mech/
+sk_mech/
+SL_GPS\ Simulation\ Data/
+
+# Models and scalers (optionally ignore if > 100MB)
+*.h5
+*.pkl
+Min-Max\ Scalers/
+MILD_model_c_100_a_0.001_n_16.h5
+
+# Documentation build
+site/
+mkdocs_build/
