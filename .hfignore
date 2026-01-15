@@ -1,0 +1,51 @@
+# Hugging Face ignore file - prevent build cache issues
+# This ensures HF Spaces rebuilds cleanly without cached dependencies
+
+# Python cache
+__pycache__
+*.pyc
+*.pyo
+*.egg-info
+
+# Virtual environments
+venv
+.venv
+env
+
+# Generated data (large, not needed in build)
+generated_data
+generated_data_test
+test_real_data
+test_real_data*
+results_data
+train_data*
+chem_plots
+de_mech
+pred_mech
+sk_mech
+SL_GPS\ Simulation\ Data
+
+# Build artifacts
+dist
+build
+.pytest_cache
+
+# Documentation
+docs
+site
+mkdocs.yml
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test/dev files
+*.npz
+source.txt
+flux_graph
