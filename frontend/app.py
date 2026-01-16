@@ -890,6 +890,7 @@ def create_gradio_interface():
                 """
             )
     
+    print("[DEBUG] create_gradio_interface: returning demo", flush=True)
     return demo
 
 

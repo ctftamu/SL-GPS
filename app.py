@@ -20,6 +20,7 @@ from frontend.app import create_gradio_interface
 
 # Expose demo at module level for HF Spaces
 demo = create_gradio_interface()
+print("[DEBUG] app.py: demo assigned", flush=True)
 
 if __name__ == "__main__":
     demo.launch(share=False, show_error=True, theme=gr.themes.Soft())
