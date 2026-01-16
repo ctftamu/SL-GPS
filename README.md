@@ -1,3 +1,13 @@
+---
+title: SL-GPS
+emoji: 🧪
+colorFrom: blue
+colorTo: green
+sdk: docker
+app_file: app.py
+pinned: false
+---
+
 # Simple steps to get started
 
 1. Install basic libraries
