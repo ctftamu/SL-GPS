@@ -1,13 +1,12 @@
-# HF Spaces specific requirements - EXACT VERSIONS ONLY
-# All versions pinned to ensure wheels exist for Python 3.10
-# DO NOT use >= or >, only == for exact matching
+# HF Spaces specific requirements - compatible versions for Python 3.10
+# All versions tested to work together without conflicts
 
 cantera==2.6.0
 gradio==4.29.0
-tensorflow-cpu==2.13.0
-numpy==1.24.3
+tensorflow==2.15.0
+numpy==1.26.4
 scikit-learn==1.5.2
 networkx==3.3
 pandas==2.2.3
 joblib==1.4.2
-matplotlib==3.9.2
+matplotlib==3.8.4

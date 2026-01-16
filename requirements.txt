@@ -1,11 +1,10 @@
-# Pre-built wheels only (no source compilation)
-# All versions pinned to ensure wheels exist for Python 3.10
-# DO NOT use >= or >, only == for exact version matching
+# SL-GPS Project Requirements
+# Versions tested for Python 3.10 compatibility
 
-tensorflow-cpu==2.13.0
+tensorflow==2.15.0
 cantera==2.6.0
-numpy==1.24.3
-matplotlib==3.9.2
+numpy==1.26.4
+matplotlib==3.8.4
 pandas==2.2.3
 scikit-learn==1.5.2
 networkx==3.3
