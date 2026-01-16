@@ -33,17 +33,27 @@ try:
 except Exception:
     pass
 
-# Backend placeholders (will be overwritten if imports succeed)
+# Backend placeholders - lazy loaded on first use
+# This prevents TensorFlow/Cantera from blocking app startup on HF Spaces
 make_data_parallel = None
 make_model = None
+_backend_imported = False
 
-try:
-    from slgps.make_data_parallel import make_data_parallel
-    from slgps.mech_train import make_model
-except Exception:
-    # Print a helpful warning — the GUI can still start, but dataset generation
-    # and training features will return a clear error message in the UI.
-    print("Warning: SL-GPS backend not importable. Dataset generation and training will be disabled in the GUI.")
+def _load_backend():
+    """Lazy load backend functions to avoid startup delays"""
+    global make_data_parallel, make_model, _backend_imported
+    if _backend_imported:
+        return
+    
+    try:
+        from slgps.make_data_parallel import make_data_parallel as mdp
+        from slgps.mech_train import make_model as mm
+        make_data_parallel = mdp
+        make_model = mm
+        _backend_imported = True
+    except Exception as e:
+        print(f"Warning: SL-GPS backend not importable. Error: {e}")
+        print("Dataset generation and training will be disabled in the GUI.")
 
 
 # Global state to track progress
@@ -125,6 +135,9 @@ def generate_dataset(
         Tuple of (status_message, error_message)
     """
     try:
+        # Load backend on first use (lazy initialization)
+        _load_backend()
+        
         # Clear log buffer and setup log queue
         app_state["log_buffer"] = []
         log_queue = queue.Queue(maxsize=100)
@@ -298,6 +311,9 @@ def train_neural_network(
         Tuple of (status_message, error_message)
     """
     try:
+        # Load backend on first use (lazy initialization)
+        _load_backend()
+        
         # Clear log buffer and setup log queue
         app_state["log_buffer"] = []
         log_queue = queue.Queue(maxsize=100)
