@@ -472,10 +472,11 @@ def train_neural_network(
 
 
 def create_gradio_interface():
-        print("[DEBUG] create_gradio_interface: function entered", flush=True)
+    print("[DEBUG] create_gradio_interface: function entered", flush=True)
     """
     Create and return the Gradio interface.
     """
+    # ...existing code...
     
     # Lazy load Gradio on first interface creation
     _load_gradio()
