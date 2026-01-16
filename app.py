@@ -24,6 +24,7 @@ demo = create_gradio_interface()
 print("[DEBUG] app.py: demo assigned", flush=True)
 
 if __name__ == "__main__":
+    print("[DEBUG] app.py: entered __main__ block", flush=True)
     print("[DEBUG] app.py: launching Gradio", flush=True)
     demo.launch(share=False, show_error=True, theme=gr.themes.Soft())
     print("[DEBUG] app.py: Gradio launch returned", flush=True)
