@@ -3,6 +3,7 @@
 
 cantera==2.6.0
 gradio==4.29.0
+huggingface-hub==0.17.0
 tensorflow==2.15.0
 numpy==1.26.4
 scikit-learn==1.5.2

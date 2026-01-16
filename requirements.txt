@@ -10,6 +10,7 @@ scikit-learn==1.5.2
 networkx==3.3
 joblib==1.4.2
 gradio==4.29.0
+huggingface-hub==0.17.0
 
 # Python 3.10 is required - see runtime.txt
 # All versions above have pre-built wheels (.whl) for Python 3.10
