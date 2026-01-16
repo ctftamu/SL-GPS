@@ -7,6 +7,9 @@ FROM python:3.10.15-slim
 # Set working directory
 WORKDIR /app
 
+# Copy application code FIRST (so requirements.txt is available)
+COPY . /app
+
 # Only upgrade pip (minimal overhead)
 RUN pip install --upgrade pip setuptools wheel
 
@@ -19,9 +22,6 @@ RUN pip install --no-cache-dir -v \
     pip install --no-cache-dir -v \
     --prefer-binary \
     -r HF_SPACE_requirements.txt
-
-# Copy application code
-COPY . /app
 
 # Install SL-GPS package
 RUN pip install --no-cache-dir -v -e /app/src/slgps
