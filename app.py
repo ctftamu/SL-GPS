@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+print("[DEBUG] app.py: container startup", flush=True)
 """
 Main entry point for SL-GPS Gradio application.
 This file is required by Hugging Face Spaces.
@@ -23,7 +24,9 @@ demo = create_gradio_interface()
 print("[DEBUG] app.py: demo assigned", flush=True)
 
 if __name__ == "__main__":
+    print("[DEBUG] app.py: launching Gradio", flush=True)
     demo.launch(share=False, show_error=True, theme=gr.themes.Soft())
+    print("[DEBUG] app.py: Gradio launch returned", flush=True)
 
 
 
