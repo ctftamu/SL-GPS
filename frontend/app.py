@@ -1,3 +1,5 @@
+# DEBUG: Mark import start
+print("[DEBUG] frontend/app.py: module import started", flush=True)
 """
 SL-GPS GUI Application using Gradio
 
@@ -470,6 +472,7 @@ def train_neural_network(
 
 
 def create_gradio_interface():
+        print("[DEBUG] create_gradio_interface: function entered", flush=True)
     """Create and return the Gradio interface."""
     
     # Lazy load Gradio on first interface creation
