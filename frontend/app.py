@@ -7,7 +7,9 @@ A browser-based interface for:
 3. Configuration of mechanism reduction parameters
 """
 
-import gradio as gr
+# Lazy imports - import Gradio and other heavy packages only when needed
+gr = None
+
 import os
 import json
 import tempfile
@@ -34,10 +36,18 @@ except Exception:
     pass
 
 # Backend placeholders - lazy loaded on first use
-# This prevents TensorFlow/Cantera from blocking app startup on HF Spaces
+# This prevents TensorFlow/Cantera/Gradio from blocking app startup on HF Spaces
 make_data_parallel = None
 make_model = None
 _backend_imported = False
+
+def _load_gradio():
+    """Lazy load Gradio to avoid startup delays"""
+    global gr
+    if gr is None:
+        import gradio as gradio_module
+        gr = gradio_module
+    return gr
 
 def _load_backend():
     """Lazy load backend functions to avoid startup delays"""
@@ -453,6 +463,9 @@ def train_neural_network(
 
 def create_gradio_interface():
     """Create and return the Gradio interface."""
+    
+    # Lazy load Gradio on first interface creation
+    _load_gradio()
     
     # Create a Blocks context for Gradio 6.0
     demo_ctx = gr.Blocks(title="SL-GPS Chemistry Reduction GUI (new)")
