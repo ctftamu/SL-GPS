@@ -33,5 +33,5 @@ EXPOSE 7860
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD python -c "import gradio; print('OK')" || exit 1
 
-# Run the main app (HF Spaces expects app.py in root)
-CMD ["python", "app.py"]
+# Run the minimal test app
+CMD ["python", "app_minimal.py"]
