@@ -9,8 +9,7 @@ pandas==2.2.3
 scikit-learn==1.5.2
 networkx==3.3
 joblib==1.4.2
-gradio==4.10.1
-huggingface-hub==0.16.4
+gradio==6.3.0
 
 # Python 3.10 is required - see runtime.txt
 # All versions above have pre-built wheels (.whl) for Python 3.10
