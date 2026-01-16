@@ -2,7 +2,7 @@
 # All versions tested to work together without conflicts
 
 cantera==2.6.0
-gradio==5.0.0
+gradio==5.4.0
 tensorflow==2.15.0
 numpy==1.26.4
 scikit-learn==1.5.2
