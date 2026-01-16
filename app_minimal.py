@@ -48,19 +48,32 @@ def gradio_find_ign_interval(hrr_str, threshold):
     except Exception as e:
         return f"Error: {e}"
 
-with gr.Blocks() as demo:
-    gr.Markdown("# Minimal Gradio App Test")
-    inp = gr.Textbox(label="Type something")
-    out = gr.Textbox(label="Echo output")
-    btn = gr.Button("Echo")
-    btn.click(fn=echo, inputs=inp, outputs=out)
+def echo_filename(file):
+    if file is None:
+        return "No file uploaded."
+    return f"Uploaded file: {file.name if hasattr(file, 'name') else str(file)}"
 
-    gr.Markdown("## Test findIgnInterval from slgps.utils")
-    hrr_input = gr.Textbox(label="HRR list (comma-separated)", value="0, 0.1, 0.5, 1.2, 0.8, 0.2, 0")
-    threshold_input = gr.Textbox(label="Threshold", value="0.7")
-    result_output = gr.Textbox(label="Result")
-    test_btn = gr.Button("Run findIgnInterval")
-    test_btn.click(fn=gradio_find_ign_interval, inputs=[hrr_input, threshold_input], outputs=result_output)
+with gr.Blocks() as demo:
+    with gr.Tab("Echo & findIgnInterval"):
+        gr.Markdown("# Minimal Gradio App Test")
+        inp = gr.Textbox(label="Type something")
+        out = gr.Textbox(label="Echo output")
+        btn = gr.Button("Echo")
+        btn.click(fn=echo, inputs=inp, outputs=out)
+
+        gr.Markdown("## Test findIgnInterval from slgps.utils")
+        hrr_input = gr.Textbox(label="HRR list (comma-separated)", value="0, 0.1, 0.5, 1.2, 0.8, 0.2, 0")
+        threshold_input = gr.Textbox(label="Threshold", value="0.7")
+        result_output = gr.Textbox(label="Result")
+        test_btn = gr.Button("Run findIgnInterval")
+        test_btn.click(fn=gradio_find_ign_interval, inputs=[hrr_input, threshold_input], outputs=result_output)
+
+    with gr.Tab("Upload Mechanism File"):
+        gr.Markdown("# Mechanism File Upload (Simulated)")
+        mech_file = gr.File(label="Upload Mechanism (.cti)")
+        file_status = gr.Textbox(label="File Status")
+        file_btn = gr.Button("Echo Filename")
+        file_btn.click(fn=echo_filename, inputs=mech_file, outputs=file_status)
 
 if __name__ == "__main__":
     print("[DEBUG] app_minimal.py: launching Gradio", flush=True)
