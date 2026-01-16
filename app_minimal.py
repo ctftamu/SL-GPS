@@ -39,12 +39,28 @@ except Exception as e:
 def echo(text):
     return f"You typed: {text}"
 
+def gradio_find_ign_interval(hrr_str, threshold):
+    try:
+        hrr = [float(x.strip()) for x in hrr_str.split(",") if x.strip()]
+        threshold = float(threshold)
+        start, end = utils.findIgnInterval(hrr, threshold)
+        return f"Ignition interval: start={start}, end={end}"
+    except Exception as e:
+        return f"Error: {e}"
+
 with gr.Blocks() as demo:
     gr.Markdown("# Minimal Gradio App Test")
     inp = gr.Textbox(label="Type something")
     out = gr.Textbox(label="Echo output")
     btn = gr.Button("Echo")
     btn.click(fn=echo, inputs=inp, outputs=out)
+
+    gr.Markdown("## Test findIgnInterval from slgps.utils")
+    hrr_input = gr.Textbox(label="HRR list (comma-separated)", value="0, 0.1, 0.5, 1.2, 0.8, 0.2, 0")
+    threshold_input = gr.Textbox(label="Threshold", value="0.7")
+    result_output = gr.Textbox(label="Result")
+    test_btn = gr.Button("Run findIgnInterval")
+    test_btn.click(fn=gradio_find_ign_interval, inputs=[hrr_input, threshold_input], outputs=result_output)
 
 if __name__ == "__main__":
     print("[DEBUG] app_minimal.py: launching Gradio", flush=True)
