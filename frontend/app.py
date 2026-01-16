@@ -123,7 +123,7 @@ def generate_dataset(
     always_threshold: float,
     never_threshold: float,
     species_string: str,
-    progress=gr.Progress(),
+    progress=None,
 ) -> Generator[Tuple[str, str], None, None]:
     """
     Generate training dataset from autoignition simulations with GPS.
@@ -145,6 +145,10 @@ def generate_dataset(
         Tuple of (status_message, error_message)
     """
     try:
+        # Create dummy progress if not provided (for non-UI usage)
+        if progress is None:
+            progress = lambda *args, **kwargs: None
+        
         # Load backend on first use (lazy initialization)
         _load_backend()
         
@@ -303,7 +307,7 @@ def train_neural_network(
     neurons_per_layer: int,
     learning_rate: float = 0.001,
     num_processes: int = 1,
-    progress=gr.Progress(),
+    progress=None,
 ) -> Generator[Tuple[str, str], None, None]:
     """
     Train neural network for species importance prediction.
@@ -321,6 +325,10 @@ def train_neural_network(
         Tuple of (status_message, error_message)
     """
     try:
+        # Create dummy progress if not provided (for non-UI usage)
+        if progress is None:
+            progress = lambda *args, **kwargs: None
+        
         # Load backend on first use (lazy initialization)
         _load_backend()
         
