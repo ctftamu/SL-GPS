@@ -14,8 +14,13 @@ print("[DEBUG] app_minimal.py: container startup", flush=True)
 try:
     from slgps import utils
     print("[DEBUG] app_minimal.py: imported slgps.utils successfully", flush=True)
+    # Call a simple function with dummy data
+    hrr = [0, 0.1, 0.5, 1.2, 0.8, 0.2, 0]
+    threshold = 0.7
+    ign_start, ign_end = utils.findIgnInterval(hrr, threshold)
+    print(f"[DEBUG] app_minimal.py: findIgnInterval result: start={ign_start}, end={ign_end}", flush=True)
 except Exception as e:
-    print(f"[DEBUG] app_minimal.py: failed to import slgps.utils: {e}", flush=True)
+    print(f"[DEBUG] app_minimal.py: failed to import slgps.utils or call function: {e}", flush=True)
 
 # Try importing TensorFlow
 try:
