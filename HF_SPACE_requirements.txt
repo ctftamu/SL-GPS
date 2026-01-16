@@ -2,7 +2,7 @@
 # All versions tested to work together without conflicts
 
 cantera==2.6.0
-gradio==4.44.1
+gradio==4.10.1
 huggingface-hub==0.16.4
 tensorflow==2.15.0
 numpy==1.26.4
