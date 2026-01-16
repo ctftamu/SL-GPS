@@ -17,6 +17,20 @@ try:
 except Exception as e:
     print(f"[DEBUG] app_minimal.py: failed to import slgps.utils: {e}", flush=True)
 
+# Try importing TensorFlow
+try:
+    import tensorflow as tf
+    print(f"[DEBUG] app_minimal.py: imported tensorflow version {tf.__version__}", flush=True)
+except Exception as e:
+    print(f"[DEBUG] app_minimal.py: failed to import tensorflow: {e}", flush=True)
+
+# Try importing Cantera
+try:
+    import cantera as ct
+    print(f"[DEBUG] app_minimal.py: imported cantera version {ct.__version__}", flush=True)
+except Exception as e:
+    print(f"[DEBUG] app_minimal.py: failed to import cantera: {e}", flush=True)
+
 def echo(text):
     return f"You typed: {text}"
 
