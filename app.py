@@ -26,7 +26,13 @@ print("[DEBUG] app.py: demo assigned", flush=True)
 if __name__ == "__main__":
     print("[DEBUG] app.py: entered __main__ block", flush=True)
     print("[DEBUG] app.py: launching Gradio", flush=True)
-    demo.launch(share=False, show_error=True, theme=gr.themes.Soft())
+    demo.launch(
+        share=False,
+        show_error=True,
+        theme=gr.themes.Soft(),
+        server_name="0.0.0.0",
+        server_port=7860
+    )
     print("[DEBUG] app.py: Gradio launch returned", flush=True)
 
 
