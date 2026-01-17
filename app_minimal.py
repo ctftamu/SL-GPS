@@ -53,6 +53,12 @@ def echo_filename(file):
         return "No file uploaded."
     return f"Uploaded file: {file.name if hasattr(file, 'name') else str(file)}"
 
+def echo_training_settings(species, layers, neurons, lr):
+    return (f"Input species: {species}\n"
+            f"Hidden layers: {layers}\n"
+            f"Neurons/layer: {neurons}\n"
+            f"Learning rate: {lr}")
+
 with gr.Blocks() as demo:
     with gr.Tab("Echo & findIgnInterval"):
         gr.Markdown("# Minimal Gradio App Test")
@@ -74,6 +80,16 @@ with gr.Blocks() as demo:
         file_status = gr.Textbox(label="File Status")
         file_btn = gr.Button("Echo Filename")
         file_btn.click(fn=echo_filename, inputs=mech_file, outputs=file_status)
+
+    with gr.Tab("Neural Network Training (Simulated)"):
+        gr.Markdown("# Neural Network Training (Simulated)")
+        species_input = gr.Textbox(label="Input Species", value="CH4, H2O, OH, H, CO, O2, CO2, O, CH3, CH, H2")
+        layers_slider = gr.Slider(label="Hidden Layers", minimum=1, maximum=5, value=2, step=1)
+        neurons_slider = gr.Slider(label="Neurons per Layer", minimum=4, maximum=256, value=16, step=4)
+        lr_slider = gr.Slider(label="Learning Rate", minimum=0.0001, maximum=0.1, value=0.001, step=0.0001)
+        train_status = gr.Textbox(label="Training Status")
+        train_btn = gr.Button("Simulate Training")
+        train_btn.click(fn=echo_training_settings, inputs=[species_input, layers_slider, neurons_slider, lr_slider], outputs=train_status)
 
 if __name__ == "__main__":
     print("[DEBUG] app_minimal.py: launching Gradio", flush=True)
