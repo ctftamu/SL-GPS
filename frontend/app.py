@@ -393,9 +393,13 @@ def train_neural_network(
         
         def run_backend():
             try:
-                if os.path.exists(model_path) and os.path.isdir(model_path):
-                    import shutil
-                    shutil.rmtree(model_path)
+                # Improved cleanup: remove if it exists, regardless of if it's a file or directory
+                if os.path.exists(model_path):
+                    if os.path.isdir(model_path):
+                        import shutil
+                        shutil.rmtree(model_path)
+                    else:
+                        os.remove(model_path)
                 with LogCapture(log_queue):
                     make_model(
                         input_specs=input_specs,

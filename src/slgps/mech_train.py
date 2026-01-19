@@ -100,5 +100,5 @@ def make_model(input_specs, data_path, scaler_path, model_path, num_hidden_layer
     # Now you can check for the file
     if not os.path.exists(model_path_with_file):
         # Create the file or process it as needed
-        best_model.save(model_path_with_file)
+        best_model.save(model_path_with_file, save_format='h5')
 
