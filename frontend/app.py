@@ -393,6 +393,9 @@ def train_neural_network(
         
         def run_backend():
             try:
+                if os.path.exists(model_path) and os.path.isdir(model_path):
+                    import shutil
+                    shutil.rmtree(model_path)
                 with LogCapture(log_queue):
                     make_model(
                         input_specs=input_specs,
