@@ -393,12 +393,17 @@ def train_neural_network(
         
         def run_backend():
             try:
-                # Improved cleanup: remove if it exists, regardless of if it's a file or directory
+                # AGGRESSIVE CLEANUP
+                import shutil
+                import os
+                
+                # Log exactly what we find
                 if os.path.exists(model_path):
                     if os.path.isdir(model_path):
-                        import shutil
+                        print(f"!!! FOUND DIRECTORY at {model_path}. DELETING...")
                         shutil.rmtree(model_path)
                     else:
+                        print(f"Found file at {model_path}. Deleting to be safe...")
                         os.remove(model_path)
                 with LogCapture(log_queue):
                     make_model(
