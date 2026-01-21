@@ -80,25 +80,23 @@ def make_model(input_specs, data_path, scaler_path, model_path, num_hidden_layer
     best_model_idx = min(range(len(train_test_histories)), key=lambda i: train_test_histories[i].history['loss'][-1])
     best_model = models[best_model_idx]
 
-    # Create all missing directories if they don't exist
-    os.makedirs(scaler_path, exist_ok=True)
+    # 1. Handle Scaler Saving
+    scaler_dir = os.path.dirname(scaler_path)
+    os.makedirs(scaler_dir, exist_ok=True)
+    
+    # If scaler_path is already the full file path (e.g., .../scaler.pkl)
+    with open(scaler_path, 'wb') as f:
+        dump(min_max_scaler, f)
 
-    scaler_path_with_file = os.path.join(scaler_path, 'model.pkl')
+    # 2. Handle Model Saving
+    model_dir = os.path.dirname(model_path)
+    os.makedirs(model_dir, exist_ok=True)
 
-    # Now you can check for the file
-    if not os.path.exists(scaler_path_with_file ):
-        # Create the file or process it as needed
-        dump(min_max_scaler, open(scaler_path_with_file , 'wb'))
+    # Delete if a directory accidentally exists from a previous bad run
+    if os.path.isdir(model_path):
+        import shutil
+        shutil.rmtree(model_path)
 
-
-
-    # Create all missing directories if they don't exist
-    os.makedirs(model_path, exist_ok=True)
-
-    model_path_with_file = os.path.join(model_path, 'model.h5')
-
-    # Now you can check for the file
-    if not os.path.exists(model_path_with_file):
-        # Create the file or process it as needed
-        best_model.save(model_path_with_file, save_format='h5')
+    # Save the file. model_path is '/app/generated_data/model.h5'
+    best_model.save(model_path, save_format='h5')
 
