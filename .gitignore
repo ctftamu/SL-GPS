@@ -65,6 +65,10 @@ SL_GPS\ Simulation\ Data/
 Min-Max\ Scalers/
 MILD_model_c_100_a_0.001_n_16.h5
 
+# Exception: track validation models (small)
+!validation/**/models/**/*.h5
+!validation/**/models/**/*.pkl
+
 # Documentation build
 site/
 mkdocs_build/

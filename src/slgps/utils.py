@@ -120,7 +120,7 @@ def findTimeIndex(times, time):
 def auto_ign_build_X0(soln, T0, atm, X0, end_threshold=2e3, end=5, dir_raw = None):
 
     raw_all = None
-    soln.TPX = T0, atm*101400, X0
+    soln.TPX = T0, atm*101325, X0
     reactor = ct.IdealGasConstPressureReactor(soln)
     network = ct.ReactorNet([reactor])
     t = 0
@@ -152,7 +152,7 @@ def auto_ign_build_X0(soln, T0, atm, X0, end_threshold=2e3, end=5, dir_raw = Non
 #run auto_ignition simulation for given initial conditions (incl. equiv. ratio phi) until heat release rate drops below threshold
 def auto_ign_build_phi(soln, T0, atm, phi, fuel, end_threshold=2e3, end=5, dir_raw = None):
     raw_all = None
-    soln.TP = T0, atm*101400
+    soln.TP = T0, atm*101325
     soln.set_equivalence_ratio(phi, fuel+':1.0', 'O2:1.0, N2:3.76', basis='mole')
     reactor = ct.IdealGasConstPressureReactor(soln)
     network = ct.ReactorNet([reactor])

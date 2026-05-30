@@ -184,7 +184,7 @@ def make_data_parallel(fuel, mech_file, end_threshold, ign_HRR_threshold_div, ig
        
     
     # Create a list of simulation data
-    sim_data_list = [(temps[i], X0_values[i], 1, 5.0, ign_GPS_resolution, norm_GPS_resolution, ign_HRR_threshold_div, det_spec_strs, mech_file, fuel, end_threshold, alpha, GPS_per_interval,i) for i in range(n_cases)]
+    sim_data_list = [(temps[i], X0_values[i], pressures[i], 5.0, ign_GPS_resolution, norm_GPS_resolution, ign_HRR_threshold_div, det_spec_strs, mech_file, fuel, end_threshold, alpha, GPS_per_interval,i) for i in range(n_cases)]
 
     num_processors = multiprocessing.cpu_count()
     print('Number of processors:', num_processors)

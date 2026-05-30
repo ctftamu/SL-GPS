@@ -51,5 +51,8 @@ This repository contains the means to create a neural network architecture for d
 This code was developed entirely in Python 3. Dependent packages include Cantera 2, Tensorflow 2, pandas, sklearn, numpy, pickle, and networkx. Code for GPS has been copied from https://github.com/golsun/GPS and modified to work in Python 3. 
 ## How to Cite
 - Mishra, R., Nelson, A., Jarrahbashi, D., "Adaptive global pathway selection using artificial neural networks: A-priori study", **Combustion and Flame**, 244 (2022) 112279 [[link](https://doi.org/10.1016/j.combustflame.2022.112279)]
+
+**If you use the validation studies or results from the `validation/` directory, please cite this work.**
+
 ## Related Publications
 - X. Gao, S. Yang, W. Sun, "A global pathway selection algorithm for the reduction of detailed chemical kinetic mechanisms", **Combustion and Flame**, 167 (2016) 238-247 [[link](https://doi.org/10.1016/j.combustflame.2016.02.007)]

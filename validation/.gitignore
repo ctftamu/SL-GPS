@@ -1,0 +1,20 @@
+# Generated data (regenerate with pipeline scripts)
+data/train/
+data/train_c3h8/
+data/train_c2h4/
+
+# Simulation result pickles (large, regenerate with pipeline)
+results/**/*.pkl
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+
+# Python cache
+__pycache__/
+
+# Runtime files
+*.npz
+flux_graph
