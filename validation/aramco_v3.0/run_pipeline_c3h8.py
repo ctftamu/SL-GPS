@@ -33,7 +33,7 @@ for d in [DATA_DIR, MODELS_DIR, RESULTS_DIR]:
 # CONFIGURATION
 # ============================================================================
 
-MECH_FILE = os.path.join(BASE_DIR, 'mechanism', 'aramco_v3.cti')
+MECH_FILE = os.path.join(BASE_DIR, 'mechanism', 'aramco_v3.yaml')
 FUEL = 'C3H8'
 
 N_CASES = 15
@@ -88,91 +88,43 @@ def step1_generate_data():
         print("  Data already exists, skipping generation.")
         return True
 
-    from slgps.make_data_parallel import process_simulation, make_data_parallel
-    import multiprocessing
-    import random
-    import cantera as ct
-    import pandas as pd
+    from slgps.make_data_parallel import make_data_parallel
 
     print(f"  Fuel: C3H8 (propane)")
     print(f"  Mechanism: AramcoMech 3.0 (581 species, 3036 reactions)")
-    print(f"  Simulations: {N_CASES} (SERIAL — avoids fork deadlock)")
+    print(f"  Simulations: {N_CASES} (PARALLEL — all available cores)")
     print(f"  T range: {T_RNG[0]}-{T_RNG[1]} K")
     print(f"  P range: {10**P_RNG[0]:.1f}-{10**P_RNG[1]:.1f} atm")
 
     t0 = time.time()
 
-    # --- Serial data generation (avoids multiprocessing deadlock with large mechanisms) ---
-    soln_in = ct.Solution(MECH_FILE)
-    det_spec_strs = list(soln_in.species_names)
-
-    # Generate random initial conditions
-    temps = [random.uniform(T_RNG[0], T_RNG[1]) for _ in range(N_CASES)]
-    pressures = [10**(random.uniform(P_RNG[0], P_RNG[1])) for _ in range(N_CASES)]
-
-    X0_values = []
-    for _ in range(N_CASES):
-        species_values = {sp: random.uniform(r[0], r[1]) for sp, r in SPECIES_RANGES.items()}
-        total = sum(species_values.values())
-        if total > 0:
-            species_values = {sp: v/total for sp, v in species_values.items()}
-        X0_values.append(', '.join(f'{sp}:{v:.5f}' for sp, v in species_values.items()))
-
-    # Run simulations one at a time
-    all_data = []
-    all_bins = []
-    for i in range(N_CASES):
-        sim_data = (temps[i], X0_values[i], pressures[i], 5.0,
-                    100, 20, 300, det_spec_strs, MECH_FILE, FUEL,
-                    2e5, ALPHA, 2, i)
-        print(f"    Simulation {i+1}/{N_CASES}: T={temps[i]:.0f}K, P={pressures[i]:.1f}atm")
-        result = process_simulation(sim_data)
-        if result is not None:
-            all_data.append(result[0])
-            all_bins.append(result[1])
-            print(f"      ✓ {result[0].shape[0]} samples")
-        else:
-            print(f"      ✗ Failed")
-
-    if not all_data:
-        print("  ERROR: No simulations succeeded!")
-        return False
-
-    # Combine and save
-    data_combined = np.vstack(all_data)
-    bin_combined = np.vstack([b.reshape(-1, b.shape[-1]) for b in all_bins])
-
-    # Save data.csv
-    header = '# Temperature,Atmospheres,' + ','.join(det_spec_strs)
-    np.savetxt(os.path.join(DATA_DIR, 'data.csv'), data_combined, delimiter=',', header=header, comments='')
-
-    # Save species.csv
-    header_sp = ','.join(det_spec_strs) + ',end'
-    np.savetxt(os.path.join(DATA_DIR, 'species.csv'), bin_combined, delimiter=',', header=header_sp, comments='# ', fmt='%d')
-
-    # Compute always/never/variable species
-    n_samples = bin_combined.shape[0]
-    freq = bin_combined.sum(axis=0) / n_samples
-
-    always_specs = [det_spec_strs[j] for j in range(len(det_spec_strs)) if freq[j] >= ALWAYS_THRESHOLD]
-    never_specs = [det_spec_strs[j] for j in range(len(det_spec_strs)) if freq[j] <= NEVER_THRESHOLD]
-    var_specs = [det_spec_strs[j] for j in range(len(det_spec_strs)) if NEVER_THRESHOLD < freq[j] < ALWAYS_THRESHOLD]
-
-    pd.DataFrame(columns=always_specs + ['end']).to_csv(os.path.join(DATA_DIR, 'always_spec_nums.csv'), index=False)
-    pd.DataFrame(columns=never_specs + ['end']).to_csv(os.path.join(DATA_DIR, 'never_spec_nums.csv'), index=False)
-    pd.DataFrame(columns=var_specs + ['end']).to_csv(os.path.join(DATA_DIR, 'var_spec_nums.csv'), index=False)
-
-    # Update species.csv to only include variable species
-    var_indices = [det_spec_strs.index(sp) for sp in var_specs]
-    bin_var = bin_combined[:, var_indices]
-    header_var = ','.join(var_specs) + ',end'
-    np.savetxt(os.path.join(DATA_DIR, 'species.csv'), bin_var, delimiter=',', header=header_var, comments='# ', fmt='%d')
+    make_data_parallel(
+        fuel=FUEL,
+        mech_file=MECH_FILE,
+        end_threshold=2e5,
+        ign_HRR_threshold_div=300,
+        ign_GPS_resolution=100,
+        norm_GPS_resolution=20,
+        GPS_per_interval=2,
+        n_cases=N_CASES,
+        t_rng=T_RNG,
+        p_rng=P_RNG,
+        phi_rng=PHI_RNG,
+        alpha=ALPHA,
+        always_threshold=ALWAYS_THRESHOLD,
+        never_threshold=NEVER_THRESHOLD,
+        pathname=DATA_DIR,
+        species_ranges=SPECIES_RANGES
+    )
 
     elapsed = time.time() - t0
     print(f"\n  ✓ Data generation complete ({elapsed:.1f}s / {elapsed/60:.1f} min)")
-    print(f"    Total samples: {n_samples}")
-    print(f"    Always species: {len(always_specs)}")
-    print(f"    Variable species: {len(var_specs)}")
+
+    for f in ['data.csv', 'species.csv']:
+        fp = os.path.join(DATA_DIR, f)
+        if os.path.isfile(fp):
+            lines = sum(1 for _ in open(fp)) - 1
+            print(f"    {f}: {lines} samples")
     print(f"    Never species: {len(never_specs)}")
     return True
 

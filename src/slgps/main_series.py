@@ -14,7 +14,7 @@ import os
 fuel = 'CH4'
 
 #name of detailed mechanism file, either stored in cantera or in custom path
-mech_file='gri30.cti'
+mech_file='gri30.yaml'
 
 #HHR threshold, below which simulation ends
 end_threshold = 2e5

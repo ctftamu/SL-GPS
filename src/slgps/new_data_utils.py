@@ -25,13 +25,12 @@ from pickle import load
 # from sup_new_data import auto_ign_build
 
 def sub_mech(mech_file, species_names):
+    full_soln = ct.Solution(mech_file)
     new_species = []
-    spec = ct.Species.listFromFile(mech_file)
-    for sp in spec:
+    for sp in full_soln.species():
         if sp.name in species_names:
             new_species.append(sp)
-    ref_phase = ct.Solution(thermo='ideal-gas', kinetics='gas', species=spec)
-    all_reactions = ct.Reaction.listFromFile(mech_file, ref_phase)
+    all_reactions = full_soln.reactions()
     reactions = []
 
     # print('\nReactions:')

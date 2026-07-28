@@ -10,7 +10,7 @@ import pickle
 fuel = 'CH4'
 
 #name of detailed mechanism file, either stored in cantera or in custom path
-mech_file='gri30.cti'
+mech_file='gri30.yaml'
 
 #Input species whose mole fractions are used as input to ANN
 input_specs = ['CH4', 'H2O', 'OH', 'H', 'CO', 'O2', 'CO2', 'O', 'CH3', 'CH']

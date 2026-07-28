@@ -23,7 +23,7 @@ from slgps.make_data_parallel import make_data_parallel
 fuel = 'CH4'
 
 # Mechanism file (must be in this directory or provide full path)
-mech_file = os.path.join(os.path.dirname(__file__), 'mechanism', 'aramco_v3.cti')
+mech_file = os.path.join(os.path.dirname(__file__), 'mechanism', 'aramco_v3.yaml')
 
 # Simulation termination: HRR threshold below which sim ends after ignition
 end_threshold = 2e5
@@ -77,7 +77,7 @@ if __name__ == '__main__':
         print(f"ERROR: Mechanism file not found at: {mech_file}")
         print("Please download AramcoMech 3.0 from:")
         print("  https://www.universityofgalway.ie/combustionchemistrycentre/mechanismdownloads/")
-        print("Convert to CTI format and place as 'aramco_v3.cti' in the mechanism/ directory.")
+        print("Convert to YAML format and place as 'aramco_v3.yaml' in the mechanism/ directory.")
         sys.exit(1)
 
     os.makedirs(data_path, exist_ok=True)

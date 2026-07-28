@@ -72,3 +72,5 @@ MILD_model_c_100_a_0.001_n_16.h5
 # Documentation build
 site/
 mkdocs_build/
+*.pyc
+__pycache__/

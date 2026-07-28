@@ -16,11 +16,11 @@ pinned: false
    ```
 2. Install cantera libraries
    ```
-   pip install --no-cache-dir "cantera==2.6.0"
+   pip install cantera
    ```
 3. Install numpy
    ```
-   pip install "numpy==1.26.4"
+   pip install numpy
    ```
 4. Install networkx (for parallel compute)
    ```
@@ -48,7 +48,7 @@ Please feel free to ask any questions related to SL-GPS there.
 This repository contains the means to create a neural network architecture for dynamic chemistry reduction based on reduction results from Global Pathway Selection. The basic procedure is to first run adaptive GPS for 0D auto-ignition simulation so as to create a dataset. This dataset is later used for training the Artificial Neural Network (ANN). You can reach out to us at rmishra@tamu.edu (Rohit Mishra) or aaronnelson@tamu.edu (Aaron Nelson) for code issues, suggestions and/or pull requests. 
 
 ## About
-This code was developed entirely in Python 3. Dependent packages include Cantera 2, Tensorflow 2, pandas, sklearn, numpy, pickle, and networkx. Code for GPS has been copied from https://github.com/golsun/GPS and modified to work in Python 3. 
+This code was developed entirely in Python 3. Dependent packages include Cantera 3, Tensorflow 2, pandas, sklearn, numpy, pickle, and networkx. Code for GPS has been copied from https://github.com/golsun/GPS and modified to work in Python 3. 
 ## How to Cite
 - Mishra, R., Nelson, A., Jarrahbashi, D., "Adaptive global pathway selection using artificial neural networks: A-priori study", **Combustion and Flame**, 244 (2022) 112279 [[link](https://doi.org/10.1016/j.combustflame.2022.112279)]
 

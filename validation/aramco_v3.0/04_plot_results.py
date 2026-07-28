@@ -287,7 +287,7 @@ if __name__ == '__main__':
         os.path.join(plots_dir, 'ignition_delay_summary.png')
     )
 
-    mech_file_path = os.path.join(os.path.dirname(__file__), 'mechanism', 'aramco_v3.cti')
+    mech_file_path = os.path.join(os.path.dirname(__file__), 'mechanism', 'aramco_v3.yaml')
     plot_reduction_summary(
         all_cases,
         os.path.join(plots_dir, 'reduction_summary.png'),

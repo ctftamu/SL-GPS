@@ -12,7 +12,7 @@ Main orchestration script that coordinates data generation and ANN training.
 
 ```python
 fuel = 'CH4'  # Fuel species name
-mech_file = 'gri30.cti'  # Detailed mechanism file (Cantera CTI format)
+mech_file = 'gri30.yaml'  # Detailed mechanism file (Cantera YAML format)
 n_cases = 100  # Number of training simulations
 t_rng = [800, 2300]  # Temperature range (K)
 p_rng = [2.1, 2.5]  # Pressure range (log atm)
@@ -59,7 +59,7 @@ def make_data_parallel(
 | Parameter | Type | Description | Example |
 |-----------|------|-------------|---------|
 | `fuel` | str | Fuel species name | `'CH4'` |
-| `mech_file` | str | Cantera mechanism file | `'gri30.cti'` |
+| `mech_file` | str | Cantera mechanism file | `'gri30.yaml'` |
 | `end_threshold` | float | HRR threshold to end simulation (J/m³s) | `2e5` |
 | `ign_HRR_threshold_div` | int | Divisor for max HRR to define ignition | `300` |
 | `ign_GPS_resolution` | int | Timesteps per interval during ignition | `200` |
@@ -84,7 +84,7 @@ def make_data_parallel(
 **Example**:
 ```python
 make_data_parallel(
-    fuel='CH4', mech_file='gri30.cti', end_threshold=2e5,
+    fuel='CH4', mech_file='gri30.yaml', end_threshold=2e5,
     ign_HRR_threshold_div=300, ign_GPS_resolution=200,
     norm_GPS_resolution=40, GPS_per_interval=4, n_cases=100,
     t_rng=[800, 2300], p_rng=[2.1, 2.5], phi_rng=[0.6, 1.4],
@@ -272,7 +272,7 @@ def sub_mech(mech_file, species_names) -> ct.Solution
 **Purpose**: Build a reduced Cantera solution with only specified species and their reactions.
 
 **Parameters**:
-- `mech_file` - Path to detailed CTI mechanism
+- `mech_file` - Path to detailed YAML mechanism
 - `species_names` - List of species to keep (must match Cantera names exactly)
 
 **Returns**: Cantera Solution object with reduced mechanism
@@ -359,7 +359,7 @@ from slgps.make_data_parallel import make_data_parallel
 
 make_data_parallel(
     fuel='CH4',
-    mech_file='gri30.cti',
+    mech_file='gri30.yaml',
     end_threshold=2e5,
     ign_HRR_threshold_div=300,
     ign_GPS_resolution=200,
@@ -397,7 +397,7 @@ from slgps.utils import auto_ign_build_SL
 
 results = auto_ign_build_SL(
     fuel='CH4',
-    mech_file='gri30.cti',
+    mech_file='gri30.yaml',
     input_specs=['CH4', 'O2', 'CO2', 'H2O'],
     norm_Dt=0.0002,
     ign_Dt=0.00005,

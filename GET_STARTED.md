@@ -38,7 +38,7 @@ You should see a beautiful interface with three tabs:
 
 **1. Generate Dataset Tab**
 - Click **Upload Cantera Mechanism** 
-  - For testing, use `src/slgps/gri30.cti` or `src/slgps/nHeptane.cti`
+  - For testing, use any Cantera YAML mechanism (e.g., `gri30.yaml` built-in)
   - Or download from [Cantera](https://cantera.org/databases/mechanisms/)
 
 - Keep default parameters OR for quick test change:
@@ -95,9 +95,9 @@ Most important files:
 ## Common Questions
 
 **Q: What mechanism file should I use?**  
-A: Any Cantera CTI file. Examples:
-- `gri30.cti` - General combustion mechanism
-- `nHeptane.cti` - For heptane combustion
+A: Any Cantera YAML file. Examples:
+- `gri30.yaml` - General combustion mechanism
+- `nHeptane.yaml` - For heptane combustion
 - Download from https://cantera.org/databases/mechanisms/
 
 **Q: How long does data generation take?**  

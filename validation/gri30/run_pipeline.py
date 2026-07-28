@@ -35,7 +35,7 @@ for d in [DATA_DIR, MODELS_DIR, RESULTS_DIR]:
 # CONFIGURATION
 # ============================================================================
 
-MECH_FILE = 'gri30.cti'  # Built into Cantera
+MECH_FILE = 'gri30.yaml'  # Built into Cantera
 FUEL = 'CH4'
 
 # Training parameters (small for fast validation)

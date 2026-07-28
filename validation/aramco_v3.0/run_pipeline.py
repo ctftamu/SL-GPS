@@ -35,7 +35,7 @@ for d in [DATA_DIR, MODELS_DIR, RESULTS_DIR]:
 # CONFIGURATION
 # ============================================================================
 
-MECH_FILE = os.path.join(BASE_DIR, 'mechanism', 'aramco_v3.cti')
+MECH_FILE = os.path.join(BASE_DIR, 'mechanism', 'aramco_v3.yaml')
 FUEL = 'CH4'
 
 # Training parameters

@@ -43,8 +43,8 @@ pip install numpy==1.26.4 matplotlib pandas
 # 2. Install machine learning libraries
 pip install tensorflow scikit-learn
 
-# 3. Install Cantera (CRITICAL: exact version required)
-pip install --no-cache-dir "cantera==2.6.0"
+# 3. Install Cantera
+pip install cantera
 
 # 4. Install other dependencies
 pip install networkx joblib
@@ -90,7 +90,7 @@ pip install -r requirements.txt
 | Package | Version | Purpose | Notes |
 |---------|---------|---------|-------|
 | **Python** | 3.8+ | Language | - |
-| **cantera** | 2.6.0 | Chemical kinetics | **EXACT VERSION** - 2.6.1+ breaks compatibility |
+| **cantera** | >=3.0.0 | Chemical kinetics | Cantera 3.x required |
 | **tensorflow** | 2.x | Neural networks | 2.13+ recommended for Python 3.10+ |
 | **numpy** | 1.26.4 | Numerics | Pinned for stability |
 | **scikit-learn** | latest | Data scaling | For MinMaxScaler |
@@ -142,12 +142,12 @@ This will generate a small training dataset and train an ANN (~5-10 minutes).
 
 **Solution**:
 ```bash
-# Force exact version
-pip install --no-cache-dir "cantera==2.6.0"
+# Install latest Cantera
+pip install cantera
 
 # Verify installation
 python -c "import cantera; print(cantera.__version__)"
-# Should print: 2.6.0
+# Should print: 3.x.x
 ```
 
 ### Issue: TensorFlow Won't Install
@@ -204,7 +204,7 @@ import tensorflow as tf
 
 ```bash
 # Use pre-built wheels (easier)
-pip install --no-cache-dir cantera==2.6.0
+pip install --no-cache-dir cantera
 ```
 
 ### Virtual Environment Activation
@@ -227,8 +227,8 @@ After successful installation:
 
 ## Common Questions
 
-**Q: Can I use Cantera 2.7 or newer?**
-A: No. Cantera 2.6.0 is required. API changes in newer versions break compatibility. Use exactly 2.6.0.
+**Q: Can I use Cantera 2.x?**
+A: No. Cantera 3.x is required. The codebase uses the YAML-based mechanism format introduced in Cantera 3.0.
 
 **Q: Do I need a GPU?**
 A: No, but it's faster. TensorFlow runs on CPU by default. For GPU support, install TensorFlow with CUDA.

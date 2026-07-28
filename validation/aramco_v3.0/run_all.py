@@ -109,11 +109,11 @@ if __name__ == '__main__':
     print(f"  Total steps: {len(STEPS)} + LaTeX compilation")
 
     # Check mechanism file
-    mech_file = os.path.join(BASE_DIR, 'aramco_v3.cti')
+    mech_file = os.path.join(BASE_DIR, 'mechanism', 'aramco_v3.yaml')
     if not os.path.isfile(mech_file):
-        print(f"\n  ⚠ WARNING: Mechanism file not found: aramco_v3.cti")
+        print(f"\n  ⚠ WARNING: Mechanism file not found: mechanism/aramco_v3.yaml")
         print("    Download from: https://www.universityofgalway.ie/combustionchemistrycentre/mechanismdownloads/")
-        print("    Convert CHEMKIN → CTI: ck2cti --input=chem.inp --thermo=therm.dat --output=aramco_v3.cti")
+        print("    Convert CHEMKIN → YAML: ck2yaml --input=chem.inp --thermo=therm.dat --output=aramco_v3.yaml")
         if start_step <= 1:
             print("\n    Cannot proceed without mechanism file.")
             sys.exit(1)

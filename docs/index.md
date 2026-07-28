@@ -7,7 +7,7 @@ Welcome to **SL-GPS**, a Python framework for automated chemistry reduction in c
 - **Automated Data Generation**: Run 0D autoignition simulations with adaptive GPS-based species selection
 - **Neural Network Training**: Train ANNs on the generated kinetics data for species importance prediction
 - **Dynamic Mechanism Reduction**: Adaptively reduce chemical mechanisms during simulation based on ANN predictions
-- **Flexible Chemistry**: Support for any detailed mechanism compatible with Cantera (CTI format)
+- **Flexible Chemistry**: Support for any detailed mechanism compatible with Cantera (YAML format)
 - **Parallel Processing**: Multi-process data generation and ensemble neural network training
 
 ## What This Does
@@ -90,7 +90,7 @@ This opens a browser interface where you can:
 
 ### Installation
 ```bash
-pip install --no-cache-dir "cantera==2.6.0"
+pip install cantera
 pip install "numpy==1.26.4" tensorflow mkdocs mkdocs-material networkx scikit-learn
 ```
 
@@ -128,7 +128,7 @@ Developed in **Python 3**. Core dependencies:
 
 | Package | Version | Purpose |
 |---------|---------|---------|
-| **Cantera** | 2.6.0 (exact) | Chemical kinetics, mechanism handling |
+| **Cantera** | >=3.0.0 | Chemical kinetics, mechanism handling |
 | **TensorFlow** | 2.x | Neural network training (Keras API) |
 | **NumPy** | 1.26.4 | Numerical computations |
 | **scikit-learn** | latest | Data scaling (MinMaxScaler) |
@@ -136,7 +136,7 @@ Developed in **Python 3**. Core dependencies:
 | **Pandas** | latest | Data I/O (CSV) |
 | **Joblib** | latest | Parallel training |
 
-**Critical**: Cantera 2.6.0 is required; newer versions have breaking API changes.
+**Note**: Cantera 3.x is required. The YAML-based mechanism format is used.
 
 ## Project Structure
 

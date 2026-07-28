@@ -69,8 +69,8 @@ The GUI opens automatically in your default browser at `http://localhost:7860`
 
 ### Tab 1: Generate Dataset
 
-1. **Upload Mechanism File** (.cti format)
-   - Examples: `gri30.cti`, `nHeptane.cti`
+1. **Upload Mechanism File** (.yaml format)
+   - Examples: `gri30.yaml`, `nHeptane.yaml`
 
 2. **Configure Simulation Parameters**
    - **Fuel Species**: Main reactant (e.g., CH4, H2)
@@ -256,7 +256,7 @@ python -m frontend --share
 **Check mechanism validity:**
 ```python
 import cantera as ct
-gas = ct.Solution('mech_file.cti')
+gas = ct.Solution('mech_file.yaml')
 print(gas.species_names)
 ```
 
@@ -270,7 +270,7 @@ generated_data/
 ├── species.csv              # Species importance masks
 ├── always_spec_nums.csv     # Always-included species
 ├── never_spec_nums.csv      # Never-included species
-├── mechanism.cti            # Copy of uploaded mechanism
+├── mechanism.yaml           # Copy of uploaded mechanism
 ├── model.h5                 # Trained Keras ANN
 └── scaler.pkl               # MinMaxScaler for normalization
 ```

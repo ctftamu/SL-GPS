@@ -1,15 +1,15 @@
 # SL-GPS Project Requirements
-# Versions tested for Python 3.10 compatibility
+# Tested with Python 3.10
 
-tensorflow==2.15.0
-cantera==2.6.0
-numpy==1.26.4
-matplotlib==3.8.4
-pandas==2.2.3
-scikit-learn==1.5.2
-networkx==3.3
-joblib==1.4.2
-gradio==6.3.0
+tensorflow>=2.15.0
+cantera>=3.0.0
+numpy>=1.26.4
+matplotlib>=3.8.4
+pandas>=2.2.3
+scikit-learn>=1.5.2
+networkx>=3.3
+joblib>=1.4.2
+gradio>=6.3.0
 
-# Python 3.10 is required - see runtime.txt
-# All versions above have pre-built wheels (.whl) for Python 3.10
+# Python 3.10+ is required
+# Cantera 3.x is required (2.x CTI/XML format support was removed)

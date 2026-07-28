@@ -24,7 +24,7 @@ import cantera as ct
 
 # Fuel & mechanism
 fuel = 'CH4'
-mech_file = os.path.join(os.path.dirname(__file__), 'mechanism', 'aramco_v3.cti')
+mech_file = os.path.join(os.path.dirname(__file__), 'mechanism', 'aramco_v3.yaml')
 
 # Trained model paths
 model_path = os.path.join(os.path.dirname(__file__), 'models', 'ch4', 'model.h5')

@@ -174,7 +174,8 @@ def generate_dataset(
             return
         
         # Save mechanism file to temp location
-        mech_path = os.path.join(data_dir, "mechanism.cti")
+        mech_ext = os.path.splitext(mechanism_file.name)[1]
+        mech_path = os.path.join(data_dir, "mechanism" + mech_ext)
         if mechanism_file is None:
             yield "", "Error: No mechanism file uploaded"
             return
@@ -520,8 +521,8 @@ def create_gradio_interface():
             
             with gr.Row():
                 mechanism_file = gr.File(
-                    label="Upload Cantera Mechanism (.cti)",
-                    file_types=[".cti"],
+                    label="Upload Cantera Mechanism (.yaml or .cti)",
+                    file_types=[".yaml", ".yml", ".cti"],
                     type="filepath"
                 )
             
