@@ -1,0 +1,46 @@
+
+==============================================================================
+  SL-GPS VALIDATION REPORT
+  Mechanism: ThInK 1.0 | Fuel: Methyl Formate (CH3OCHO)
+==============================================================================
+
+  MECHANISM DETAILS
+    Name:        ThInK 1.0
+    Species:     160
+    Reactions:   1089
+    Fuel:        CH3OCHO (methyl formate, C2H4O2, MW=60.05)
+
+  TRAINING CONFIGURATION
+    Simulations: 15
+    T range:     800-1600 K
+    P range:     1-20 atm
+    φ range:     0.7-1.4
+    α (GPS):     0.001
+    Samples:     707
+    Variable:    63 species (ANN-predicted)
+    Always:      14 species (always included)
+    Never:       83 species (always excluded)
+    Input specs: ['CH3OCHO', 'O2', 'H2O', 'CO2', 'CO', 'OH', 'H', 'H2', 'CH4', 'CH2O', 'CH3OH', 'HO2', 'CH3O', 'HCO']
+    NN arch:     2 × 32 neurons, ReLU, sigmoid output
+
+  VALIDATION RESULTS
+  Case                          T(K)  P(atm)    φ   τ_det(ms)   τ_SL(ms)  Error%  Avg Sp  Red%  Pass
+  ------------------------------------------------------------------------------------------------
+  T1000_P1                      1000     1.0  1.0      41.240     43.698     6.0      58    64     ✓
+  T1200_P1                      1200     1.0  1.0       2.660      2.665     0.2      60    63     ✓
+  T1200_P10                     1200    10.0  1.0       0.280      0.290     3.4      62    61     ✓
+  T1500_P1                      1500     1.0  1.0       0.226      0.224     0.9      60    62     ✓
+  T800_P20                       800    20.0  1.0      25.529     25.597     0.3      63    61     ✓
+  T900_P10                       900    10.0  1.0      13.716     36.373   165.2      59    63     ✗
+  T1100_P1_rich                 1100     1.0  1.3       7.968      8.071     1.3      60    62     ✓
+  T1400_P5_lean                 1400     5.0  0.7       0.094      0.090     4.5      62    62     ✓
+  ------------------------------------------------------------------------------------------------
+
+  SUMMARY
+    Cases passed:        7/8
+    Mean ign. error:     22.7%
+    Max ign. error:      165.2%
+    Mean reduction:      62%
+    Mean species count:  61 / 160
+
+==============================================================================

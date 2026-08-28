@@ -1,0 +1,11 @@
+# Large simulation state dumps (regenerable from model + mechanism; results captured in PNGs + report)
+results/**/*.pkl
+
+# Cluster-specific SLURM submission script (contains machine-specific paths)
+eurov2_submit.job
+
+# Copyrighted publisher PDF — do not redistribute
+1-s2.0-S0010218025005383-main.pdf
+
+# Runtime state
+results/**/.validation_pid
