@@ -9,3 +9,10 @@ eurov2_submit.job
 
 # Runtime state
 results/**/.validation_pid
+
+# scratch / superseded intermediates from the NTC debugging campaign
+flux_graph_tmp
+data/train_ch3ocho_merged/
+models/ch3ocho_merged/
+models/ch3ocho_expanded/
+results_balanced2v/

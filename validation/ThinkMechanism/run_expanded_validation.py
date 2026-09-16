@@ -64,9 +64,15 @@ for d in [DATA_DIR, MODELS_DIR, RESULTS_DIR]:
 MECH_FILE = os.path.join(BASE_DIR, 'ThInK_1.0_Mech.yaml')
 FUEL = 'CH3OCHO'
 
-# Expanded training: 25 cases (up from 15) for better NTC coverage
-N_CASES = 25
-T_RNG = [750, 1600]         # Extended to 750K to better cover NTC
+# Expanded training with stratified low-T (NTC) coverage
+N_CASES = 60
+T_RNG = [700, 1600]         # Extended low-T floor for NTC
+# Guarantee dedicated sampling of the NTC / low-T band (counts sum to N_CASES)
+T_STRATA = [
+    (700, 900, 24),         # low-T / NTC band (previously starved by uniform sampling)
+    (900, 1100, 16),        # intermediate
+    (1100, 1600, 20),       # high-T
+]
 P_RNG = [0.0, 1.3]          # 1-20 atm (log10)
 PHI_RNG = [0.7, 1.4]
 ALPHA = 0.001
@@ -153,7 +159,8 @@ def step1_generate_data():
         always_threshold=ALWAYS_THRESHOLD,
         never_threshold=NEVER_THRESHOLD,
         pathname=DATA_DIR,
-        species_ranges=SPECIES_RANGES
+        species_ranges=SPECIES_RANGES,
+        t_strata=T_STRATA
     )
 
     elapsed = time.time() - t0
@@ -183,26 +190,44 @@ def step2_train():
         log("  Model already exists, skipping training.")
         return True
 
-    # Try to use existing model from original training if expanded model not ready
-    fallback_model = os.path.join(BASE_DIR, 'models', 'ch3ocho', 'model.h5')
-    fallback_scaler = os.path.join(BASE_DIR, 'models', 'ch3ocho', 'scaler.pkl')
-    
-    if os.path.isfile(fallback_model) and os.path.isfile(fallback_scaler):
-        log("  Using existing model from original training (ch3ocho)")
-        import shutil
-        os.makedirs(MODELS_DIR, exist_ok=True)
-        shutil.copy(fallback_model, model_path)
-        shutil.copy(fallback_scaler, scaler_path)
-        log(f"  ✓ Copied model to {model_path}")
-        return True
-
+    # Train a NEW model on the expanded/stratified data. (Do NOT copy the original
+    # ch3ocho model as a fallback — that silently skips retraining and leaves low-T
+    # accuracy unchanged.)
     try:
         from slgps.mech_train import make_model
     except ImportError as e:
         log(f"  ⚠ TensorFlow not available: {e}")
-        log(f"  ⚠ Cannot train model without TensorFlow")
-        log(f"  ⚠ Will proceed with validation using existing model")
-        return True
+        log(f"  ⚠ Cannot train model without TensorFlow — aborting.")
+        return False
+
+    os.makedirs(MODELS_DIR, exist_ok=True)
+    log(f"  Training on expanded data: {DATA_DIR}")
+    log(f"  Input species: {INPUT_SPECS}")
+
+    # make_model treats its path args as DIRECTORIES and writes model.h5 / model.pkl
+    # inside them. Train into temp dirs, then flatten to the flat file paths step3 loads.
+    import shutil
+    tmp_model_dir = os.path.join(MODELS_DIR, '_train_model')
+    tmp_scaler_dir = os.path.join(MODELS_DIR, '_train_scaler')
+    for p in (model_path, scaler_path, tmp_model_dir, tmp_scaler_dir):
+        if os.path.isdir(p):
+            shutil.rmtree(p)
+        elif os.path.isfile(p):
+            os.remove(p)
+
+    t0 = time.time()
+    make_model(
+        input_specs=INPUT_SPECS,
+        data_path=DATA_DIR,
+        scaler_path=tmp_scaler_dir,
+        model_path=tmp_model_dir
+    )
+    shutil.move(os.path.join(tmp_model_dir, 'model.h5'), model_path)
+    shutil.move(os.path.join(tmp_scaler_dir, 'model.pkl'), scaler_path)
+    shutil.rmtree(tmp_model_dir, ignore_errors=True)
+    shutil.rmtree(tmp_scaler_dir, ignore_errors=True)
+    log(f"  ✓ Training complete ({time.time() - t0:.1f}s)")
+    return True
 
 
 # ============================================================================

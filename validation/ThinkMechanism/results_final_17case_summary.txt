@@ -1,0 +1,73 @@
+=== A: FULL 17 cases with 6420 balanced model ===
+=== CH3OCHO_T850_P10  T=850K P=10.0atm phi=1.0 ===
+=== CH3OCHO_T950_P10  T=950K P=10.0atm phi=1.0 ===
+=== CH3OCHO_T900_P15  T=900K P=15.0atm phi=1.0 ===
+=== CH3OCHO_T900_P5  T=900K P=5.0atm phi=1.0 ===
+=== CH3OCHO_T750_P20  T=750K P=20.0atm phi=1.0 ===
+=== CH3OCHO_T1100_P5  T=1100K P=5.0atm phi=1.0 ===
+=== CH3OCHO_T1300_P2  T=1300K P=2.0atm phi=1.0 ===
+=== CH3OCHO_T800_P5  T=800K P=5.0atm phi=1.0 ===
+=== CH3OCHO_T1100_P10_rich  T=1100K P=10.0atm phi=1.3 ===
+=== CH3OCHO_T1400_P5_lean  T=1400K P=5.0atm phi=0.7 ===
+=== CH3OCHO_T1200_P10  T=1200K P=10.0atm phi=1.0 ===
+=== CH3OCHO_T1500_P1  T=1500K P=1.0atm phi=1.0 ===
+=== CH3OCHO_T1200_P1  T=1200K P=1.0atm phi=1.0 ===
+=== CH3OCHO_T1000_P1  T=1000K P=1.0atm phi=1.0 ===
+=== CH3OCHO_T1100_P1_rich  T=1100K P=1.0atm phi=1.3 ===
+=== CH3OCHO_T900_P10  T=900K P=10.0atm phi=1.0 ===
+=== CH3OCHO_T800_P20  T=800K P=20.0atm phi=1.0 ===
+CH3OCHO_T850_P10             850  10.0  1.0  2.5596e-02  2.5412e-02    0.7%   31 PASS
+CH3OCHO_T950_P10             950  10.0  1.0  7.1282e-03  7.1116e-03    0.2%   31 PASS
+CH3OCHO_T900_P15             900  15.0  1.0  8.1433e-03  8.0979e-03    0.6%   32 PASS
+CH3OCHO_T900_P5              900   5.0  1.0  3.3776e-02  3.3483e-02    0.9%   29 PASS
+CH3OCHO_T750_P20             750  20.0  1.0  8.3133e-02  8.2995e-02    0.2%   32 PASS
+CH3OCHO_T1100_P5            1100   5.0  1.0  1.8704e-03  1.8952e-03    1.3%   25 PASS
+CH3OCHO_T1300_P2            1300   2.0  1.0  4.7965e-04  4.9428e-04    3.1%   20 PASS
+CH3OCHO_T800_P5              800   5.0  1.0  1.2080e-01  1.1976e-01    0.9%   29 PASS
+CH3OCHO_T1100_P10_rich      1100  10.0  1.3  8.2455e-04  8.5005e-04    3.1%   33 PASS
+CH3OCHO_T1400_P5_lean       1400   5.0  0.7  9.3681e-05  9.3806e-05    0.1%   19 PASS
+CH3OCHO_T1200_P10           1200  10.0  1.0  2.8001e-04  2.7943e-04    0.2%   28 PASS
+CH3OCHO_T1500_P1            1500   1.0  1.0  2.2565e-04  2.4279e-04    7.6%   20 PASS
+CH3OCHO_T1200_P1            1200   1.0  1.0  2.6577e-03  2.8231e-03    6.2%   21 PASS
+CH3OCHO_T1000_P1            1000   1.0  1.0  4.1210e-02  4.6587e-02   13.0%   23 WARN
+CH3OCHO_T1100_P1_rich       1100   1.0  1.3  7.9617e-03  8.5883e-03    7.9%   22 PASS
+CH3OCHO_T900_P10             900  10.0  1.0  1.3703e-02  1.3631e-02    0.5%   31 PASS
+CH3OCHO_T800_P20             800  20.0  1.0  2.5512e-02  2.5410e-02    0.4%   32 PASS
+=== B: retrain balanced2 with val-loss ensemble selection ===
+val losses: ['0.0440', '0.0332', '0.0440', '0.0442', '0.0491', '0.0439', '0.0360', '0.0447', '0.0329', '0.0416', '0.0405', '0.0361'] -> best: 8
+=== B: FULL 17 cases with val-selected model ===
+=== CH3OCHO_T850_P10  T=850K P=10.0atm phi=1.0 ===
+=== CH3OCHO_T950_P10  T=950K P=10.0atm phi=1.0 ===
+=== CH3OCHO_T900_P15  T=900K P=15.0atm phi=1.0 ===
+=== CH3OCHO_T900_P5  T=900K P=5.0atm phi=1.0 ===
+=== CH3OCHO_T750_P20  T=750K P=20.0atm phi=1.0 ===
+=== CH3OCHO_T1100_P5  T=1100K P=5.0atm phi=1.0 ===
+=== CH3OCHO_T1300_P2  T=1300K P=2.0atm phi=1.0 ===
+=== CH3OCHO_T800_P5  T=800K P=5.0atm phi=1.0 ===
+=== CH3OCHO_T1100_P10_rich  T=1100K P=10.0atm phi=1.3 ===
+=== CH3OCHO_T1400_P5_lean  T=1400K P=5.0atm phi=0.7 ===
+=== CH3OCHO_T1200_P10  T=1200K P=10.0atm phi=1.0 ===
+=== CH3OCHO_T1500_P1  T=1500K P=1.0atm phi=1.0 ===
+=== CH3OCHO_T1200_P1  T=1200K P=1.0atm phi=1.0 ===
+=== CH3OCHO_T1000_P1  T=1000K P=1.0atm phi=1.0 ===
+=== CH3OCHO_T1100_P1_rich  T=1100K P=1.0atm phi=1.3 ===
+=== CH3OCHO_T900_P10  T=900K P=10.0atm phi=1.0 ===
+=== CH3OCHO_T800_P20  T=800K P=20.0atm phi=1.0 ===
+CH3OCHO_T850_P10             850  10.0  1.0  2.5596e-02  2.5387e-02    0.8%   31 PASS
+CH3OCHO_T950_P10             950  10.0  1.0  7.1282e-03  7.0819e-03    0.6%   29 PASS
+CH3OCHO_T900_P15             900  15.0  1.0  8.1433e-03  8.0862e-03    0.7%   29 PASS
+CH3OCHO_T900_P5              900   5.0  1.0  3.3776e-02  3.3695e-02    0.2%   30 PASS
+CH3OCHO_T750_P20             750  20.0  1.0  8.3133e-02  8.2993e-02    0.2%   35 PASS
+CH3OCHO_T1100_P5            1100   5.0  1.0  1.8704e-03  1.9042e-03    1.8%   21 PASS
+CH3OCHO_T1300_P2            1300   2.0  1.0  4.7965e-04  4.9938e-04    4.1%   19 PASS
+CH3OCHO_T800_P5              800   5.0  1.0  1.2080e-01  1.1989e-01    0.8%   30 PASS
+CH3OCHO_T1100_P10_rich      1100  10.0  1.3  8.2455e-04  8.2767e-04    0.4%   24 PASS
+CH3OCHO_T1400_P5_lean       1400   5.0  0.7  9.3681e-05  9.6363e-05    2.9%   19 PASS
+CH3OCHO_T1200_P10           1200  10.0  1.0  2.8001e-04  2.7926e-04    0.3%   26 PASS
+CH3OCHO_T1500_P1            1500   1.0  1.0  2.2565e-04  2.4343e-04    7.9%   19 PASS
+CH3OCHO_T1200_P1            1200   1.0  1.0  2.6577e-03  2.8897e-03    8.7%   21 PASS
+CH3OCHO_T1000_P1            1000   1.0  1.0  4.1210e-02  4.3051e-02    4.5%   23 PASS
+CH3OCHO_T1100_P1_rich       1100   1.0  1.3  7.9617e-03  8.4722e-03    6.4%   21 PASS
+CH3OCHO_T900_P10             900  10.0  1.0  1.3703e-02  1.3602e-02    0.7%   31 PASS
+CH3OCHO_T800_P20             800  20.0  1.0  2.5512e-02  2.5406e-02    0.4%   33 PASS
+done: Wed Sep 16 09:11:04 CDT 2026

@@ -297,12 +297,7 @@ The T900\_P10 case ($T_0=900$~K, $P=10$~atm) exhibits a 165\% ignition delay err
     \item The competition between thermal decomposition and H-abstraction channels is sensitive to radical pool composition
     \item The ANN may lack sufficient training data at this specific condition
 \end{itemize}
-Potential remedies include:
-\begin{enumerate}
-    \item Increasing \texttt{n\_cases} from 15 to 30+ to improve low-$T$ coverage
-    \item Adding targeted training conditions at 850--950~K, 5--15~atm
-    \item Widening the neural network architecture (e.g., $2 \times 64$ neurons)
-\end{enumerate}
+This failure was subsequently root-caused and resolved; see Section~\ref{sec:revision2}.
 
 \subsection{Mechanism Reduction}
 
@@ -314,6 +309,118 @@ The adaptive SL-GPS approach reduces the ThInK~1.0 mechanism from 160 species to
 \end{itemize}
 
 % =============================================================================
+\section{Revision 2: NTC Investigation and Pipeline Hardening}
+\label{sec:revision2}
+% =============================================================================
+
+Following the baseline study, the T900\_P10 failure was root-caused through a
+controlled diagnostic campaign. Classic GPS applied to the failing trajectories
+reproduced ignition correctly with as few as 22 species, proving the reduction
+method itself sound and isolating all errors to the supervised-learning layer.
+Five distinct defects were identified and fixed:
+
+\begin{enumerate}
+    \item \textbf{Frozen-state ANN input (code bug).} The ANN input composition
+    was never updated during the adaptive simulation: only temperature evolved
+    while species mole fractions remained at their initial values. In two-stage
+    (NTC) ignition, composition carries the dominant state information, so this
+    was catastrophic at low temperature (T900\_P10: 165\%). Fixed in
+    \texttt{slgps/utils.py} (\texttt{auto\_ign\_build\_SL}); gated by the
+    environment variable \texttt{SLGPS\_FROZEN\_STATE\_FIX} (default on).
+
+    \item \textbf{Never-list frequency threshold.} Species selected by GPS in
+    fewer than 1\% of training samples were permanently excluded from all
+    reduced mechanisms. Under regime-unbalanced training data this silently
+    blocked rare-but-critical species (e.g.\ CH at high temperature). Revised
+    rule: only species GPS \emph{never} selects (frequency $=0$) are excluded.
+
+    \item \textbf{Always-list erosion under rebalancing.} Merging datasets
+    diluted H$_2$ occurrence just below the 99\% always-threshold, demoting it
+    to ANN control and collapsing low-temperature ignition (H$_2$/HO$_2$/H$_2$O$_2$
+    chain). Revised rule: the always list is the frequency criterion
+    \emph{unioned} with every source dataset's always list.
+
+    \item \textbf{Fixed ANN re-prediction interval.} A constant
+    $\Delta t_{\text{norm}}=0.2$~ms provided only a single mechanism update
+    before ignition at high temperature ($\tau_{\text{ign}}=0.23$~ms at
+    1500~K/1~atm). Revised rule: $\Delta t_{\text{norm}} = \min(0.2\,\text{ms},
+    \tau_{\text{ign}}/50)$ and $\Delta t_{\text{ign}} = \min(\tau_{\text{ign}}/200,
+    \Delta t_{\text{norm}}/4)$, guaranteeing $\geq 50$ mechanism updates during
+    induction at every condition.
+
+    \item \textbf{Ensemble selection by training loss.} The parallel training
+    ensemble selected its best member by final \emph{training} loss, producing
+    large run-to-run variance in sparse regimes. Revised: selection by
+    \emph{validation} loss (12 seeds, early stopping with best-weight
+    restoration).
+\end{enumerate}
+
+\subsection{Balanced Training Data and Never-List Audit}
+
+Training data was assembled from four generation batches (baseline 15 cases;
+NTC-stratified 25 cases, 750--1600~K; high-$T$ 30 cases, 1200--1600~K; mid-$T$
+15 cases, 950--1150~K), pooled and \emph{temperature-balanced} by capping 500
+samples per initial-temperature bin (bin edges 800/950/1100/1250/1400~K),
+yielding 3000 training samples with partitions of 63 variable, 14 always, and
+84 never species computed over the full pool.
+
+An automated \emph{never-list audit} now precedes every training run: for each
+validation condition, the union of classic-GPS species over the detailed
+trajectory is checked against the never list; where blocked species exist, the
+\emph{ceiling mechanism} (always $\cup$ variable species) must reproduce the
+detailed ignition delay within 5\%, guaranteeing that no trained ANN is
+structurally prevented from igniting correctly.
+
+\subsection{Final Validation: 17 Cases}
+
+\begin{table}[H]
+\centering
+\caption{Final CH$_3$OCHO validation (model \texttt{ch3ocho\_balanced2v}, all fixes active). All 17 cases pass.}
+\label{tab:final_results}
+\begin{tabular}{lccccccc}
+\toprule
+\textbf{Case} & \textbf{$T$ (K)} & \textbf{$P$ (atm)} & \textbf{$\phi$} & \textbf{$\tau_{\text{det}}$ (ms)} & \textbf{$\tau_{\text{SL}}$ (ms)} & \textbf{Error (\%)} & \textbf{Pass} \\
+\midrule
+T750\_P20         &  750 & 20 & 1.0 & 83.133 & 82.993 & 0.2 & \checkmark \\
+T800\_P5          &  800 &  5 & 1.0 & 120.80 & 119.89 & 0.8 & \checkmark \\
+T800\_P20         &  800 & 20 & 1.0 & 25.512 & 25.406 & 0.4 & \checkmark \\
+T850\_P10         &  850 & 10 & 1.0 & 25.596 & 25.387 & 0.8 & \checkmark \\
+T900\_P5          &  900 &  5 & 1.0 & 33.776 & 33.695 & 0.2 & \checkmark \\
+T900\_P10         &  900 & 10 & 1.0 & 13.703 & 13.602 & 0.7 & \checkmark \\
+T900\_P15         &  900 & 15 & 1.0 &  8.143 &  8.086 & 0.7 & \checkmark \\
+T950\_P10         &  950 & 10 & 1.0 &  7.128 &  7.082 & 0.6 & \checkmark \\
+T1000\_P1         & 1000 &  1 & 1.0 & 41.210 & 43.051 & 4.5 & \checkmark \\
+T1100\_P5         & 1100 &  5 & 1.0 &  1.870 &  1.904 & 1.8 & \checkmark \\
+T1100\_P1\_rich   & 1100 &  1 & 1.3 &  7.962 &  8.472 & 6.4 & \checkmark \\
+T1100\_P10\_rich  & 1100 & 10 & 1.3 &  0.825 &  0.828 & 0.4 & \checkmark \\
+T1200\_P1         & 1200 &  1 & 1.0 &  2.658 &  2.890 & 8.7 & \checkmark \\
+T1200\_P10        & 1200 & 10 & 1.0 &  0.280 &  0.279 & 0.3 & \checkmark \\
+T1300\_P2         & 1300 &  2 & 1.0 &  0.480 &  0.499 & 4.1 & \checkmark \\
+T1400\_P5\_lean   & 1400 &  5 & 0.7 &  0.094 &  0.096 & 2.9 & \checkmark \\
+T1500\_P1         & 1500 &  1 & 1.0 &  0.226 &  0.243 & 7.9 & \checkmark \\
+\midrule
+\multicolumn{4}{l}{\textbf{Overall}} & \multicolumn{2}{c}{\textbf{17/17 passed}} & \textbf{2.4 (mean)} & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The previously failed NTC case T900\_P10 improved from 165.2\% to 0.7\%, and
+the entire NTC region (750--950~K, 5--20~atm) is reproduced with sub-1\%
+ignition-delay error. Mean reduced-mechanism size is 26 species (84\%
+reduction from 160).
+
+\subsection{Limitations and Future Work}
+
+The idt-scaled timestep rule uses the detailed ignition delay, available here
+because validation runs the detailed simulation anyway; production use requires
+a cheap ignition-delay estimate or a state-responsive interval controller. The
+ANN input (T, P, 14 species) is an information bottleneck at the fresh-mixture
+state; a hybrid scheme that evaluates classic GPS at the first interval (and
+optionally at the heat-release-rate transition) and uses the ANN elsewhere
+would eliminate the residual first-interval prediction error (T1500\_P1,
+7.9\%) at negligible cost.
+
+% =============================================================================
 \section{Reproducibility}
 \label{sec:reproducibility}
 % =============================================================================
@@ -321,9 +428,16 @@ The adaptive SL-GPS approach reduces the ThInK~1.0 mechanism from 160 species to
 All scripts are in \texttt{validation/ThinkMechanism/}:
 
 \begin{lstlisting}[language=bash]
-# Full pipeline (data gen + training + validation + plots)
+# Baseline pipeline (data gen + training + validation + plots)
 cd validation/ThinkMechanism
 python run_pipeline_ch3ocho.py   # ~47 min total
+
+# Revision-2 pipeline (Section 6): balanced data, audit, val-loss
+# ensemble selection, idt-scaled timesteps, 17-case validation
+python make_balanced_data.py train_ch3ocho_balanced2 500 \
+    train_ch3ocho train_ch3ocho_expanded train_ch3ocho_hiT train_ch3ocho_midT
+python audit_never_list.py data/train_ch3ocho_balanced2
+python validate_full.py ch3ocho_balanced2v
 \end{lstlisting}
 
 \subsection{Prerequisites}

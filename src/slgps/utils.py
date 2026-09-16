@@ -64,7 +64,11 @@ def GPS_spec(soln_in, fuel, raw, t_start, t_end, alpha, GPS_per_interval):
         ind_start=len(raw['axis0'])-1
     if not ind_end:
         ind_end=ind_start
-        
+
+    # use the actual per-state interval; guarantee at least one sample point
+    if ind_end <= ind_start:
+        ind_end = ind_start + 1
+
     #run GPS on GPS_per_interval data points across interval
     for i_pnt in range(ind_start, ind_end, ((ind_end-ind_start)//GPS_per_interval)+1):
         #build flux graph for each element
@@ -346,6 +350,9 @@ def auto_ign_build_SL(fuel, mech_file, input_specs, norm_Dt,
         X0 = dict(zip(spec_list, auto_ign_temp['mole_fraction'][-1].tolist()[0]))
         T0 = auto_ign_temp['temperature'][-1]
         tick = auto_ign_complete['axis0'][-1]
+        # feed evolving state to the ANN input next interval (gate for A/B testing; default on)
+        if os.environ.get('SLGPS_FROZEN_STATE_FIX', '1') == '1':
+            soln_in.TPX = T0, atm*101325, X0
         j+=1
         count += 1
     
