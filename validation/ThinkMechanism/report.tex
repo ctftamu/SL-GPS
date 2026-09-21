@@ -212,7 +212,7 @@ T1400\_P5\_lean & 1400 & 5 & 0.7 & 0.01 \\
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.95\textwidth]{results/ch3ocho/CH3OCHO_T900_P10.png}
-    \caption{CH$_3$OCHO Case 6: $T_0=900$~K, $P=10$~atm, $\phi=1.0$. Ignition delay error: 165.2\%. \textbf{Failed} --- low-temperature NTC regime insufficiently covered by training data.}
+    \caption{CH$_3$OCHO Case 6 (\textbf{baseline model, before fixes}): $T_0=900$~K, $P=10$~atm, $\phi=1.0$. Ignition delay error: 165.2\%. This historical failure motivated the Revision~2 investigation and is \textbf{resolved by the final model} (0.7\% error, Figure~\ref{fig:final_t900}).}
     \label{fig:ch3ocho_case6}
 \end{figure}
 
@@ -408,6 +408,27 @@ The previously failed NTC case T900\_P10 improved from 165.2\% to 0.7\%, and
 the entire NTC region (750--950~K, 5--20~atm) is reproduced with sub-1\%
 ignition-delay error. Mean reduced-mechanism size is 26 species (84\%
 reduction from 160).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{results/ch3ocho_final/CH3OCHO_T900_P10.png}
+    \caption{Final model, T900\_P10 ($T_0=900$~K, $P=10$~atm, $\phi=1.0$): the baseline failure (165.2\%, Figure~\ref{fig:ch3ocho_case6}) is resolved --- ignition delay error 0.7\%.}
+    \label{fig:final_t900}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{results/ch3ocho_final/CH3OCHO_T750_P20.png}
+    \caption{Final model, deep-NTC case T750\_P20 ($T_0=750$~K, $P=20$~atm): two-stage ignition reproduced with 0.2\% error.}
+    \label{fig:final_t750}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{results/ch3ocho_final/CH3OCHO_T1500_P1.png}
+    \caption{Final model, high-temperature case T1500\_P1 ($T_0=1500$~K, $P=1$~atm): the Revision-2 regression (146.7\%) is recovered to 7.9\% error.}
+    \label{fig:final_t1500}
+\end{figure}
 
 \subsection{Limitations and Future Work}
 
