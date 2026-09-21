@@ -420,6 +420,50 @@ optionally at the heat-release-rate transition) and uses the ANN elsewhere
 would eliminate the residual first-interval prediction error (T1500\_P1,
 7.9\%) at negligible cost.
 
+\subsection{Expanded Validation Campaign (in progress)}
+\label{sec:expanded_campaign}
+
+To probe the validated envelope further, the test matrix was expanded from 17
+to 35 cases: 14 additional in-envelope conditions (low-pressure deep-NTC
+T750\_P10; mid-$T$/high-$P$ combinations T950--T1000 at 5--20~atm; rich and
+lean NTC at 900~K/10~atm; the training-edge cases T1600\_P1 and
+$\phi=1.4$), plus four \emph{explicit extrapolation probes} outside the
+training envelope, prefixed \texttt{X\_}: T700\_P20 (below the 700~K training
+floor sampling), T900\_P30 (above the 20~atm pressure ceiling), and
+$\phi=0.5$/$\phi=1.6$ at 1100~K/5~atm (beyond the 0.7--1.4 equivalence-ratio
+range).
+
+The never-list audit was extended to 15 conditions including all extrapolation
+corners and \textbf{passed at every condition}: even outside the training
+envelope, the ceiling mechanism (always $\cup$ variable species) reproduces
+the detailed ignition delay within 0.02\%, i.e.\ the species partition is
+structurally sound beyond the envelope and any extrapolation error is
+attributable to ANN prediction alone.
+
+\begin{table}[H]
+\centering
+\caption{Extended never-list audit (data \texttt{train\_ch3ocho\_balanced2}). Blocked = GPS-selected species in the never list; where non-zero, the ceiling mechanism must match detailed ignition within 5\%.}
+\label{tab:extended_audit}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Condition} & \textbf{GPS-required} & \textbf{Blocked} & \textbf{Ceiling idt err} & \textbf{Verdict} \\
+\midrule
+T1500\_P1 / T1200\_P1 / T1000\_P1 & 38--61 & 0 & --- & ok \\
+T1100\_P1\_rich / T1600\_P1 & 37--63 & 0 & --- & ok \\
+T900\_P10 / T800\_P20 / T750\_P20 & 87--91 & 14--15 & $\leq 0.02\%$ & ok \\
+T750\_P10 / T1000\_P10 / T1400\_P5\_lean & 70--86 & 5--14 & $\leq 0.01\%$ & ok \\
+\texttt{X\_}T700\_P20 (extrapolation) & 90 & 16 & 0.00\% & ok \\
+\texttt{X\_}T900\_P30 (extrapolation) & 88 & 12 & 0.02\% & ok \\
+\texttt{X\_}$\phi$0.5 / \texttt{X\_}$\phi$1.6 (extrapolation) & 75--76 & 2--4 & $\leq 0.02\%$ & ok \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Per-case ignition-delay results for the expanded matrix will be appended when
+the validation run completes; the first repeated cases reproduce the
+Table~\ref{tab:final_results} values exactly, confirming run-to-run
+determinism of the pipeline.
+
 % =============================================================================
 \section{Reproducibility}
 \label{sec:reproducibility}

@@ -49,6 +49,28 @@ CASES = [
     ('CH3OCHO_T1100_P1_rich', 1100,  1.0, 1.3, 0.05),
     ('CH3OCHO_T900_P10',       900, 10.0, 1.0, 0.1),
     ('CH3OCHO_T800_P20',       800, 20.0, 1.0, 0.5),
+
+    # --- expansion round: in-envelope gap filling ---
+    ('CH3OCHO_T750_P10',       750, 10.0, 1.0, 0.8),    # deep NTC, lower P
+    ('CH3OCHO_T800_P10',       800, 10.0, 1.0, 0.3),
+    ('CH3OCHO_T850_P20',       850, 20.0, 1.0, 0.1),
+    ('CH3OCHO_T950_P5',        950,  5.0, 1.0, 0.1),
+    ('CH3OCHO_T950_P20',       950, 20.0, 1.0, 0.05),
+    ('CH3OCHO_T1000_P10',     1000, 10.0, 1.0, 0.05),
+    ('CH3OCHO_T1000_P20',     1000, 20.0, 1.0, 0.02),
+    ('CH3OCHO_T1050_P1',      1050,  1.0, 1.0, 0.15),
+    ('CH3OCHO_T900_P10_rich',  900, 10.0, 1.3, 0.15),   # NTC + rich
+    ('CH3OCHO_T900_P10_lean',  900, 10.0, 0.7, 0.15),   # NTC + lean
+    ('CH3OCHO_T1300_P10',     1300, 10.0, 1.0, 0.003),
+    ('CH3OCHO_T1400_P1',      1400,  1.0, 1.0, 0.01),
+    ('CH3OCHO_T1200_P5_rich', 1200,  5.0, 1.4, 0.01),   # phi at training edge
+    ('CH3OCHO_T1600_P1',      1600,  1.0, 1.0, 0.002),  # T at training ceiling
+
+    # --- extrapolation probes (OUTSIDE training envelope, expect degradation) ---
+    ('CH3OCHO_X_T700_P20',     700, 20.0, 1.0, 2.0),    # below training T floor
+    ('CH3OCHO_X_T900_P30',     900, 30.0, 1.0, 0.05),   # above training P ceiling
+    ('CH3OCHO_X_T1100_P5_vlean', 1100, 5.0, 0.5, 0.1),  # below training phi floor
+    ('CH3OCHO_X_T1100_P5_vrich', 1100, 5.0, 1.6, 0.05), # above training phi ceiling
 ]
 
 
