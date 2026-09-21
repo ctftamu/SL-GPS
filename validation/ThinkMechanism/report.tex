@@ -286,18 +286,18 @@ T1400\_P5\_lean  & 1400 &  5 & 0.7 &  0.094 &  0.090 &   4.5 & \checkmark \\
 
 \begin{table}[H]
 \centering
-\caption{CH$_3$OCHO mechanism reduction summary.}
+\caption{CH$_3$OCHO mechanism reduction summary: baseline model vs final model (v2.1.0). Final-model means are over the 31 in-envelope validation cases.}
 \label{tab:ch3ocho_reduction}
 \begin{tabular}{lcc}
 \toprule
-\textbf{Metric} & \textbf{Value} \\
+\textbf{Metric} & \textbf{Baseline} & \textbf{Final (v2.1.0)} \\
 \midrule
-Detailed mechanism species & 160 \\
-Mean reduced species & 61 \\
-Mean reduction & 62\% \\
-Always species (unconditional) & 14 \\
-Variable species (ANN-predicted) & 63 \\
-Never species (excluded) & 83 \\
+Detailed mechanism species & 160 & 160 \\
+Mean reduced species (time-averaged) & 61 & 27 \\
+Mean reduction & 62\% & 83\% \\
+Always species (unconditional) & 14 & 14 \\
+Variable species (ANN-predicted) & 63 & 63 \\
+Never species (excluded) & 83 & 84 \\
 \bottomrule
 \end{tabular}
 \end{table}
