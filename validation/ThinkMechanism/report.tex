@@ -250,8 +250,15 @@ T1400\_P5\_lean & 1400 & 5 & 0.7 & 0.01 \\
         \includegraphics[width=\textwidth]{results/ch3ocho_final/CH3OCHO_summary.png}
         \caption{Final model (v2.1.0, Revision 2): 17/17 cases, mean error 2.4\%, 84\% mean reduction.}
     \end{subfigure}
-    \caption{CH$_3$OCHO validation summary, baseline vs final model. Left panels: ignition delay comparison (detailed vs.\ SL-GPS). Right panels: average mechanism size.}
+    \caption{CH$_3$OCHO validation summary, baseline vs final model. Left panels: ignition delay comparison (detailed vs.\ SL-GPS). Right panels: \emph{time-averaged} mechanism size per case (the instantaneous size varies along the trajectory; see Figure~\ref{fig:nspec_time}).}
     \label{fig:ch3ocho_summary}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{results/ch3ocho_final/CH3OCHO_nspecies_vs_time.png}
+    \caption{Adaptive mechanism size vs.\ normalized time (final model). NTC cases (T750\_P20, T900\_P10) begin with $\sim$60 active species while low-temperature chemistry operates, contract after first-stage heat release, spike briefly at ignition, and relax post-ignition; the high-temperature case (T1500\_P1) never requires more than $\sim$25 species. Bars in Figure~\ref{fig:ch3ocho_summary} are the time averages of these traces.}
+    \label{fig:nspec_time}
 \end{figure}
 
 \begin{table}[H]
