@@ -211,8 +211,16 @@ T1400\_P5\_lean & 1400 & 5 & 0.7 & 0.01 \\
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\textwidth]{results/ch3ocho/CH3OCHO_T900_P10.png}
-    \caption{CH$_3$OCHO Case 6 (\textbf{baseline model, before fixes}): $T_0=900$~K, $P=10$~atm, $\phi=1.0$. Ignition delay error: 165.2\%. This historical failure motivated the Revision~2 investigation and is \textbf{resolved by the final model} (0.7\% error, Figure~\ref{fig:final_t900}).}
+    \begin{subfigure}[t]{0.49\textwidth}
+        \includegraphics[width=\textwidth]{results/ch3ocho/CH3OCHO_T900_P10.png}
+        \caption{Baseline model (before fixes): 165.2\% error.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.49\textwidth}
+        \includegraphics[width=\textwidth]{results/ch3ocho_final/CH3OCHO_T900_P10.png}
+        \caption{Final model (Revision 2): 0.7\% error.}
+    \end{subfigure}
+    \caption{CH$_3$OCHO Case 6: $T_0=900$~K, $P=10$~atm, $\phi=1.0$ (NTC regime). The baseline failure (a) motivated the Revision~2 investigation (Section~\ref{sec:revision2}) and is resolved by the final model (b).}
     \label{fig:ch3ocho_case6}
 \end{figure}
 
