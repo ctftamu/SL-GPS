@@ -242,8 +242,15 @@ T1400\_P5\_lean & 1400 & 5 & 0.7 & 0.01 \\
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\textwidth]{results/ch3ocho/CH3OCHO_summary.png}
-    \caption{CH$_3$OCHO validation summary. Left: ignition delay comparison (detailed vs.\ SL-GPS). Right: average mechanism size.}
+    \begin{subfigure}[t]{\textwidth}
+        \includegraphics[width=\textwidth]{results/ch3ocho/CH3OCHO_summary.png}
+        \caption{Baseline model (before fixes): 7/8 cases, T900\_P10 outlier at 165\%.}
+    \end{subfigure}\\[0.6em]
+    \begin{subfigure}[t]{\textwidth}
+        \includegraphics[width=\textwidth]{results/ch3ocho_final/CH3OCHO_summary.png}
+        \caption{Final model (v2.1.0, Revision 2): 17/17 cases, mean error 2.4\%, 84\% mean reduction.}
+    \end{subfigure}
+    \caption{CH$_3$OCHO validation summary, baseline vs final model. Left panels: ignition delay comparison (detailed vs.\ SL-GPS). Right panels: average mechanism size.}
     \label{fig:ch3ocho_summary}
 \end{figure}
 
