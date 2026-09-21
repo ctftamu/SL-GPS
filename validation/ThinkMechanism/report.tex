@@ -553,6 +553,13 @@ X\_T900\_P30      &  900 & 30 & 1.0 &  3.499 &  7.180 & 105.2 & $\times$ \\
 The 17 repeated Table~\ref{tab:final_results} cases reproduced their values
 exactly, confirming run-to-run determinism of the pipeline.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{results/ch3ocho_final/CH3OCHO_X_T900_P30.png}
+    \caption{Pressure-extrapolation probe X\_T900\_P30 ($T_0=900$~K, $P=30$~atm, outside the 1--20~atm training range): the sole failing case (105.2\% ignition-delay error). The input scaler saturates at 20~atm, so the ANN operates on out-of-range input; the never-list audit confirms the species partition itself remains adequate at this condition, isolating the failure to ANN input extrapolation.}
+    \label{fig:x_t900_p30}
+\end{figure}
+
 % =============================================================================
 \section{Reproducibility}
 \label{sec:reproducibility}
