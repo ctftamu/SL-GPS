@@ -1,0 +1,24 @@
+# Large simulation state dumps (regenerable from model + mechanism)
+results/**/*.pkl
+
+# Runtime state
+results/**/.validation_pid
+
+# scratch intermediates
+flux_graph_tmp
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+
+# Python cache
+__pycache__/
+
+# Pipeline run logs
+pipeline_run*.log
+
+# Cantera runtime files
+ign.npz
+flux_graph

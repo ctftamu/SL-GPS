@@ -1,0 +1,132 @@
+"""
+Validate the trained model on a comprehensive set of cases.
+Uses IDT-scaled adaptive timesteps for robust coverage.
+
+Usage: python validate_full.py [model_tag]  (default: dmm_balanced)
+"""
+import os
+import sys
+import time
+import pickle
+import numpy as np
+
+BASE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(BASE, '..', '..', 'src'))
+
+import cantera as ct
+from slgps.utils import auto_ign_build_SL, auto_ign_build_X0
+
+TAG = sys.argv[1] if len(sys.argv) > 1 else 'dmm_balanced'
+MECH = os.path.join(BASE, 'mechanism', 'PODE-1_clean.yaml')
+FUEL = 'CH3OCH2OCH3'
+DATA_DIR = os.path.join(BASE, 'data', f'train_{TAG}')
+MODEL = os.path.join(BASE, 'models', TAG, 'model.h5')
+SCALER = os.path.join(BASE, 'models', TAG, 'scaler.pkl')
+RESULTS = os.path.join(BASE, 'results', f'{TAG}_idtscaled')
+os.makedirs(RESULTS, exist_ok=True)
+print(f'model tag: {TAG}\n  data: {DATA_DIR}\n  results: {RESULTS}')
+
+INPUT_SPECS = [
+    'CH3OCH2OCH3', 'O2', 'H2O', 'CO2', 'CO', 'OH', 'H', 'H2',
+    'CH4', 'CH2O', 'CH3OH', 'HO2', 'CH3O', 'HCO'
+]
+
+
+CASES = [
+    # --- Core NTC & low-T cases ---
+    ("DMM_T850_P10",       850, 10.0, 1.0, 0.2),
+    ("DMM_T950_P10",       950, 10.0, 1.0, 0.08),
+    ("DMM_T900_P15",       900, 15.0, 1.0, 0.15),
+    ("DMM_T900_P5",        900,  5.0, 1.0, 0.08),
+    ("DMM_T750_P20",       750, 20.0, 1.0, 1.0),
+    ("DMM_T1100_P5",      1100,  5.0, 1.0, 0.05),
+    ("DMM_T1300_P2",      1300,  2.0, 1.0, 0.01),
+    ("DMM_T800_P5",        800,  5.0, 1.0, 0.3),
+    ("DMM_T1100_P10_rich",1100, 10.0, 1.3, 0.08),
+    ("DMM_T1400_P5_lean", 1400,  5.0, 0.7, 0.005),
+    ("DMM_T1200_P10",     1200, 10.0, 1.0, 0.005),
+    ('DMM_T1500_P1',      1500,  1.0, 1.0, 0.005),
+    ('DMM_T1200_P1',      1200,  1.0, 1.0, 0.02),
+    ('DMM_T1000_P1',      1000,  1.0, 1.0, 0.2),
+    ('DMM_T1100_P1_rich', 1100,  1.0, 1.3, 0.05),
+    ('DMM_T900_P10',       900, 10.0, 1.0, 0.1),
+    ('DMM_T800_P20',       800, 20.0, 1.0, 0.5),
+    # --- Expansion: in-envelope gap filling ---
+    ('DMM_T750_P10',       750, 10.0, 1.0, 0.8),
+    ('DMM_T800_P10',       800, 10.0, 1.0, 0.3),
+    ('DMM_T850_P20',       850, 20.0, 1.0, 0.1),
+    ('DMM_T950_P5',        950,  5.0, 1.0, 0.1),
+    ('DMM_T950_P20',       950, 20.0, 1.0, 0.05),
+    ('DMM_T1000_P10',     1000, 10.0, 1.0, 0.05),
+    ('DMM_T1000_P20',     1000, 20.0, 1.0, 0.02),
+    ('DMM_T1050_P1',      1050,  1.0, 1.0, 0.15),
+    ('DMM_T900_P10_rich',  900, 10.0, 1.3, 0.15),
+    ('DMM_T900_P10_lean',  900, 10.0, 0.7, 0.15),
+    ('DMM_T1300_P10',     1300, 10.0, 1.0, 0.003),
+    ('DMM_T1400_P1',      1400,  1.0, 1.0, 0.01),
+    ('DMM_T1200_P5_rich', 1200,  5.0, 1.4, 0.01),
+    ('DMM_T1600_P1',      1600,  1.0, 1.0, 0.002),
+    # --- Extrapolation probes (OUTSIDE training envelope) ---
+    ('DMM_X_T700_P20',     700, 20.0, 1.0, 2.0),
+    ('DMM_X_T900_P30',     900, 30.0, 1.0, 0.05),
+    ('DMM_X_T1100_P5_vlean', 1100, 5.0, 0.5, 0.1),
+    ('DMM_X_T1100_P5_vrich', 1100, 5.0, 1.6, 0.05),
+]
+
+
+def ign_delay(result):
+    if result is None:
+        return None
+    t = np.array(result[0]['axis0'])
+    T = np.array(result[0]['temperature'])
+    if len(t) < 3:
+        return None
+    dTdt = np.diff(T) / np.diff(t)
+    return t[np.argmax(dTdt)]
+
+
+summary = []
+for label, T0, P_atm, phi, t_end in CASES:
+    out = os.path.join(RESULTS, f'{label}.pkl')
+    print(f'\n=== {label}  T={T0}K P={P_atm}atm phi={phi} ===', flush=True)
+    case = {'config': dict(label=label, T0=T0, P_atm=P_atm, phi=phi, t_end=t_end)}
+
+    t0 = time.time()
+    soln = ct.Solution(MECH)
+    soln.TP = T0, P_atm * 101325
+    soln.set_equivalence_ratio(phi, f'{FUEL}:1.0', 'O2:1.0, N2:3.76')
+    X0 = soln.mole_fraction_dict()
+    case['detailed'] = auto_ign_build_X0(
+        soln, T0, P_atm, X0, end_threshold=None, end=t_end, dir_raw='ign')
+    print(f'  detailed done ({time.time()-t0:.0f}s, '
+          f'{len(case["detailed"][0]["axis0"])} steps)', flush=True)
+
+    idt_det = ign_delay(case['detailed'])
+    norm_Dt = min(2e-4, idt_det / 50)
+    ign_Dt = min(idt_det / 200, norm_Dt / 4)
+    print(f'  timesteps from idt={idt_det:.3e}: '
+          f'norm_Dt={norm_Dt:.2e} ign_Dt={ign_Dt:.2e}', flush=True)
+
+    t0 = time.time()
+    case['slgps'] = auto_ign_build_SL(
+        FUEL, MECH, INPUT_SPECS, norm_Dt, ign_Dt,
+        T0, phi, P_atm, t_end, SCALER, MODEL, DATA_DIR, 9e7)
+    print(f'  slgps done ({time.time()-t0:.0f}s)', flush=True)
+
+    with open(out, 'wb') as f:
+        pickle.dump(case, f)
+
+    d, s = ign_delay(case['detailed']), ign_delay(case['slgps'])
+    err = 100 * abs(s - d) / d if (d and s) else float('nan')
+    nspec = np.mean(case['slgps'][3]) if case['slgps'] else float('nan')
+    summary.append((label, T0, P_atm, phi, d, s, err, nspec))
+    print(f'  idt: det={d:.4e}  sl={s:.4e}  err={err:.1f}%  '
+          f'avg_species={nspec:.0f}', flush=True)
+
+print('\n' + '=' * 80)
+print(f'{"case":26s} {"T":>5} {"P":>5} {"phi":>4} '
+      f'{"det idt":>11} {"sl idt":>11} {"err%":>7} {"nsp":>4}')
+for label, T0, P, phi, d, s, err, nsp in summary:
+    mark = 'PASS' if err < 10 else ('WARN' if err < 25 else 'FAIL')
+    print(f'{label:26s} {T0:>5.0f} {P:>5.1f} {phi:>4.1f} '
+          f'{d:>11.4e} {s:>11.4e} {err:>6.1f}% {nsp:>4.0f} {mark}')
